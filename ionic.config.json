@@ -1,0 +1,7 @@
+{
+  "name": "prodv-v2",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
