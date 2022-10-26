@@ -1,4 +1,12 @@
 import { Component } from '@angular/core';
+import { FirebaseauthService } from 'src/app/services/firebaseauth.service';
+import { FirestoreService } from './services/firestore.service';
+import { User } from './models';
+import { Subscription } from 'rxjs';
+import { LoadingController, Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +14,124 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+
+ isLogin = false;
+
+  admin = false;
+
+  usuario: User = { 
+    uid: '',
+    email:'',
+    displayName:'',
+    emailVerified:null,
+  };
+
+  uid='';
+  suscriberUserInfo : Subscription;
+  
+  constructor(  public firebaseauthService: FirebaseauthService,
+                public loadingController: LoadingController,
+                public firestoreService: FirestoreService,
+                public router:Router,
+                private menuL: MenuController,
+                private platform: Platform,
+                ){
+
+      this.firebaseauthService.stateAuth().subscribe(res =>{
+        if(res!=null){
+          this.isLogin = true;
+          if (res.uid == 'LikZN15qNiQi1pFEAT8frapWt243' || res.uid == 'sYOl5vJntAWPUoDMoBZsrd05KAu1' ) {
+            this.admin = true;
+            this.getUserInfo(res.uid);
+          }else{
+            this.admin = false;
+            this.getUserInfo(res.uid);
+          }
+        }else{
+          this.admin = false;
+          this.initClient();
+          this.isLogin = false;
+
+        }
+
+      });
+
+
+    }
+
+    initializeApp(){
+      this.getUid();
+    }
+
+    initClient(){  
+      this.uid='';
+      this.usuario = { 
+        uid: '',
+        email:'',
+        displayName:'',
+      emailVerified:null,
+      };
+  
+     }
+
+    getUserInfo(uid:string ){
+      const path = 'Usuarios';
+      this.suscriberUserInfo= this.firestoreService.getDoc<User>(path, uid).subscribe(res =>{
+        this.usuario = res ;
+      });
+    }
+
+  async Salir() {
+
+    console.log("salir salir salir");
+    this.firebaseauthService.logout();
+    this.usuario = { 
+      uid: null,
+      email:null,
+      displayName:null,
+      emailVerified:null,
+    };
+    await this.suscriberUserInfo.unsubscribe();
+
+    this.presentLoading('Cerrando Sesión',1000);
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    this.menuL.enable(true);
+    }, 1000);
+ 
+  }
+
+
+  async presentLoading(mensaje:string, tiempo:number) {
+    const loading = await this.loadingController.create({
+      message: mensaje,
+      duration: tiempo
+    });
+    await loading.present();
+  } 
+  getUid(){
+  
+    this.firebaseauthService.stateAuth().subscribe(res =>{
+      if(res!=null){
+  
+        if (res.uid == 'LikZN15qNiQi1pFEAT8frapWt243' || res.uid == 'sYOl5vJntAWPUoDMoBZsrd05KAu1' ) {
+          this.admin = true;
+          this.getUserInfo(res.uid);
+        }else{
+          this.admin = false;
+          this.getUserInfo(res.uid);
+        }
+      }else{
+        this.admin = false;
+        this.initClient();
+  
+      }
+  
+    });
+  }
+
+
 }
+
+
+

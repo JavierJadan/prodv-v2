@@ -1,0 +1,134 @@
+ion-toolbar{
+    --background: linear-gradient(to left, #20C6C6, #0c4d4d);
+    // --background: #0c4d4d;
+     --border-color:  transparent;
+    height: 150px;
+}   
+ion-menu{
+    --background: linear-gradient(to left, #20C6C6, #0c4d4d);
+}  
+ion-content{
+    // --background: #0c4d4d;
+    --background: linear-gradient(to left, #20C6C6, #0c4d4d);
+}
+.grid_init{
+    --ion-grid-padding: 30px;
+    text-align: center;
+    // border: 1px red solid;
+    height: auto;
+}
+.row-init{
+    // border: 1px black solid;
+   height: auto;
+    
+}
+// .col_img{
+//     // border: 1px red solid;
+
+// }
+.img-icon{
+    height: auto;
+    width: auto;
+    // border: 1px purple solid;
+}
+.img-icono-prodv{
+
+    width: 70px;
+    height: 70px;
+
+}
+.col_text{
+    margin-top: auto;
+    margin-bottom: auto;
+    text-align: left;
+    // border: 1px blue solid;
+    
+}
+
+.item-menu{ 
+    --color: #FFF;
+    --color-activated: #3c6e71;
+    --background: linear-gradient(to left, #20C6C6, #0c4d4d);
+    //  --background: #0c4d4d; 
+    --padding-top: 3px; 
+    --padding-bottom: 3px;
+
+} 
+
+.div_boton{
+    text-align: center;
+    margin-top: 50px;
+    
+}
+
+.salir{
+    --border-radius: 5px;
+    --background: #075E54;
+}
+
+
+.div_gualaquiza{
+    margin-top: auto;
+    margin-bottom: auto;
+    display:flex;
+}
+.img_gualaquiza{
+    
+    height: 35px;
+    width: 110px;
+}
+.img_copa{
+    
+    height: 25px;
+    width: 50px;
+}
+
+.text_menu{
+
+    font-size: 16px;
+    font-weight: normal;
+}
+.div_imglogo{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 6px;
+    //   border: 1px solid black;
+}
+
+.div_imgcopa{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    // border: 1px solid black;
+}
+
+
+.text_gualaquiza{
+    margin-top: auto;
+    margin-bottom: auto;
+    // border: 1px solid blue;
+    height: 33px;
+}
+
+.img_logo{
+
+    height: 30px;
+    width: 30px;
+}
+
+.copa{
+    font-size: 30px;
+    font-family: 'Cream Cake';
+    background-image: linear-gradient(to left, violet, indigo, green, blue, yellow, orange, red);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
+@font-face{
+    font-family: 'Cream Cake';
+    src: url('/assets/icon/Cream.otf');
+}
