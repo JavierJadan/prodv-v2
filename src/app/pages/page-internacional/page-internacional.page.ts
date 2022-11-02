@@ -10,6 +10,7 @@ import {
   RewardAdPluginEvents,
 } from '@capacitor-community/admob';
 import { isPlatform } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-page-internacional',
@@ -18,77 +19,89 @@ import { isPlatform } from '@ionic/angular';
 })
 export class PageInternacionalPage implements OnInit {
 
-  constructor() {
-    this.initialize();
+    matches=[];
+  constructor(private http:HttpClient ) {
+    // this.initialize();
   }
 
   ngOnInit() {
-  }
-  async initialize(){
-    const { status } = await AdMob.trackingAuthorizationStatus();
-    console.log(status);
-    if (status === 'notDetermined') {
-      console.log('Display information before ads load first time');
-    }
 
-    AdMob.initialize({
-      requestTrackingAuthorization: true,
-      testingDevices: ['YOURTESTDEVICECODE'],
-      initializeForTesting: true,
+    this.http.get<any>('https://v3.football.api-sports.io/fixtures?live=all',{
+      headers:{
+        'x-rapidapi-host' : 'v3.football.api-sports.io',
+        'x-rapidapi-key'  : '057eb7678fa2d34dca7c319ce9a57a7d'
+      }
+    }).subscribe(res =>{
+      console.log(res);
+      this.matches = res.response;
+      console.log(res.response);
     });
   }
+  // async initialize(){
+  //   const { status } = await AdMob.trackingAuthorizationStatus();
+  //   console.log(status);
+  //   if (status === 'notDetermined') {
+  //     console.log('Display information before ads load first time');
+  //   }
 
-  async showBanner() {
-    const adId = isPlatform('ios') ? 'ios-ad-id' : 'android-ad-unit';
+  //   AdMob.initialize({
+  //     requestTrackingAuthorization: true,
+  //     testingDevices: ['YOURTESTDEVICECODE'],
+  //     initializeForTesting: true,
+  //   });
+  // }
 
-    const options: BannerAdOptions = {
-      adId,
-      adSize: BannerAdSize.ADAPTIVE_BANNER,
-      position: BannerAdPosition.BOTTOM_CENTER,
-      margin: 0,
-      isTesting: true,
-      // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
-      // Set this to true to request Non-Personalized Ads
-      // npa: true
-    };
-    await AdMob.showBanner(options);
-  }
+  // async showBanner() {
+  //   const adId = isPlatform('ios') ? 'ios-ad-id' : 'android-ad-unit';
 
-  async hideBanner() {
-    // Hides it but still available in background
-    await AdMob.hideBanner();
+  //   const options: BannerAdOptions = {
+  //     adId,
+  //     adSize: BannerAdSize.ADAPTIVE_BANNER,
+  //     position: BannerAdPosition.BOTTOM_CENTER,
+  //     margin: 0,
+  //     isTesting: true,
+  //     // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
+  //     // Set this to true to request Non-Personalized Ads
+  //     // npa: true
+  //   };
+  //   await AdMob.showBanner(options);
+  // }
 
-    // Completely removes the banner
-    await AdMob.removeBanner();
-  }
+  // async hideBanner() {
+  //   // Hides it but still available in background
+  //   await AdMob.hideBanner();
+
+  //   // Completely removes the banner
+  //   await AdMob.removeBanner();
+  // }
 
 
-  async showInterstitial() {
-    const options: AdOptions = {
-      adId: 'YOUR AD ID',
-      isTesting: true,
-      // npa: true
-    };
-    await AdMob.prepareInterstitial(options);
-    await AdMob.showInterstitial();
-  }
-  async showRewardVideo() {
-    AdMob.addListener(
-      RewardAdPluginEvents.Rewarded,
-      (reward: AdMobRewardItem) => {
-        // Give the reward!
-        console.log('REWARD: ', reward);
-      }
-    );
-    const options: RewardAdOptions = {
-      adId: 'YOUR ADID',
-      isTesting: true,
-      // npa: true
-      // ssv: { ... }
-    };
+  // async showInterstitial() {
+  //   const options: AdOptions = {
+  //     adId: 'YOUR AD ID',
+  //     isTesting: true,
+  //     // npa: true
+  //   };
+  //   await AdMob.prepareInterstitial(options);
+  //   await AdMob.showInterstitial();
+  // }
+  // async showRewardVideo() {
+  //   AdMob.addListener(
+  //     RewardAdPluginEvents.Rewarded,
+  //     (reward: AdMobRewardItem) => {
+  //       // Give the reward!
+  //       console.log('REWARD: ', reward);
+  //     }
+  //   );
+  //   const options: RewardAdOptions = {
+  //     adId: 'YOUR ADID',
+  //     isTesting: true,
+  //     // npa: true
+  //     // ssv: { ... }
+  //   };
 
-    await AdMob.prepareRewardVideoAd(options);
-    await AdMob.showRewardVideoAd();
-  }
+  //   await AdMob.prepareRewardVideoAd(options);
+  //   await AdMob.showRewardVideoAd();
+  // }
 
 }
