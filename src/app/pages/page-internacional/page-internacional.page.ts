@@ -20,7 +20,7 @@ import { HttpClient } from '@angular/common/http';
 export class PageInternacionalPage implements OnInit {
 
     matches=[];
-  constructor(private http:HttpClient ) {
+  constructor(private http: HttpClient ) {
     // this.initialize();
   }
 
