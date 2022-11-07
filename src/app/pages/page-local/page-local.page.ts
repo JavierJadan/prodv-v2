@@ -5,6 +5,17 @@ import { Subscription } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { EncuentroPrueba, Equipos } from 'src/app/models';
 import { MenuController } from '@ionic/angular';
+import {
+  AdMob,
+  AdMobRewardItem,
+  AdOptions,
+  BannerAdOptions,
+  BannerAdPosition,
+  BannerAdSize,
+  RewardAdOptions,
+  RewardAdPluginEvents,
+} from '@capacitor-community/admob';
+import { isPlatform } from '@ionic/angular';
 
 
 @Component({
@@ -65,9 +76,9 @@ export class PageLocalPage implements OnInit {
   ida = false;
   vuelta = false;
   descenso = false;
-  opcion = "";
-  opcion2 = "";
-  titulo = "";
+  opcion = '';
+  opcion2 = '';
+  titulo = '';
   gru1 = false;
   gru2 = false;
   gru3 = false;
@@ -81,7 +92,7 @@ export class PageLocalPage implements OnInit {
   antsig = false;
   isActiveM1 = false;
   isActiveM2 = false;
-  fase = "";
+  fase = '';
   numero = 0;
 
 
@@ -114,9 +125,9 @@ export class PageLocalPage implements OnInit {
     nombre_e1: '',
     nombre_e2: '',
   }
- 
 
- // Tabla
+
+  // Tabla
 
   grupoE1: Equipos[] = [];
   grupoE2: Equipos[] = [];
@@ -146,42 +157,69 @@ export class PageLocalPage implements OnInit {
   constructor(public firestoreService: FirestoreService,
     public alertController: AlertController,
     public menuL: MenuController) {
-    
-     }
+    this.initialize();
+  }
 
   ngOnInit() {
     this.menuL.enable(false);
-    this.opcion = "Partidos";
-    this.opcion2 = "Clasificacion";
+    this.opcion = 'Partidos';
+    this.opcion2 = 'Clasificacion';
     this.isActiveM1 = true;
     this.getCampeonatos();
     const campeonatod = this.firestoreService.getCampeonato();
     console.log(campeonatod);
     // if (campeonatod == undefined) {
-    //   this.infocampeonato.uid = "3BuPLlNAQ7yA4yo8Karg";
-    //   this.infocampeonato.nombre = "Copa Gualaquiza";
+    //   this.infocampeonato.uid = '3BuPLlNAQ7yA4yo8Karg';
+    //   this.infocampeonato.nombre = 'Copa Gualaquiza';
     // } else {
     //   this.infocampeonato = campeonatod;
     // }
     // this.getPartidos(this.infocampeonato.uid);
 
-    this.opcion2 = "clasificacion";
+    this.opcion2 = 'clasificacion';
   }
 
 
 
   //codigo para publicidad
 
+  async initialize() {
+    const { status } = await AdMob.trackingAuthorizationStatus();
+    console.log(status);
+    if (status === 'notDetermined') {
+      console.log('Display information before ads load first time');
+    }
+    AdMob.initialize({
+      requestTrackingAuthorization: true,
+      testingDevices: ['YOURTESTDEVICECODE'],
+      initializeForTesting: true,
+    });
+  }
+
+  async showBanner() {
+    const adId = isPlatform('ios') ? 'ios-ad-id' : 'android-ad-unit';
+    const options: BannerAdOptions = {
+      adId,
+      adSize: BannerAdSize.ADAPTIVE_BANNER,
+      position: BannerAdPosition.BOTTOM_CENTER,
+      margin: 0,
+      isTesting: true,
+      // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
+      // Set this to true to request Non-Personalized Ads
+      // npa: true
+    };
+    await AdMob.showBanner(options);
+  }
   ///
 
   changeSegment(event: any) {
+    this.showBanner();
     const opc = event.detail.value;
     console.log(opc);
     this.opcion = opc;
     console.log(this.opcion);
-    (this.opcion == "Clasificacion") ? this.isActiveM2 = true : this.isActiveM2 = false;
-    (this.opcion == "Partidos") ? this.isActiveM1 = true : this.isActiveM1 = false;
-    
+    (this.opcion == 'Clasificacion') ? this.isActiveM2 = true : this.isActiveM2 = false;
+    (this.opcion == 'Partidos') ? this.isActiveM1 = true : this.isActiveM1 = false;
   }
   changeSegment2(event: any) {
     const opc = event.detail.value;
@@ -228,7 +266,7 @@ export class PageLocalPage implements OnInit {
   async limpiar() {
 
     this.antsig = false;
-    this.titulo = "";
+    this.titulo = '';
     this.gru1 = false;
     this.gru2 = false;
     this.gru3 = false;
@@ -293,16 +331,16 @@ export class PageLocalPage implements OnInit {
     this.grupoE10 = [];
     this.descensoE = [];
     this.grup1 = false;
-    this.grup2 = false,
-      this.grup3 = false;
-    this.grup4 = false,
-      this.grup5 = false;
-    this.grup6 = false,
-      this.grup7 = false;
-    this.grup8 = false,
-      this.grup9 = false;
-    this.grup10 = false,
-      this.des = false;
+    this.grup2 = false;
+    this.grup3 = false;
+    this.grup4 = false;
+    this.grup5 = false;
+    this.grup6 = false;
+    this.grup7 = false;
+    this.grup8 = false;
+    this.grup9 = false;
+    this.grup10 = false;
+    this.des = false;
 
 
 
@@ -332,7 +370,7 @@ export class PageLocalPage implements OnInit {
     this.getDescenso(this.infocampeonato.uid);
 
   }
-  
+
   async getPartidos(uid: string) {
     const path = 'Campeonatos/' + uid + '/Partidos';
     this.equiposInfo = this.firestoreService.getPartidos<EncuentroPrueba>(path).subscribe(res => {
@@ -342,7 +380,7 @@ export class PageLocalPage implements OnInit {
         this.antsig = false;
       }
       this.encuentro = res[0];
-      if (this.encuentro.fechae == "ida" || this.encuentro.fechae == "vuelta" || this.encuentro.fechae == "unico") {
+      if (this.encuentro.fechae == 'ida' || this.encuentro.fechae == 'vuelta' || this.encuentro.fechae == 'unico') {
         this.titulo = this.encuentro.tipo;
       } else {
         this.titulo = this.encuentro.fechae;
@@ -350,7 +388,7 @@ export class PageLocalPage implements OnInit {
       this.numero = this.encuentro.numero;
       this.fase = this.encuentro.fechae;
 
-      if (this.fase == "ida" || this.fase == "vuelta" || this.fase == "unico") {
+      if (this.fase == 'ida' || this.fase == 'vuelta' || this.fase == 'unico') {
         this.prueba(this.encuentro.tipo);
         this.pruebafina(this.encuentro.tipo);
         this.partidos_init(this.encuentro.tipo);
@@ -372,7 +410,7 @@ export class PageLocalPage implements OnInit {
 
   async prueba(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getCollection<EncuentroPrueba>(path, 'tipo', '==', tipo, "unico").subscribe(res => {
+    this.equiposInfo = this.firestoreService.getCollection<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.gene = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -384,7 +422,7 @@ export class PageLocalPage implements OnInit {
   }
   async partidos_init(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getpartidos_init<EncuentroPrueba>(path, 'tipo', '==', tipo, "unico").subscribe(res => {
+    this.equiposInfo = this.firestoreService.getpartidos_init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.geneinit = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -397,7 +435,7 @@ export class PageLocalPage implements OnInit {
   }
   async pruebafina(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getCollectionfinalizados<EncuentroPrueba>(path, 'tipo', '==', tipo, "unico").subscribe(res => {
+    this.equiposInfo = this.firestoreService.getCollectionfinalizados<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.genef = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -696,7 +734,7 @@ export class PageLocalPage implements OnInit {
 
   async partidos_ida_vuel_E(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, "ida").subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneida = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -709,7 +747,7 @@ export class PageLocalPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, "vuelta").subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta').subscribe(res => {
       this.genevuel = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -728,7 +766,7 @@ export class PageLocalPage implements OnInit {
 
   async partidos_ida_vuel_init(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, "ida").subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneidainit = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -740,7 +778,8 @@ export class PageLocalPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, "vuelta").subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta')
+    .subscribe(res => {
       this.genevuelinit = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -758,7 +797,7 @@ export class PageLocalPage implements OnInit {
 
   async partidos_ida_vuel_fina(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, "ida").subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneidaf = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -770,7 +809,8 @@ export class PageLocalPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, "vuelta").subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta')
+    .subscribe(res => {
       this.genevuelf = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -794,13 +834,13 @@ export class PageLocalPage implements OnInit {
 
     }
 
-    console.log(this.numero)
+    console.log(this.numero);
 
     if (this.numero >= 1 && this.numero <= this.infocampeonato.fases) {
-      this.titulo = "Fecha " + this.numero;
-      this.grupos("Fecha " + this.numero);
-      this.gruposfinalizados("Fecha " + this.numero);
-      this.partidos_init_fases("Fecha " + this.numero);
+      this.titulo = 'Fecha ' + this.numero;
+      this.grupos('Fecha ' + this.numero);
+      this.gruposfinalizados('Fecha ' + this.numero);
+      this.partidos_init_fases('Fecha ' + this.numero);
       this.gene = [];
       this.genef = [];
       this.geneinit = [];
@@ -824,10 +864,10 @@ export class PageLocalPage implements OnInit {
       this.vuelta = false;
     } else if (this.numero == this.infocampeonato.fases + 1) {
 
-      this.titulo = "Descenso"
-      this.prueba("Descenso");
-      this.pruebafina("Descenso");
-      this.partidos_init("Descenso");
+      this.titulo = 'Descenso';
+      this.prueba('Descenso');
+      this.pruebafina('Descenso');
+      this.partidos_init('Descenso');
 
       this.geneida = [];
       this.geneidainit = [];
@@ -838,40 +878,40 @@ export class PageLocalPage implements OnInit {
       this.limpiargrupos();
 
     } else if (this.numero == this.infocampeonato.fases + 2) {
-      this.titulo = "Cuartos de final"
-      this.prueba("Cuartos de final");
-      this.pruebafina("Cuartos de final");
-      this.partidos_init("Cuartos de final");
-      this.partidos_ida_vuel_E("Cuartos de final");
-      this.partidos_ida_vuel_init("Cuartos de final");
-      this.partidos_ida_vuel_fina("Cuartos de final");
+      this.titulo = 'Cuartos de final';
+      this.prueba('Cuartos de final');
+      this.pruebafina('Cuartos de final');
+      this.partidos_init('Cuartos de final');
+      this.partidos_ida_vuel_E('Cuartos de final');
+      this.partidos_ida_vuel_init('Cuartos de final');
+      this.partidos_ida_vuel_fina('Cuartos de final');
       this.limpiargrupos();
     } else if (this.numero == this.infocampeonato.fases + 3) {
-      this.titulo = "Semifinal";
-      this.prueba("Semifinal");
-      this.pruebafina("Semifinal");
-      this.partidos_init("Semifinal");
-      this.partidos_ida_vuel_E("Semifinal");
-      this.partidos_ida_vuel_init("Semifinal");
-      this.partidos_ida_vuel_fina("Semifinal");
+      this.titulo = 'Semifinal';
+      this.prueba('Semifinal');
+      this.pruebafina('Semifinal');
+      this.partidos_init('Semifinal');
+      this.partidos_ida_vuel_E('Semifinal');
+      this.partidos_ida_vuel_init('Semifinal');
+      this.partidos_ida_vuel_fina('Semifinal');
       this.limpiargrupos();
     } else if (this.numero == this.infocampeonato.fases + 4) {
-      this.titulo = "Tercero y Cuarto";
-      this.prueba("Tercero y Cuarto");
-      this.pruebafina("Tercero y Cuarto");
-      this.partidos_init("Tercero y Cuarto");
-      this.partidos_ida_vuel_E("Tercero y Cuarto");
-      this.partidos_ida_vuel_init("Tercero y Cuarto");
-      this.partidos_ida_vuel_fina("Tercero y Cuarto");
+      this.titulo = 'Tercero y Cuarto';
+      this.prueba('Tercero y Cuarto');
+      this.pruebafina('Tercero y Cuarto');
+      this.partidos_init('Tercero y Cuarto');
+      this.partidos_ida_vuel_E('Tercero y Cuarto');
+      this.partidos_ida_vuel_init('Tercero y Cuarto');
+      this.partidos_ida_vuel_fina('Tercero y Cuarto');
       this.limpiargrupos();
     } else if (this.numero == this.infocampeonato.fases + 5) {
-      this.titulo = "Final";
-      this.prueba("Final");
-      this.pruebafina("Final");
-      this.partidos_init("Final");
-      this.partidos_ida_vuel_E("Final");
-      this.partidos_ida_vuel_init("Final");
-      this.partidos_ida_vuel_fina("Final");
+      this.titulo = 'Final';
+      this.prueba('Final');
+      this.pruebafina('Final');
+      this.partidos_init('Final');
+      this.partidos_ida_vuel_E('Final');
+      this.partidos_ida_vuel_init('Final');
+      this.partidos_ida_vuel_fina('Final');
       this.limpiargrupos();
     }
   }
@@ -883,12 +923,12 @@ export class PageLocalPage implements OnInit {
 
     }
 
-    console.log(this.numero)
+    console.log(this.numero);
     if (this.numero >= 1 && this.numero <= this.infocampeonato.fases) {
-      this.titulo = "Fecha " + this.numero;
-      this.grupos("Fecha " + this.numero);
-      this.gruposfinalizados("Fecha " + this.numero);
-      this.partidos_init_fases("Fecha " + this.numero);
+      this.titulo = 'Fecha ' + this.numero;
+      this.grupos('Fecha ' + this.numero);
+      this.gruposfinalizados('Fecha ' + this.numero);
+      this.partidos_init_fases('Fecha ' + this.numero);
       this.gene = [];
       this.genef = [];
       this.geneinit = [];
@@ -912,10 +952,10 @@ export class PageLocalPage implements OnInit {
       this.vuelta = false;
     } else if (this.numero == this.infocampeonato.fases + 1) {
 
-      this.titulo = "Descenso"
-      this.prueba("Descenso");
-      this.pruebafina("Descenso");
-      this.partidos_init("Descenso");
+      this.titulo = 'Descenso';
+      this.prueba('Descenso');
+      this.pruebafina('Descenso');
+      this.partidos_init('Descenso');
       this.limpiargrupos();
       this.geneida = [];
       this.geneidainit = [];
@@ -926,40 +966,40 @@ export class PageLocalPage implements OnInit {
 
 
     } else if (this.numero == this.infocampeonato.fases + 2) {
-      this.titulo = "Cuartos de final"
-      this.prueba("Cuartos de final");
-      this.pruebafina("Cuartos de final");
-      this.partidos_init("Cuartos de final");
-      this.partidos_ida_vuel_E("Cuartos de final");
-      this.partidos_ida_vuel_init("Cuartos de final");
-      this.partidos_ida_vuel_fina("Cuartos de final");
+      this.titulo = 'Cuartos de final';
+      this.prueba('Cuartos de final');
+      this.pruebafina('Cuartos de final');
+      this.partidos_init('Cuartos de final');
+      this.partidos_ida_vuel_E('Cuartos de final');
+      this.partidos_ida_vuel_init('Cuartos de final');
+      this.partidos_ida_vuel_fina('Cuartos de final');
       this.limpiargrupos();
     } else if (this.numero == this.infocampeonato.fases + 3) {
-      this.titulo = "Semifinal";
-      this.prueba("Semifinal");
-      this.pruebafina("Semifinal");
-      this.partidos_init("Semifinal");
-      this.partidos_ida_vuel_E("Semifinal");
-      this.partidos_ida_vuel_init("Semifinal");
-      this.partidos_ida_vuel_fina("Semifinal");
+      this.titulo = 'Semifinal';
+      this.prueba('Semifinal');
+      this.pruebafina('Semifinal');
+      this.partidos_init('Semifinal');
+      this.partidos_ida_vuel_E('Semifinal');
+      this.partidos_ida_vuel_init('Semifinal');
+      this.partidos_ida_vuel_fina('Semifinal');
       this.limpiargrupos();
     } else if (this.numero == this.infocampeonato.fases + 4) {
-      this.titulo = "Tercero y Cuarto";
-      this.prueba("Tercero y Cuarto");
-      this.pruebafina("Tercero y Cuarto");
-      this.partidos_init("Tercero y Cuarto");
-      this.partidos_ida_vuel_E("Tercero y Cuarto");
-      this.partidos_ida_vuel_init("Tercero y Cuarto");
-      this.partidos_ida_vuel_fina("Tercero y Cuarto");
+      this.titulo = 'Tercero y Cuarto';
+      this.prueba('Tercero y Cuarto');
+      this.pruebafina('Tercero y Cuarto');
+      this.partidos_init('Tercero y Cuarto');
+      this.partidos_ida_vuel_E('Tercero y Cuarto');
+      this.partidos_ida_vuel_init('Tercero y Cuarto');
+      this.partidos_ida_vuel_fina('Tercero y Cuarto');
       this.limpiargrupos();
     } else if (this.numero == this.infocampeonato.fases + 5) {
-      this.titulo = "Final";
-      this.prueba("Final");
-      this.pruebafina("Final");
-      this.partidos_init("Final");
-      this.partidos_ida_vuel_E("Final");
-      this.partidos_ida_vuel_init("Final");
-      this.partidos_ida_vuel_fina("Final");
+      this.titulo = 'Final';
+      this.prueba('Final');
+      this.pruebafina('Final');
+      this.partidos_init('Final');
+      this.partidos_ida_vuel_E('Final');
+      this.partidos_ida_vuel_init('Final');
+      this.partidos_ida_vuel_fina('Final');
       this.limpiargrupos();
     }
   }
@@ -1015,9 +1055,9 @@ export class PageLocalPage implements OnInit {
 
   }
 
-   // Tabla codigo
+  // Tabla codigo
 
-   async getGrupo1(uid: string) {
+  async getGrupo1(uid: string) {
     const path = 'Campeonatos/' + uid + '/Equipos';
     this.firestoreService.getCollectionGru<Equipos>(path, 'grupo', '==', 'Grupo 1').subscribe(res => {
       this.grupoE1 = res;

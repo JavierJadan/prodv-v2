@@ -1,0 +1,93 @@
+<ion-content class="content_pri">
+  <ion-card class="Nuevo_campeonato">
+    <ion-card-header>
+      <ion-card-title class="tittle_np">
+        Información del campeonato
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        Nombre:
+      </ion-label>
+      <ion-input class="campos" [(ngModel)]="infocampeonato.nombre"></ion-input>
+    </ion-item>
+
+    <ion-item class="IonInput" id="open-modal" >
+      <ion-label class="ion-label-itemin" > Fecha: </ion-label>
+      <ion-input slot="end" class="campos_fecha" [(ngModel)]="infocampeonato.fecha">  {{formatedString}} </ion-input>
+      <!-- <ion-text >  {{formatedString}} </ion-text> -->
+  </ion-item>
+
+  <ion-modal trigger="open-modal" mode="md" >
+    <ng-template>
+      <ion-content>
+        <ion-datetime
+        #datetime 
+        [value]="dateValue"
+        size="cover"
+        (ionChange)="dateChanged(datetime.value)"
+        showDefaultButtons ="true"
+        (ionCancel) = "showPicker = false"
+        >
+          <ion-buttons slot="buttons" >
+            <ion-button (click)="close()">Cancelar</ion-button>
+            <ion-button (click)="select()" color="primary">Seleccionar</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+        
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        Fases:
+      </ion-label>
+      <ion-input type="number" class="campos" [(ngModel)]="infocampeonato.fases"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        Lugar:
+      </ion-label>
+      <ion-input class="campos" [(ngModel)]="infocampeonato.lugar"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="IonInput">
+      <ion-label class="ion-label-itemin">Tipo:</ion-label>
+      <ion-input slot="" class="campos" (click)="tipocam()" [(ngModel)]="infocampeonato.tipo"
+        placeholder="Seleccione tipo">
+      </ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        N° Grupos:
+      </ion-label>
+      <ion-input type="number" class="campos" [(ngModel)]="infocampeonato.grupos"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>Estado: </ion-label>
+      <ion-select class="campos" [(ngModel)]="infocampeonato.estado" placeholder="Seleccione estado">
+        <ion-select-option value="iniciado">Iniciado</ion-select-option>
+        <ion-select-option value="finalizado">Finalizado</ion-select-option>
+        <ion-select-option value="suspendido">Suspendido</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- <ion-item lines="none" class="IonInput">
+      <ion-label class="ion-label-itemin">Equipo 1</ion-label>
+      <ion-select class="campos" [(ngModel)]="infocampeonato.nombre" placeholder="Seleccione">
+        <ion-select-option *ngFor="let grupo of grupose" value={{grupo.nombre}}>{{grupo.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+
+    <ion-card-content class="botones">
+      <ion-button  (click)="reset()" routerLink="/page-create-campeonato" class="button-cancelar">Cancelar</ion-button>
+      <ion-button (click)="saveCampeonato()" routerLink="/page-create-campeonato" class="button-guardar">Actualizar</ion-button>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

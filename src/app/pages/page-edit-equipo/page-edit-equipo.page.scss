@@ -1,0 +1,68 @@
+.content_pri{
+    // --background: white;
+}
+.Nuevo_equipo{
+    // --background: white; 
+    padding: 15px;
+    
+}
+.IonInput{
+
+    // --background: #FFF; 
+    // --color:#333333;
+    font-weight: bold;
+    margin: 10px; 
+    border: 2px solid #FFF;
+    border-radius: 10px;
+}
+.encabezado{
+    padding-top: 10px;
+   padding-bottom: 10px;
+//    background: white;
+    }
+    .titulo{
+      font-size: 16px;  
+    //   color: black;
+      font-weight: bold;
+      text-align: left;
+      margin-left: 10px;
+    }
+
+.campos{
+    // --color: black; 
+    padding: 10px;
+} 
+.button-eliminar{
+    --color: #075E54;
+    text-align: center;
+    --background: #ffffff;
+    --border-radius:10px;
+    width:50%;
+    font-weight: bold;
+
+}
+.botones{
+    
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+    
+}
+
+.button-cancelar{ 
+    --color: #075E54;
+    text-align: center;
+    --background: #ffffff;
+    --border-radius:10px;
+    width:42%;
+    font-weight: bold;
+} 
+.button-guardar{ 
+    --color: #ffffff;
+    margin-left: 10px;
+    text-align: center;
+    --border-radius:10px;
+    --background:#075E54;
+    font-weight: bold;
+    width: 40%;
+}

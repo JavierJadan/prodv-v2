@@ -1,0 +1,166 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    
+    <ion-buttons slot="start">
+      <ion-button  routerLink="/page-main-menu/page-profile">
+        <ion-icon  name="arrow-back"></ion-icon>
+      </ion-button>
+      <!-- <ion-button>
+        <ion-menu-button></ion-menu-button>
+      </ion-button> -->
+    </ion-buttons>
+    <!-- <ion-title slot="secondary">Campeonatos</ion-title> -->
+<!-- 
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/perfil']">
+        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="page-content">
+
+  <ion-card *ngIf="estado" class="Nuevo_campeonato">
+    <ion-card-header>
+      <ion-card-title class="tittle_np">
+        Nuevo campeonato
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        Nombre:
+      </ion-label>
+      <ion-input class="campos" [(ngModel)]="newcampeonato.nombre"></ion-input>
+    </ion-item>
+
+    <ion-item class="IonInput" id="open-modal" >
+      <ion-label class="ion-label-itemin" > Fecha: </ion-label>
+      <ion-input slot="end" class="campos_fecha" [(ngModel)]="newcampeonato.fecha">  {{formatedString}} </ion-input>
+      <!-- <ion-text >  {{formatedString}} </ion-text> -->
+  </ion-item>
+
+  <ion-modal trigger="open-modal" mode="md" >
+    <ng-template>
+      <ion-content>
+        <ion-datetime
+        #datetime 
+        [value]="dateValue"
+        size="cover"
+        (ionChange)="dateChanged(datetime.value)"
+        showDefaultButtons ="true"
+        (ionCancel) = "showPicker = false"
+        >
+          <ion-buttons slot="buttons" >
+            <ion-button (click)="close()">Cancelar</ion-button>
+            <ion-button (click)="select()" color="primary">Seleccionar</ion-button>
+          </ion-buttons>
+        </ion-datetime>
+        
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        Fases:
+      </ion-label>
+      <ion-input type="number" class="campos" [(ngModel)]="newcampeonato.fases"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>
+        Lugar:
+      </ion-label>
+      <ion-input class="campos" [(ngModel)]="newcampeonato.lugar"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="IonInput">
+      <ion-label class="ion-label-itemin">Tipo:</ion-label>
+      <ion-input slot="" class="campos" (click)="tipocam()" [(ngModel)]="newcampeonato.tipo"
+        placeholder="Seleccione tipo">
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="grupos" lines="none" class="IonInput">
+      <ion-label>
+        N° Grupos:
+      </ion-label>
+      <ion-input type="number" class="campos" [(ngModel)]="newcampeonato.grupos"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none" class="IonInput">
+      <ion-label>Estado: </ion-label>
+      <ion-select class="campos" [(ngModel)]="newcampeonato.estado" placeholder="Seleccione estado">
+        <ion-select-option value="iniciado">Iniciado</ion-select-option>
+        <ion-select-option value="finalizado">Finalizado</ion-select-option>
+        <ion-select-option value="suspendido">Suspendido</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- <ion-item lines="none" class="IonInput">
+      <ion-label class="ion-label-itemin">Equipo 1</ion-label>
+      <ion-select class="campos" [(ngModel)]="newcampeonato.nombre" placeholder="Seleccione">
+        <ion-select-option *ngFor="let grupo of grupose" value={{grupo.nombre}}>{{grupo.nombre}}</ion-select-option>
+      </ion-select>
+    </ion-item> -->
+
+    <ion-card-content class="botones">
+      <ion-button (click)="estado=false" (click)="reset()" class="button-cancelar">Cancelar</ion-button>
+      <ion-button (click)="saveCampeonato()" class="button-guardar">Guardar</ion-button>
+    </ion-card-content>
+
+  </ion-card>
+
+  <div *ngFor="let campeonato of campeonatos"  class="campeonatos">
+
+    <ion-grid class="grid_general">
+      <ion-row class="encabezado">
+        <ion-col routerLink="/tab-info-campeonato/page-equipos-campeonato" (click)="getCampeonato(campeonato)" class="col_text" size="10">
+          <ion-label  class="label_tittle">
+            {{campeonato.nombre}}
+          </ion-label>
+          <br>
+          <br>
+          <ion-label class="label_text">
+            {{campeonato.tipo}}, {{campeonato.lugar}} 
+          </ion-label>
+          <br />
+        </ion-col>
+        
+        <ion-col class="col_icon" size="2">
+         
+          <ion-buttons class="button">
+            <ion-button  routerLink="/page-edit-campeonato" (click)="getCampeonato(campeonato)">
+              <ion-icon class="icon_edit" slot="icon-only" name="create-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          
+        </ion-col>
+      </ion-row>
+      <!-- <ion-col class="col_boton" size="2">
+
+      </ion-col> -->
+
+      <!-- <ion-row class="datos" routerLink="/tab-campeonato/equipos">
+        <ion-col class="col_datos" size="8">
+          <ion-label class="label_text">
+            {{campeonato.tipo}}, {{campeonato.lugar}}, 
+          </ion-label>
+          <br />
+
+        </ion-col>
+        
+      </ion-row> -->
+    </ion-grid>
+  </div>
+
+  <ion-fab class="boton_mas" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="success" (click)="estado=true">
+      <ion-icon color="light" name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>
