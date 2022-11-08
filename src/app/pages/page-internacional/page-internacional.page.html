@@ -44,32 +44,32 @@
     <ion-row>
       <ion-col class="col_nom_eq1" size="3">
         <ion-label class="label_e1">
-          {{match.teams.away.name}}
+          {{match.teams.home.name}}
         </ion-label>
       </ion-col>
       
       <ion-col class="col_img" size="2">
         <ion-item lines="none" class="item_avatar">
           
-          <img class="con_img" src="{{match.teams.away.logo}}" >
+          <img class="con_img" src="{{match.teams.home.logo}}" >
         </ion-item>
         
       </ion-col>
       <ion-col class="col_vs" size="2">
         <ion-label class="label_tittle_vs">
-          {{match.goals.away}} - {{match.goals.home}}
+          {{match.goals.home}} - {{match.goals.away}}
         </ion-label>
       </ion-col>
       
       <ion-col class="col_img" size="2">
         <ion-item lines="none" class="item_avatar">
-          <img class="con_img" src="{{match.teams.home.logo}}" >
+          <img class="con_img" src="{{match.teams.away.logo}}" >
         </ion-item>
       </ion-col>
       
       <ion-col class="col_nom_eq2" size="3">
         <ion-label class="label_e2">
-          {{match.teams.home.name}}
+          {{match.teams.away.name}}
         </ion-label>
       </ion-col>
     </ion-row> 
