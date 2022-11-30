@@ -72,27 +72,83 @@
 
 
 
+
+
   <div class="div_botonadmin" *ngIf="admin" >
-    <ion-button class="botonadmin" routerLink="/page-create-campeonato">
+    <!-- <ion-button class="botonadmin" routerLink="/page-create-campeonato">
       <ion-icon slot="start" color="black" name="football-outline"></ion-icon>
        Administrador
-    </ion-button>
+    </ion-button> -->
+
+    <div class="button-admin" routerLink="/page-create-campeonato">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" style="text-align: center;">
+            <ion-icon class="icon-settings" name="settings"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-settings" >
+          <ion-col size="12" style="text-align: center;">
+            <label class="text-label-settings" for="">Admin</label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="button-admin" id="open-modal">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" style="text-align: center;">
+            <ion-icon class="icon-users" name="people"></ion-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="row-settings" >
+          <ion-col size="12" style="text-align: center;">
+            <label class="text-label-settings" for="">Usuarios</label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
   </div>
 
 
 <div *ngIf="admin" >
 
-  <ion-card class="conten-admin"> 
-    <ion-label class="text_referencia">Total de Usuarios: {{this.userAll}}</ion-label>
-  </ion-card>   
-  <ion-card class="conten-admin"> 
-    <ion-label class="text_referencia">Usuarios sin referencia: {{this.usersinrefe}}</ion-label>
-  </ion-card>  
+  <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Usuarios registrados</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="confirm()" [strong]="true">Ok</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
 
-  <ion-card class="conten-admin" *ngFor="let referencia of refeadmin">
-    <ion-label class="text_referencia">{{this.referencia.nombre}}</ion-label><br>
-    <ion-label class="text_referencia">Usuarios con esta referencia: {{this.referencia.total}}</ion-label>
-  </ion-card>
+        <!-- <ion-item>
+          <ion-label position="stacked">Enter your name</ion-label>
+          <ion-input type="text" placeholder="Your name" [(ngModel)]="name"></ion-input>
+        </ion-item> -->
+
+        <ion-card class="conten-admin"> 
+          <ion-label class="text_referencia">Total de Usuarios: {{this.userAll}}</ion-label>
+        </ion-card>   
+        <ion-card class="conten-admin"> 
+          <ion-label class="text_referencia">Usuarios sin referencia: {{this.usersinrefe}}</ion-label>
+        </ion-card>  
+      
+        <ion-card class="conten-admin" *ngFor="let referencia of refeadmin">
+          <ion-label class="text_referencia">{{this.referencia.nombre}}</ion-label><br>
+          <ion-label class="text_referencia">Usuarios con esta referencia: {{this.referencia.total}}</ion-label>
+        </ion-card>
+
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+
 </div>
 
 <ion-card *ngIf="referente" class="conten-referen">
@@ -111,17 +167,17 @@
 
     <ion-button size="large" expand="block" fill="solid">
       <ion-icon slot="start" name="person-circle"></ion-icon>
-      Contact
+      Ayuda
     </ion-button>
   
     <ion-button size="large" expand="block" fill="solid">
       <ion-icon slot="start" name="person-circle"></ion-icon>
-      Contact
+      Contactanos
     </ion-button>
   
     <ion-button size="large" expand="block" fill="solid">
       <ion-icon slot="start" name="person-circle"></ion-icon>
-      Contact
+      Soporte
     </ion-button>
 
     <div class="activeData" *ngIf="!activeData" >

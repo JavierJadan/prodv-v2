@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataUser } from 'src/app/models';
 import { FirestoreService } from '../../services/firestore.service';
 import { FirebaseauthService } from '../../services/firebaseauth.service';
@@ -8,7 +8,8 @@ import { LoadingController, ToastController, AlertController } from '@ionic/angu
 import { Referencia, Referencias, User } from '../../models';
 import { MenuController } from '@ionic/angular';
 import { Router } from '@angular/router';
-
+import { IonModal } from '@ionic/angular';
+import {OverlayEventDetail} from '@ionic/core/components';
 
 @Component({
   selector: 'app-page-profile',
@@ -16,6 +17,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./page-profile.page.scss'],
 })
 export class PageProfilePage implements OnInit {
+
+  @ViewChild(IonModal) modal: IonModal;
+
+  message = 'This modal use triggers';
+  name = String;
+
   adminA = false;
   admin = false;
   referente = false;
@@ -401,6 +408,21 @@ export class PageProfilePage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  cancel(){
+    this.modal.dismiss(null, 'cancel');
+  }
+  confirm(){
+    this.modal.dismiss(this.name, 'Confirm');
+  }
+
+  onWillDismiss(event: Event){
+
+    const env = event as CustomEvent<OverlayEventDetail<string>>;
+    if (env.detail.role === 'confirm') {
+      this.message = `Hello', ${env.detail.data}!`;
+    }
   }
 
 
