@@ -7,7 +7,7 @@
 
 <ion-content class="content_pri" *ngIf="!activeData">
 
-  <div class="ionc-card">
+  <ion-card class="ionc-card">
 
 
     <h3 *ngIf="!dataUpdate" class="ionic-sub" style="text-align: center;">Mi Perfil</h3>
@@ -16,8 +16,6 @@
     </ion-avatar>
     <h3 *ngIf="dataUpdate" class="ionic-sub" style="text-align: center;">Actualizar datos</h3>
     <!-- <ion-img *ngIf="ingresarEnable" class="ion-img" src='/assets/img/edit.svg'></ion-img> -->
-  
-
    
     <div lines="none" *ngIf="!dataUpdate" class="items-email">
       <ion-label class="normal">
@@ -68,19 +66,14 @@
 
     </ion-card-content> -->
    
-  </div>
+  </ion-card>
 
 
 
 
 
   <div class="div_botonadmin" *ngIf="admin" >
-    <!-- <ion-button class="botonadmin" routerLink="/page-create-campeonato">
-      <ion-icon slot="start" color="black" name="football-outline"></ion-icon>
-       Administrador
-    </ion-button> -->
-
-    <div class="button-admin" routerLink="/page-create-campeonato">
+    <ion-card class="button-admin" routerLink="/page-create-campeonato">
       <ion-grid>
         <ion-row>
           <ion-col size="12" style="text-align: center;">
@@ -93,9 +86,9 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
+    </ion-card>
 
-    <div class="button-admin" id="open-modal">
+    <ion-card class="button-admin" id="open-modal">
       <ion-grid>
         <ion-row>
           <ion-col size="12" style="text-align: center;">
@@ -108,8 +101,7 @@
           </ion-col>
         </ion-row>
       </ion-grid>
-    </div>
-
+    </ion-card>
   </div>
 
 
@@ -134,7 +126,8 @@
 
         <ion-card class="conten-admin"> 
           <ion-label class="text_referencia">Total de Usuarios: {{this.userAll}}</ion-label>
-        </ion-card>   
+        </ion-card>
+        
         <ion-card class="conten-admin"> 
           <ion-label class="text_referencia">Usuarios sin referencia: {{this.usersinrefe}}</ion-label>
         </ion-card>  
@@ -163,42 +156,45 @@
   </ion-button>
 </div> -->
 
-<div class="content-item-option">
+<ion-card class="content-item-option">
 
-    <ion-button size="large" expand="block" fill="solid">
-      <ion-icon slot="start" name="person-circle"></ion-icon>
-      Ayuda
-    </ion-button>
-  
-    <ion-button size="large" expand="block" fill="solid">
-      <ion-icon slot="start" name="person-circle"></ion-icon>
-      Contactanos
-    </ion-button>
-  
-    <ion-button size="large" expand="block" fill="solid">
-      <ion-icon slot="start" name="person-circle"></ion-icon>
-      Soporte
-    </ion-button>
+  <ion-item class="item-button-profile-info" button>
+    <ion-icon name="information-outline" slot="start"></ion-icon>
+    <ion-label>Información</ion-label>
+   <ion-icon name="chevron-forward-outline" slot="end" ></ion-icon>
+    
+  </ion-item>
 
-    <div class="activeData" *ngIf="!activeData" >
-      <ion-button  class="activeDataButton" (click)="activeData=true" (click)="salir()">
+  <ion-item button class="item-button-profile">
+    <ion-icon name="call-outline" slot="start"></ion-icon>
+    <ion-label>Contactanos</ion-label>
+   <ion-icon name="chevron-forward-outline" slot="end" ></ion-icon>
+  </ion-item>
+
+  <ion-item button class="item-button-profile">
+    <ion-icon name="library-outline" slot="start"></ion-icon>
+    <ion-label>Política de Privacidad</ion-label>
+   <ion-icon name="chevron-forward-outline" slot="end" ></ion-icon>
+  </ion-item>
+
+  <ion-item class="item-button-profile-sesion" button *ngIf="!activeData" (click)="activeData=true" (click)="salir()">
+    <ion-icon name="log-out-outline" slot="start"></ion-icon>
+    <ion-label>Cerrar Sesión</ion-label>
+   <ion-icon name="chevron-forward-outline" slot="end" ></ion-icon>
+  </ion-item>
+
+
+    <!-- <div class="activeData" *ngIf="!activeData" >
+      <ion-button  class="activeDataButton" (click)="activeData=true" (click)="salir()" >
         <ion-icon name="log-out-outline"></ion-icon>
          Cerrar Sesión
       </ion-button>
-    </div>
+    </div> -->
 
     
   
   
-</div>
-
-
-<div class="activeData" *ngIf="!activeData" >
-  <ion-button  class="activeDataButton" (click)="activeData=true" (click)="salir()">
-    <ion-icon name="log-out-outline"></ion-icon>
-     Cerrar Sesión
-  </ion-button>
-</div>
+  </ion-card>
   
 </ion-content>
 
