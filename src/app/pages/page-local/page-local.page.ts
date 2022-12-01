@@ -201,7 +201,7 @@ export class PageLocalPage implements OnInit {
     const options: BannerAdOptions = {
       adId,
       adSize: BannerAdSize.ADAPTIVE_BANNER,
-      position: BannerAdPosition.BOTTOM_CENTER,
+      position: BannerAdPosition.TOP_CENTER,
       margin: 0,
       isTesting: true,
       // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
