@@ -18,13 +18,25 @@ import {OverlayEventDetail} from '@ionic/core/components';
 })
 export class PageProfilePage implements OnInit {
 
+
+
   @ViewChild(IonModal) modal: IonModal;
+
+  isModalOpen = false;
+  isModalOpenContact = false;
+  isModalOpenPrivate = false;
 
   message = 'This modal use triggers';
   name = String;
 
+  message1 = 'This modal use triggers';
+  name1 = String;
+
   adminA = false;
   admin = false;
+  modalInformation = false;
+
+
   referente = false;
   num = 0;
   userAll = 0;
@@ -416,14 +428,28 @@ export class PageProfilePage implements OnInit {
   confirm(){
     this.modal.dismiss(this.name, 'Confirm');
   }
+  confirm1(){
+    this.modal.dismiss(this.name, 'Confirm');
+  }
 
   onWillDismiss(event: Event){
-
     const env = event as CustomEvent<OverlayEventDetail<string>>;
     if (env.detail.role === 'confirm') {
       this.message = `Hello', ${env.detail.data}!`;
+      console.log(this.message);
     }
   }
+
+  setOpen(isOpen: boolean){
+    this.isModalOpen = isOpen;
+  }
+  setOpenContact(isOpen: boolean){
+    this.isModalOpenContact = isOpen;
+  }
+  setOpenPrivate(isOpen: boolean){
+    this.isModalOpenPrivate = isOpen;
+  }
+
 
 
 

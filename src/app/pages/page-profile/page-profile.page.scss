@@ -7,15 +7,26 @@ ion-menu-button {
     color: white;
 }
 
-// .item_dark {
-//     --background: #075E54;
+.text-information-modal{
+    text-align: justify;
+}
+
+// .grid-icons{
+
+//     display: flex;
+
 // }
 
-.content_pri {
-
-    // --background:#edf6f9;
-    // --padding-bottom: 70px;
+.row-icons{
+    display: flex;
+    justify-content: center;
 }
+
+// .col-icons{
+
+//     text-align: center;
+// }
+
 .ionic-avatar{
     position: absolute;
     margin-top: 60px;
