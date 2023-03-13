@@ -192,18 +192,18 @@ export class PageLocalPage implements OnInit {
     AdMob.initialize({
       requestTrackingAuthorization: true,
       testingDevices: ['YOURTESTDEVICECODE'],
-      initializeForTesting: true,
+      initializeForTesting: false,
     });
   }
 
   async showBanner() {
-    const adId = isPlatform('ios') ? 'ios-ad-id' : 'android-ad-unit';
+    const adId = isPlatform('ios') ? 'ios-ad-id' : 'ca-app-pub-5567251641138923/3143918917';
     const options: BannerAdOptions = {
       adId,
       adSize: BannerAdSize.ADAPTIVE_BANNER,
       position: BannerAdPosition.TOP_CENTER,
       margin: 0,
-      isTesting: true,
+      isTesting: false,
       // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
       // Set this to true to request Non-Personalized Ads
       // npa: true
