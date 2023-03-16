@@ -191,13 +191,13 @@ export class PageLocalPage implements OnInit {
     }
     AdMob.initialize({
       requestTrackingAuthorization: true,
-      testingDevices: ['YOURTESTDEVICECODE'],
+     // testingDevices: ['YOURTESTDEVICECODE'],
       initializeForTesting: false,
     });
   }
 
   async showBanner() {
-    const adId = isPlatform('ios') ? 'ios-ad-id' : 'ca-app-pub-5567251641138923/3143918917';
+    const adId = isPlatform('ios') ? 'ca-app-pub-5567251641138923/4617221021' : 'ca-app-pub-5567251641138923/3143918917';
     const options: BannerAdOptions = {
       adId,
       adSize: BannerAdSize.ADAPTIVE_BANNER,
