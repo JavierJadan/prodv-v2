@@ -19,7 +19,7 @@ export class AppComponent {
 
   admin = false;
 
-  usuario: User = { 
+  usuario: User = {
     uid: '',
     email:'',
     displayName:'',

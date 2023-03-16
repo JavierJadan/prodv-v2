@@ -187,7 +187,8 @@ export class PageProfilePage implements OnInit {
   validar(email: string){
     console.log('Emai: '+email);
 
-    if(email == 'jefematute27@gmail.com'){
+    // eslint-disable-next-line max-len
+    if(email === 'miguelsaetama7@gmail.com' || email === 'jefematute27@gmail.com' || email === 'matute-1@hotmail.es' || email === 'prodv215@gmail.com' ){
       this.admin=true;
       this.referente=false;
       this.referencias(email);
