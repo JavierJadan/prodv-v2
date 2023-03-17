@@ -5,16 +5,16 @@ import { Subscription } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { EncuentroPrueba, Equipos } from 'src/app/models';
 import { MenuController } from '@ionic/angular';
-// import {
-//   AdMob,
-//   AdMobRewardItem,
-//   AdOptions,
-//   BannerAdOptions,
-//   BannerAdPosition,
-//   BannerAdSize,
-//   RewardAdOptions,
-//   RewardAdPluginEvents,
-// } from '@capacitor-community/admob';
+import {
+  AdMob,
+  AdMobRewardItem,
+  AdOptions,
+  BannerAdOptions,
+  BannerAdPosition,
+  BannerAdSize,
+  RewardAdOptions,
+  RewardAdPluginEvents,
+} from '@capacitor-community/admob';
 import { isPlatform } from '@ionic/angular';
 
 
@@ -157,7 +157,7 @@ export class PageLocalPage implements OnInit {
   constructor(public firestoreService: FirestoreService,
     public alertController: AlertController,
     public menuL: MenuController) {
-    // this.initialize();
+    this.initialize();
   }
 
   ngOnInit() {
@@ -184,36 +184,36 @@ export class PageLocalPage implements OnInit {
   //codigo para publicidad
 
   async initialize() {
-    // const { status } = await AdMob.trackingAuthorizationStatus();
+    const { status } = await AdMob.trackingAuthorizationStatus();
     console.log(status);
     if (status === 'notDetermined') {
       console.log('Display information before ads load first time');
     }
-    // AdMob.initialize({
-    //   requestTrackingAuthorization: true,
-    //   testingDevices: ['YOURTESTDEVICECODE'],
-    //   initializeForTesting: true,
-    // });
+    AdMob.initialize({
+      requestTrackingAuthorization: true,
+      testingDevices: ['YOURTESTDEVICECODE'],
+      initializeForTesting: true,
+    });
   }
 
-  // async showBanner() {
-  //   const adId = isPlatform('ios') ? 'ca-app-pub-5567251641138923/4617221021' : 'ca-app-pub-5567251641138923/3143918917';
-  //   const options: BannerAdOptions = {
-  //     adId,
-  //     adSize: BannerAdSize.ADAPTIVE_BANNER,
-  //     position: BannerAdPosition.TOP_CENTER,
-  //     margin: 0,
-  //     isTesting: true,
-  //     // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
-  //     // Set this to true to request Non-Personalized Ads
-  //     // npa: true
-  //   };
-  //   await AdMob.showBanner(options);
-  // }
+  async showBanner() {
+    const adId = isPlatform('ios') ? 'ca-app-pub-5567251641138923/4617221021' : 'ca-app-pub-5567251641138923/3143918917';
+    const options: BannerAdOptions = {
+      adId,
+      adSize: BannerAdSize.ADAPTIVE_BANNER,
+      position: BannerAdPosition.TOP_CENTER,
+      margin: 0,
+      isTesting: true,
+      // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
+      // Set this to true to request Non-Personalized Ads
+      // npa: true
+    };
+    await AdMob.showBanner(options);
+  }
   ///
 
   changeSegment(event: any) {
-    // this.showBanner();
+    this.showBanner();
     const opc = event.detail.value;
     console.log(opc);
     this.opcion = opc;
