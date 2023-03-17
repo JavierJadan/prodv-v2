@@ -157,7 +157,7 @@ export class PageLocalPage implements OnInit {
   constructor(public firestoreService: FirestoreService,
     public alertController: AlertController,
     public menuL: MenuController) {
-    this.initialize();
+    // this.initialize();
   }
 
   ngOnInit() {
@@ -191,8 +191,8 @@ export class PageLocalPage implements OnInit {
     }
     AdMob.initialize({
       requestTrackingAuthorization: true,
-     // testingDevices: ['YOURTESTDEVICECODE'],
-      initializeForTesting: false,
+      testingDevices: ['YOURTESTDEVICECODE'],
+      initializeForTesting: true,
     });
   }
 
@@ -203,7 +203,7 @@ export class PageLocalPage implements OnInit {
       adSize: BannerAdSize.ADAPTIVE_BANNER,
       position: BannerAdPosition.TOP_CENTER,
       margin: 0,
-      isTesting: false,
+      isTesting: true,
       // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
       // Set this to true to request Non-Personalized Ads
       // npa: true
@@ -213,7 +213,7 @@ export class PageLocalPage implements OnInit {
   ///
 
   changeSegment(event: any) {
-    this.showBanner();
+    // this.showBanner();
     const opc = event.detail.value;
     console.log(opc);
     this.opcion = opc;
