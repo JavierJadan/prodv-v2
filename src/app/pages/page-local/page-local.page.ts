@@ -190,9 +190,9 @@ export class PageLocalPage implements OnInit {
       console.log('Display information before ads load first time');
     }
     AdMob.initialize({
-      requestTrackingAuthorization: true,
-      testingDevices: ['YOURTESTDEVICECODE'],
-      initializeForTesting: true,
+      requestTrackingAuthorization: false,
+      // testingDevices: ['YOURTESTDEVICECODE'],
+      // initializeForTesting: true,
     });
   }
 
@@ -203,7 +203,7 @@ export class PageLocalPage implements OnInit {
       adSize: BannerAdSize.ADAPTIVE_BANNER,
       position: BannerAdPosition.TOP_CENTER,
       margin: 0,
-      isTesting: true,
+      // isTesting: true,
       // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
       // Set this to true to request Non-Personalized Ads
       // npa: true
