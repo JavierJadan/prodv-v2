@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AdMob,
-  AdMobRewardItem,
-  AdOptions,
-  BannerAdOptions,
-  BannerAdPosition,
-  BannerAdSize,
-  RewardAdOptions,
-  RewardAdPluginEvents,
-} from '@capacitor-community/admob';
+// import {
+//   AdMob,
+//   AdMobRewardItem,
+//   AdOptions,
+//   BannerAdOptions,
+//   BannerAdPosition,
+//   BannerAdSize,
+//   RewardAdOptions,
+//   RewardAdPluginEvents,
+// } from '@capacitor-community/admob';
 import { isPlatform } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 

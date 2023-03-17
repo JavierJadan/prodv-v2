@@ -5,16 +5,16 @@ import { Subscription } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { EncuentroPrueba, Equipos } from 'src/app/models';
 import { MenuController } from '@ionic/angular';
-import {
-  AdMob,
-  AdMobRewardItem,
-  AdOptions,
-  BannerAdOptions,
-  BannerAdPosition,
-  BannerAdSize,
-  RewardAdOptions,
-  RewardAdPluginEvents,
-} from '@capacitor-community/admob';
+// import {
+//   AdMob,
+//   AdMobRewardItem,
+//   AdOptions,
+//   BannerAdOptions,
+//   BannerAdPosition,
+//   BannerAdSize,
+//   RewardAdOptions,
+//   RewardAdPluginEvents,
+// } from '@capacitor-community/admob';
 import { isPlatform } from '@ionic/angular';
 
 
