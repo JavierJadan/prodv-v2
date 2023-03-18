@@ -1,4 +1,4 @@
-package com.bitec.prodv;
+package com.prodv.bitec;
 
 import com.getcapacitor.BridgeActivity;
 
