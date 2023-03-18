@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">PRODV</string>
+    <string name="title_activity_main">PRODV</string>
+    <string name="package_name">com.bitec.prodv</string>
+    <string name="custom_url_scheme">com.bitec.prodv</string>
+    <string name="admob_app_id">ca-app-pub-5567251641138923~9709327263</string>
+</resources>
