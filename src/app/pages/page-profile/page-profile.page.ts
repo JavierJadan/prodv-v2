@@ -306,6 +306,7 @@ export class PageProfilePage implements OnInit {
     const opc = event.detail.value;
     console.log(opc);
     this.opcion=opc;
+    this.initClient();
   }
 
   async getReferencias() {

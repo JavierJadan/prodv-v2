@@ -32,6 +32,10 @@ const routes: Routes = [
   {
     path: 'page-edit-partido',
     loadChildren: () => import('./pages/page-edit-partido/page-edit-partido.module').then( m => m.PageEditPartidoPageModule)
+  },
+  {
+    path: 'page-recuperar',
+    loadChildren: () => import('./pages/page-recuperar/page-recuperar.module').then( m => m.PageRecuperarPageModule)
   }
 
 
