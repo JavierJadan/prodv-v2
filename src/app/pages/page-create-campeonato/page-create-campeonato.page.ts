@@ -36,6 +36,7 @@ export class PageCreateCampeonatoPage implements OnInit {
   dateValue = format(new Date(), 'yyy-MM-dd') + 'T09:00:00.000Z';
   formatedString = '';
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild(IonDatetime) datetime: IonDatetime;
   constructor(public alertController: AlertController,
     public firestoreService: FirestoreService,

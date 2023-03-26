@@ -46,13 +46,11 @@
     <ng-template>
       <ion-content>
         <ion-datetime
-        #datetime 
-        [value]="dateValue"
-        size="cover"
+        #datetime
+        [value]="dateValue" size="cover"
         (ionChange)="dateChanged(datetime.value)"
         showDefaultButtons ="true"
-        (ionCancel) = "showPicker = false"
-        >
+        (ionCancel) = "showPicker = false">
           <ion-buttons slot="buttons" >
             <ion-button (click)="close()">Cancelar</ion-button>
             <ion-button (click)="select()" color="primary">Seleccionar</ion-button>
