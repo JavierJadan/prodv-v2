@@ -188,25 +188,57 @@ export class PageProfilePage implements OnInit {
     console.log('Emai: '+email);
 
     // eslint-disable-next-line max-len
-    if(email === 'miguelsaetama7@gmail.com' || email === 'jefematute27@gmail.com' || email === 'matute-1@hotmail.es' || email === 'prodv215@gmail.com' ){
-      this.admin=true;
-      this.referente=false;
-      this.referencias(email);
-      this.getreferencias();
-      // console.log("admin");
-      // this.usuariorefe("Todo Deportes");
-      // this.usuariorefe("Ruth");
-      // this.usuariorefe("Chontillo");
-      // this.usuariorefe("Miguel");
-      // this.usuariorefe("La Tertulia");
-      // this.usuariorefe("");
-      this.getAllUser();
-    }else{
-      this.admin=false;
-      this.referente=false;
-      this.referencias(email);
+    // if(email === 'miguelsaetama7@gmail.com' || email === 'jefematute27@gmail.com' || email === 'matute-1@hotmail.es' || email === 'prodv215@gmail.com' ){
+    //   this.admin=true;
+    //   this.referente=false;
+    //   this.referencias(email);
+    //   this.getreferencias();
+    //   // console.log("admin");
+    //   // this.usuariorefe("Todo Deportes");
+    //   // this.usuariorefe("Ruth");
+    //   // this.usuariorefe("Chontillo");
+    //   // this.usuariorefe("Miguel");
+    //   // this.usuariorefe("La Tertulia");
+    //   // this.usuariorefe("");
+    //   this.getAllUser();
+    // }else{
+    //   this.admin=false;
+    //   this.referente=false;
+    //   this.referencias(email);
+    // }
 
-      // console.log("user");
+    switch (email) {
+      case 'miguelsaetama7@gmail.com':
+              this.admin=true;
+              this.adminA =false;
+              this.referente=false;
+              this.referencias(email);
+              this.getreferencias();
+        break;
+      case 'jefematute27@gmail.com':
+              this.admin=true;
+              this.adminA =false;
+              this.referente=false;
+              this.referencias(email);
+              this.getreferencias();
+        break;
+      case 'matute-1@hotmail.es':
+              this.admin=true;
+              this.adminA =false;
+              this.referente=false;
+              this.referencias(email);
+              this.getreferencias();
+        break;
+      case 'prodv215@gmail.com':
+              this.admin=true;
+              this.adminA =true;
+              this.referente=false;
+              this.referencias(email);
+              this.getreferencias();
+        break;
+      default:
+        // this.referente = false;
+        break;
     }
 
   }
