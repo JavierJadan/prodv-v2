@@ -5,6 +5,10 @@
     padding: 15px;
     
 }
+ion-toolbar{
+    --background: #075E54;
+    // color: white;
+}
 .titulo_NE{
 
     font-size: 18px;
@@ -12,7 +16,7 @@
 }
 .boton_mas{
 
-    margin-bottom: 60px;
+    margin-bottom: 70px;
    
 }
 .botones{
@@ -76,11 +80,10 @@
     height: auto;
 }
 .titulocampeonato{
-    font-size: 16px;  
-    //   color: black;
-      font-weight: bold;
-      margin-left: 10px;
-
+    font-size: 15px;  
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
 .col_icon_encabezado{
     // border: 1px black so lid;
@@ -93,8 +96,8 @@
     // border: 1px blue solid;
 }
 .icon_return{
-    color: #075E54;
-    font-size: 25px;
+    color: white;
+    font-size: 20px;
 }
 
 .equipos{

@@ -1,22 +1,19 @@
-<!-- <ion-header>
-
-  <ion-toolbar mode="md">
-    <ion-title style="text-align: center;">Prodv</ion-title>
-
+<ion-header>
+  <ion-toolbar class="info_campeonato" mode="ios">
+    
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-menu-button></ion-menu-button>
+      <ion-button  routerLink="/page-create-campeonato">
+        <ion-icon class="icon_return"  name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-
+    <ion-title class="titulocampeonato" >{{infocampeonato.nombre}}</ion-title> 
     <ion-buttons slot="end">
-      <ion-button [routerLink]="['/perfil']">
-        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
+      <ion-button >
+        <!-- <ion-icon class="icon_return"  name="arrow-back"></ion-icon> -->
       </ion-button>
     </ion-buttons>
-
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
 <ion-content class="content-resultados">
   
@@ -26,21 +23,6 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div class="info_campeonato">
-    <ion-grid>
-      <ion-row>
-        <ion-col class="col_icon_encabezado" size="3">
-          <ion-icon class="icon_return" name="arrow-back-outline" routerLink="/page-create-campeonato" (click)="restart()"></ion-icon>
-        </ion-col>
-        <ion-col class="col_titulo_encabezado" size="6">
-          <ion-label class="titulocampeonato">{{infocampeonato.nombre}}</ion-label>
-        </ion-col>
-        <ion-col size="3">
-  
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
 
   <ion-card *ngIf="estado" class="Nuevo_partido">
     <ion-card-header>

@@ -2,6 +2,7 @@
 .page-content {
   // --background: #f3eded;
   // --padding-bottom: 70px;
+  --padding-bottom: 50px;
 }
 
 
@@ -159,7 +160,7 @@
     margin-bottom: auto;
     text-align: center;
     display: flex;
-    border-radius: 10px;
+    border-radius: 50px;
     background: #075E54;
     color: white;
   }
@@ -347,6 +348,7 @@
     text-align: center;
     margin-top: auto;
     margin-bottom: auto;
+    border-radius: 50px;
   }
   
   .text_enjuego {
@@ -390,6 +392,7 @@
   .col_finalizado {
     background: #9b2226;
     text-align: center;
+    border-radius: 50px;
   
   }
   
@@ -404,7 +407,7 @@
   .div_cuarto {
     background: #075E54;
     margin-bottom: 5px;
-    border-radius: 10px;
+    border-radius: 50px;
     width: 98%;
     margin-right: auto;
     margin-left: auto;
@@ -424,6 +427,7 @@
   
   .grid_cuarto {
     margin-top: 10px;
+
   
   }
   

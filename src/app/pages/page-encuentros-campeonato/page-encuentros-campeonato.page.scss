@@ -14,10 +14,11 @@ ion-toolbar{
     // background: white;
     text-align: center;
     height: auto;
+    
 }
 .titulocampeonato{
     font-size: 16px;  
-    //   color: black;
+     color: white;
       font-weight: bold;
       margin-left: 10px;
 
@@ -33,7 +34,7 @@ ion-toolbar{
     // border: 1px blue solid;
 }
 .icon_return{
-    color: #075E54;
+    color: white;
     font-size: 25px;
 }
 .Nuevo_partido{
@@ -44,7 +45,7 @@ ion-toolbar{
 .div_cuarto{
     background: #075E54;
     margin-bottom: 5px;
-    border-radius: 10px;
+    border-radius: 50px;
     width: 98%;
     margin-right:auto;
     margin-left: auto;
@@ -176,7 +177,7 @@ ion-toolbar{
   margin-bottom: auto;
   text-align: center;
   display: flex;
-  border-radius: 10px;
+  border-radius: 50px;
   background: #075E54;
 //   color: white ;
 }
@@ -215,11 +216,12 @@ margin-bottom: auto;
 .col_finalizado{
  background: #9b2226;
  text-align: center;
+ border-radius: 50px;
 
 }
 .text_finalizado{
     font-size: 14px;
-    // color: white;
+    color: white;
     font-weight: bold;
 }
 
@@ -298,7 +300,7 @@ ion-card-title{
 
 .boton_mas{
 
-    margin-bottom: 60px;
+    margin-bottom: 70px;
 
 }   
 .icon_edit{

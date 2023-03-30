@@ -1,3 +1,41 @@
+<ion-header>
+  <ion-toolbar mode="ios">
+    
+    <ion-buttons slot="start">
+      <ion-button  routerLink="/page-create-campeonato">
+        <ion-icon class="icon_return"  name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="titulocampeonato" >{{infocampeonato.nombre}}</ion-title> 
+    <ion-buttons slot="end">
+      <ion-button >
+        <!-- <ion-icon class="icon_return"  name="arrow-back"></ion-icon> -->
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<!-- 
+
+<div class="info_campeonato">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="col_icon_encabezado" size="3">
+        <ion-icon class="icon_return" name="arrow-back-outline" routerLink="/page-create-campeonato" (click)="restart()"></ion-icon>
+      </ion-col>
+      <ion-col class="col_titulo_encabezado" size="6">
+        <ion-label class="titulocampeonato">{{infocampeonato.nombre}}</ion-label>
+      </ion-col>
+      <ion-col size="3">
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div> -->
+
 <ion-content class="content-resultados">
 
   <ion-fab class="boton_mas" vertical="bottom" horizontal="end" slot="fixed" >
@@ -52,21 +90,7 @@
 </ion-card>
 
 
-<div class="info_campeonato">
-  <ion-grid>
-    <ion-row>
-      <ion-col class="col_icon_encabezado" size="3">
-        <ion-icon class="icon_return" name="arrow-back-outline" routerLink="/page-create-campeonato" (click)="restart()"></ion-icon>
-      </ion-col>
-      <ion-col class="col_titulo_encabezado" size="6">
-        <ion-label class="titulocampeonato">{{infocampeonato.nombre}}</ion-label>
-      </ion-col>
-      <ion-col size="3">
 
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</div>
 
 
 <div class="encabezado">

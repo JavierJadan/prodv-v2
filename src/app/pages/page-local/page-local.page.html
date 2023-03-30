@@ -72,7 +72,7 @@
   </div>
   
 
-    <div *ngIf="opcion=='Partidos'" >
+    <div *ngIf="opcion==='Partidos'" >
     <div class="encabezado">
       <ion-label class="titulo"> Proximos partidos </ion-label>
     </div>
@@ -2395,7 +2395,7 @@
   
   </div>
   
-  <div *ngIf="opcion=='Clasificacion'" class="content-resultados">
+  <div *ngIf="opcion==='Clasificacion'" class="content-resultados">
   
     <ion-segment  mode="ios" (ionChange)="changeSegment2($event)" value="clasificacion">
   
@@ -2410,7 +2410,7 @@
     </ion-segment>
   
     <!-- Grupo 1 -->
-    <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+    <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="grup1" class="row_grupo">
         <ion-label class="tituloG">Grupo A</ion-label>
       </ion-row>
@@ -2455,7 +2455,7 @@
     </ion-grid>
   
     <!-- Grupos 2 -->
-    <ion-grid class="grid_encabezado" *ngIf="opcion2=='clasificacion'" >
+    <ion-grid class="grid_encabezado" *ngIf="opcion2==='clasificacion'" >
       <ion-row *ngIf="grup2" class="row_grupo">
         <ion-label class="tituloG">Grupo B</ion-label>
       </ion-row>
@@ -2504,7 +2504,7 @@
     </ion-grid>
   
     <!-- Grupo 3 -->
-    <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+    <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="grup3" class="row_grupo">
         <ion-label class="tituloG">Grupo C</ion-label>
       </ion-row>
@@ -2549,7 +2549,7 @@
     </ion-grid>
   
      <!-- Grupo 4 -->
-     <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+     <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="grup4" class="row_grupo">
         <ion-label class="tituloG">Grupo D</ion-label>
       </ion-row>
@@ -2594,7 +2594,7 @@
     </ion-grid>
   
      <!-- Grupo 5 -->
-     <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+     <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="grup5" class="row_grupo">
         <ion-label class="tituloG">Grupo E</ion-label>
       </ion-row>
@@ -2639,7 +2639,7 @@
     </ion-grid>
   
      <!-- Grupo 6 -->
-     <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+     <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="grup6" class="row_grupo">
         <ion-label class="tituloG">Grupo F</ion-label>
       </ion-row>
@@ -2684,7 +2684,7 @@
     </ion-grid>
   
    <!-- Grupo 7 -->
-     <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+     <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="grup7" class="row_grupo">
         <ion-label class="tituloG">Grupo G</ion-label>
       </ion-row>
@@ -2730,7 +2730,7 @@
   
   
    <!-- Grupo 8 -->
-   <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+   <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
     <ion-row *ngIf="grup8" class="row_grupo">
       <ion-label class="tituloG">Grupo H</ion-label>
     </ion-row>
@@ -2775,7 +2775,7 @@
     </ion-grid>
   
    <!-- Grupo 9 -->
-   <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+   <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
     <ion-row *ngIf="grup9" class="row_grupo">
       <ion-label class="tituloG">Grupo I</ion-label>
     </ion-row>
@@ -2820,7 +2820,7 @@
     </ion-grid>
   
    <!-- Grupo 10 -->
-   <ion-grid class="grid_encabezado"  *ngIf="opcion2=='clasificacion'">
+   <ion-grid class="grid_encabezado"  *ngIf="opcion2==='clasificacion'">
     <ion-row *ngIf="grup10" class="row_grupo">
       <ion-label class="tituloG">Grupo J</ion-label>
     </ion-row>
@@ -2865,7 +2865,7 @@
     </ion-grid>
   
     <!-- Descenso -->
-    <ion-grid class="grid_encabezado" *ngIf="opcion2=='clasificacion'">
+    <ion-grid class="grid_encabezado" *ngIf="opcion2==='clasificacion'">
       <ion-row *ngIf="des" class="row_grupo">
         <ion-label class="tituloG">Descenso</ion-label>
       </ion-row>
@@ -2916,7 +2916,7 @@
   
   
   <!-- Grupo 1 -->
-    <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+    <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
       <ion-row *ngIf="grup1" class="row_grupo">
         <ion-label  class="tituloG">Grupo A</ion-label>
       </ion-row>
@@ -2995,7 +2995,7 @@
     </ion-grid>
   
   <!-- Grupo 2 -->
-    <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'" >
+    <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'" >
       <ion-row *ngIf="grup2" class="row_grupo">
         <ion-label class="tituloG">Grupo B</ion-label>
       </ion-row>
@@ -3074,7 +3074,7 @@
     </ion-grid>
   
   <!-- Grupo 3 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup3" class="row_grupo">
       <ion-label  class="tituloG">Grupo C</ion-label>
     </ion-row>
@@ -3153,7 +3153,7 @@
   </ion-grid>  
   
   <!-- Grupo 4 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup4" class="row_grupo">
       <ion-label  class="tituloG">Grupo D</ion-label>
     </ion-row>
@@ -3232,7 +3232,7 @@
   </ion-grid>
   
   <!-- Grupo 5 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup5" class="row_grupo">
       <ion-label  class="tituloG">Grupo E</ion-label>
     </ion-row>
@@ -3311,7 +3311,7 @@
   </ion-grid>
   
   <!-- Grupo 6 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup6" class="row_grupo">
       <ion-label  class="tituloG">Grupo F</ion-label>
     </ion-row>
@@ -3390,7 +3390,7 @@
   </ion-grid>
   
   <!-- Grupo 7 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup7" class="row_grupo">
       <ion-label  class="tituloG">Grupo G</ion-label>
     </ion-row>
@@ -3469,7 +3469,7 @@
   </ion-grid>
   
   <!-- Grupo 8 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup8" class="row_grupo">
       <ion-label  class="tituloG">Grupo H</ion-label>
     </ion-row>
@@ -3548,7 +3548,7 @@
   </ion-grid>
   
   <!-- Grupo 9 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup9" class="row_grupo">
       <ion-label  class="tituloG">Grupo I</ion-label>
     </ion-row>
@@ -3627,7 +3627,7 @@
   </ion-grid>
   
   <!-- Grupo 10 -->
-  <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'">
+  <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'">
     <ion-row *ngIf="grup10" class="row_grupo">
       <ion-label  class="tituloG">Grupo J</ion-label>
     </ion-row>
@@ -3705,7 +3705,7 @@
     </div>
   </ion-grid>
   <!-- Descenso -->
-    <ion-grid class="grid_encabezado" *ngIf="opcion2=='detalles'" >
+    <ion-grid class="grid_encabezado" *ngIf="opcion2==='detalles'" >
       <ion-row *ngIf="des" class="row_grupo">
         <ion-label  class="tituloG">Descenso</ion-label>
       </ion-row>
