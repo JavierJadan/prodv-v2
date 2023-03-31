@@ -157,7 +157,7 @@ export class PageLocalPage implements OnInit {
   constructor(public firestoreService: FirestoreService,
     public alertController: AlertController,
     public menuL: MenuController) {
-    this.initialize();
+    // this.initialize();
   }
 
   ngOnInit() {
@@ -213,7 +213,7 @@ export class PageLocalPage implements OnInit {
   ///
 
   changeSegment(event: any) {
-    this.showBanner();
+    // this.showBanner();
     const opc = event.detail.value;
     console.log(opc);
     this.opcion = opc;
