@@ -6,10 +6,12 @@ ion-tab-bar{
     --color:#fff;
     margin-bottom: 15px;
     position: absolute;
-    width: 90%;
+    width: 85%;
 }
 ion-tab-button{
     --color-selected:#25D366;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .text-selected-item{
