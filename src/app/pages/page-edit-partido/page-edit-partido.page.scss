@@ -4,8 +4,10 @@
 .Nuevo_partido{
     // --background: white; 
     padding: 15px;
-   
     //  border: 1px  black solid;
+}
+.Card_Penales{
+    background-color: #075E54;
 }
 .IonInput{
     // --background: #FFF; 
@@ -15,19 +17,34 @@
     border: 2px solid #FFF;
     border-radius: 10px;
 }
+.IonInputPenales{
+    --background:#075E54; 
+    --color: white;
+    font-weight: bold;
+    margin: 10px; 
+    border: 2px solid #FFF;
+    border-radius: 10px;
+}
+
+ion-toggle {
+    // --background: #000;
+    --background-checked: #075E54;
+    --handle-background: #075E54;
+    // --handle-background-checked: #075E54;
+}
 .encabezado{
     padding-top: 10px;
     padding-bottom: 10px;
     // background: white;
     // border: 1px blue solid;
-   }
-     .titulo{
-         font-size: 18px;
+}
+.titulo{
+    font-size: 18px;
     //    color: black;
-       font-weight: bold;
-       text-align: left;
-       margin-left: 10px;
-     }
+    font-weight: bold;
+    text-align: left;
+    margin-left: 10px;
+}
 .campos{
     // --color: black; 
     padding: 10px;

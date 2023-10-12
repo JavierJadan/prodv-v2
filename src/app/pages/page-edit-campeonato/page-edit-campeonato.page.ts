@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, AlertController, ToastController, IonDatetime } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Equipos, Campeonatos } from 'src/app/models';
+import { FirebaseauthService } from '../../services/firebaseauth.service';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
 import { format, parseISO } from 'date-fns';
@@ -12,7 +13,10 @@ import { format, parseISO } from 'date-fns';
   styleUrls: ['./page-edit-campeonato.page.scss'],
 })
 export class PageEditCampeonatoPage implements OnInit {
+
+  eliminar=false;
   grupos=false;
+  uid='';
   infocampeonato: Campeonatos = {
     uid: '',
     nombre: '',
@@ -24,14 +28,31 @@ export class PageEditCampeonatoPage implements OnInit {
     fases: 0
   };
   showPicker = false;
-  dateValue = format(new Date(), 'yyy-MM-dd') + 'T09:00:00.000Z'
+  dateValue = format(new Date(), 'yyy-MM-dd') + 'T09:00:00.000Z';
   formatedString = '';
   @ViewChild(IonDatetime) datetime: IonDatetime;
   constructor(public firestoreService: FirestoreService,
+    public firebaseauth: FirebaseauthService,
     public loadingController: LoadingController,
     public toastController: ToastController,
     public alertController: AlertController,
-    public router: Router) { }
+    public router: Router) {
+    this.firebaseauth.stateAuth().subscribe(res => {
+      if (res != null) {
+        this.uid = res.uid;
+        console.log(this.uid);
+
+      if(this.uid === '5wDUdu2vCvapam5cGLAU95hrBn32'){
+        this.eliminar=true;
+      }else{
+        this.eliminar=false;
+      }
+      }else {
+        console.log(this.uid);
+      }
+      });
+
+    }
 
   ngOnInit() {
     const campeonato = this.firestoreService.getCampeonato();
@@ -55,6 +76,18 @@ export class PageEditCampeonatoPage implements OnInit {
     this.showPicker = false;
     this.infocampeonato.fecha = value;
     console.log(value);
+  }
+
+  async deleteCampeonato() {
+    const path = 'Campeonatos/';
+    this.firestoreService.deletepartido(path, this.infocampeonato.uid).then(res => {
+      this.presentLoading('Eliminando', 1500);
+      setTimeout(() => {
+        this.router.navigate(['/page-create-campeonato']);
+      }, 1000);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   async tipocam() {

@@ -5,7 +5,7 @@
 </header>
 <ion-content class="content_pri">
   <div class="encabezado">
-    <ion-label class="titulo"> Datos del partido</ion-label>
+    <ion-label class="titulo">Datos del partido</ion-label>
   </div>
   <ion-card  class="Nuevo_partido">
 
@@ -56,11 +56,29 @@
         <ion-select-option value="finalizado">Finalizado</ion-select-option>
       </ion-select>
     </ion-item>
-   
+
+    <!-- <ion-item ines="none" class="IonInput">
+      <ion-label>Penales</ion-label>
+      <ion-toggle (ionChange)="handleChange($event)"></ion-toggle><br/>
+    </ion-item> -->
+    <!-- <ion-card *ngIf="penaltis" class="Card_Penales">
+
+      <ion-item lines="none" class="IonInputPenales">
+        <ion-label slot="start"  class="ion-label-item">P.{{encuentro.nombre_e1}}</ion-label>
+        <ion-input type="number" slot="end" class="campos"  [(ngModel)]="encuentro.penale1">
+        </ion-input>
+      </ion-item>
+      
+      <ion-item  lines="none" class="IonInputPenales">
+        <ion-label slot="start" class="ion-label-item">P.{{encuentro.nombre_e2}}</ion-label>
+        <ion-input type="number" slot="end" class="campos"  [(ngModel)]="encuentro.penale2">
+        </ion-input>
+      </ion-item>
+    </ion-card> -->
     
     <ion-card-content class="botones">
       <ion-button (click)="restart()" class="button-cancelar">Cancelar</ion-button>
-      <ion-button *ngIf="boton" (click)="saveMatch()" (click)="boton=false" class="button-guardar">Guardar</ion-button>
+      <ion-button [routerLink]="['/tab-info-campeonato/page-encuentros-campeonato']" *ngIf="boton" (click)="saveMatch()" (click)="boton=false" class="button-guardar">Guardar</ion-button>
     </ion-card-content>
 
 

@@ -30,8 +30,6 @@
         Nuevo partido
       </ion-card-title>
     </ion-card-header>
-
-   
     <ion-item class="IonInput" id="open-modal" >
         <ion-label class="ion-label-itemin" > Fecha: </ion-label>
         <ion-input slot="end" class="campos_fecha" [(ngModel)]="encuentro.fecha">  {{formatedString}} </ion-input>
@@ -66,12 +64,6 @@
       </ion-input>
     </ion-item>
 
-    <!-- <ion-item *ngIf="fecha" lines="none" class="IonInput">
-      <ion-label class="ion-label-itemin">Fase:</ion-label>
-      <ion-input slot="end" class="campos" (click)="newFecha()" [(ngModel)]="encuentro.fechae"
-        placeholder="Seleccione fase del partido">
-      </ion-input>    
-    </ion-item> -->
 
     <ion-item *ngIf="fecha" lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Fase:</ion-label>
@@ -81,13 +73,6 @@
     </ion-item> 
    
 
-    <!-- <ion-item *ngIf="grupo" lines="none" class="IonInput">
-      <ion-label class="ion-label-itemin">Grupo:</ion-label>
-      <ion-input slot="end" class="campos" (click)="newTeam()" [(ngModel)]="encuentro.grupo"
-        placeholder="Seleccione grupo">
-      </ion-input>
-    </ion-item> -->
-
     <ion-item *ngIf="grupo" lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Grupo:</ion-label>
       <ion-select class="campos" [(ngModel)]="encuentro.grupo"  placeholder="Seleccione fase">
@@ -96,13 +81,13 @@
     </ion-item> 
 
     <!-- Inicio Grupo 1 -->
-    <ion-item *ngIf="grupo1" lines="none" class="IonInput">
+    <ion-item *ngIf="grupo1" (click)="getEquiposG1()" lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Equipo 1</ion-label>
       <ion-select class="campos" [(ngModel)]="encuentro.nombre_e1" placeholder="Seleccione">
         <ion-select-option *ngFor="let equipos of team1" value={{equipos.nombre}}>{{equipos.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item *ngIf="grupo1" lines="none" class="IonInput">
+    <ion-item *ngIf="grupo1" (click)="getEquiposG1()" lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Equipo 2</ion-label>
       <ion-select class="campos" [(ngModel)]="encuentro.nombre_e2" placeholder="Seleccione">
         <ion-select-option *ngFor="let equipos of team1" value={{equipos.nombre}}>{{equipos.nombre}}</ion-select-option>
@@ -151,13 +136,13 @@
       </ion-select>
     </ion-item>
 
-     <ion-item  lines="none" class="IonInput">
+     <ion-item *ngIf="gene" lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Equipo 1</ion-label>
       <ion-select class="campos" [(ngModel)]="encuentro.nombre_e1" placeholder="Seleccione">
         <ion-select-option *ngFor="let equipos of teamg" value={{equipos.nombre}}>{{equipos.nombre}}</ion-select-option>
       </ion-select>
     </ion-item>
-    <ion-item  lines="none" class="IonInput">
+    <ion-item *ngIf="gene"  lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Equipo 2</ion-label>
       <ion-select class="campos" [(ngModel)]="encuentro.nombre_e2" placeholder="Seleccione">
         <ion-select-option *ngFor="let equipos of teamg" value={{equipos.nombre}}>{{equipos.nombre}}</ion-select-option>
@@ -167,7 +152,7 @@
 
     <ion-card-content class="botones">
       <ion-button (click)="estado=false" (click)="reset()" class="button-cancelar">Cancelar</ion-button>
-      <ion-button (click)="saveMatch()" class="button-guardar">Guardar</ion-button>
+      <ion-button [routerLink]="['/tab-info-campeonato/page-encuentros-campeonato']" (click)="saveMatch()" class="button-guardar">Guardar</ion-button>
     </ion-card-content>
 
   </ion-card>
@@ -175,9 +160,9 @@
 
   <div class="encabezado">
     <ion-label class="titulo"> Lista de partidos </ion-label>
-   </div>
- 
- <!-- Html de partidos de Final -->
+</div>
+
+<!-- Html de partidos de Final -->
  <div *ngIf="antsig" class="div_cuarto">
   <ion-grid class="grid_cuarto">
     
@@ -213,7 +198,6 @@
       
     </ion-col>
     <ion-col class="col_icon" size="4">
-         
       <ion-buttons class="button">
         <ion-button  routerLink="/page-edit-partido" (click)="getMatch(equipo)" >
           <ion-icon class="icon_edit" slot="icon-only" name="create-outline"></ion-icon>
@@ -275,7 +259,6 @@
         
       </ion-col>
       <ion-col class="col_icon" size="4">
-         
         <ion-buttons class="button">
           <ion-button  routerLink="/page-edit-partido" (click)="getMatch(equipo)" >
             <ion-icon class="icon_edit" slot="icon-only" name="create-outline"></ion-icon>
@@ -339,8 +322,7 @@
         </ion-label>
         
       </ion-col>
-      <ion-col class="col_icon" size="4">
-         
+      <ion-col class="col_icon" size="4">s
       </ion-col>
     </ion-row>
   
