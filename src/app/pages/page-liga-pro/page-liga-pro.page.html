@@ -37,3 +37,206 @@
   </div>
 
 </ion-content>
+
+<!--% CODE TO SOCCER   -->
+
+<!-- <ion-header>
+  <ion-toolbar mode="ios">
+    <ion-title style="text-align: center;">PRODV</ion-title> 
+  </ion-toolbar>
+</ion-header>
+
+<ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
+  <ion-segment-button value="live">
+    <ion-label>En Vivo</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="dates">
+    <ion-label>Fechas</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="stadium">
+    <ion-label>Estadios</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="playes">
+    <ion-label>Jugadores</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+
+ <ion-content class="content_pri" >
+
+
+<div *ngIf="opcion==='live' && matches.length != 0 " >
+
+  <!-- <h2>Tengo datos</h2> -->
+  <!-- <div  *ngFor="let match of matches, let i = index" class="div-partidos" [routerLink]="['/details/' + match.fixture.id ]" >
+    <ion-row class="row_fecha">  
+
+      <ion-col class="col_tex_country" size="4">
+        <ion-label  class="label_fecha">
+          {{match.league.country}}
+        </ion-label>
+      </ion-col>
+      
+      <ion-col class="col_tex_fecha" size="4">
+        <ion-label  class="label_fecha">
+          {{match.fixture.date | date : "dd/MM/yyyy"}}
+        </ion-label>
+      </ion-col>
+
+      <ion-col class="col_tex_league" size="4">
+        <ion-label  class="label_fecha">
+          {{match.league.name}}
+        </ion-label>
+      </ion-col>
+    
+    </ion-row>
+      
+    <ion-row>
+      <ion-col class="col_nom_eq1" size="3">
+        <ion-label class="label_e1">
+          {{match.teams.home.name}}
+        </ion-label>
+      </ion-col>
+      
+      <ion-col class="col_img" size="2">
+        <ion-item lines="none" class="item_avatar">
+          
+          <img class="con_img" src="{{match.teams.home.logo}}" >
+        </ion-item>
+        
+      </ion-col>
+      <ion-col class="col_vs" size="2">
+        <ion-label class="label_tittle_vs">
+          {{match.goals.home}} - {{match.goals.away}}
+        </ion-label>
+      </ion-col>
+      
+      <ion-col class="col_img" size="2">
+        <ion-item lines="none" class="item_avatar">
+          <img class="con_img" src="{{match.teams.away.logo}}" >
+        </ion-item>
+      </ion-col>
+      
+      <ion-col class="col_nom_eq2" size="3">
+        <ion-label class="label_e2">
+          {{match.teams.away.name}}
+        </ion-label>
+      </ion-col>
+    </ion-row> 
+
+    <ion-row class="row_fecha">  
+      <ion-col class="col_tex_fecha" size="12">
+        <ion-label  class="label_estadio">
+          {{match.fixture.status.long}}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row_fecha">  
+      <ion-col class="col_tex_fecha" size="12">
+        <ion-label  class="label_estadio">
+          {{match.fixture.venue.name}}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </div>
+</div>  -->
+
+<!-- <div *ngIf="matches.length === 0" style="margin-top: auto; margin-bottom: auto; " >
+  <img src="../../../assets/imgs/wait_soccer.gif" alt="" srcset="">
+</div> -->
+<!-- 
+<div *ngIf="opcion==='dates'" >
+
+  <div  *ngFor="let match of matches1, let i = index" class="div-partidos" [routerLink]="['/details/' + match.fixture.id ]" >
+    <ion-row class="row_fecha">  
+
+      <ion-col class="col_tex_country" size="4">
+        <ion-label  class="label_fecha">
+          {{match.league.country}}
+        </ion-label>
+      </ion-col>
+      
+      <ion-col class="col_tex_fecha" size="4">
+        <ion-label  class="label_fecha">
+          {{match.fixture.date | date : "dd/MM/yyyy"}}
+        </ion-label>
+      </ion-col>
+
+      <ion-col class="col_tex_league" size="4">
+        <ion-label  class="label_fecha">
+          {{match.league.name}}
+        </ion-label>
+      </ion-col>
+    
+    </ion-row>
+      
+    <ion-row>
+      <ion-col class="col_nom_eq1" size="3">
+        <ion-label class="label_e1">
+          {{match.teams.home.name}}
+        </ion-label>
+      </ion-col>
+      
+      <ion-col class="col_img" size="2">
+        <ion-item lines="none" class="item_avatar">
+          
+          <img class="con_img" src="{{match.teams.home.logo}}" >
+        </ion-item>
+        
+      </ion-col>
+      <ion-col class="col_vs" size="2">
+        <ion-label class="label_tittle_vs">
+          {{match.goals.home}} - {{match.goals.away}}
+        </ion-label>
+      </ion-col>
+      
+      <ion-col class="col_img" size="2">
+        <ion-item lines="none" class="item_avatar">
+          <img class="con_img" src="{{match.teams.away.logo}}" >
+        </ion-item>
+      </ion-col>
+      
+      <ion-col class="col_nom_eq2" size="3">
+        <ion-label class="label_e2">
+          {{match.teams.away.name}}
+        </ion-label>
+      </ion-col>
+    </ion-row> 
+
+    <ion-row class="row_fecha">  
+      <ion-col class="col_tex_fecha" size="12">
+        <ion-label  class="label_estadio">
+          {{match.fixture.status.long}}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="row_fecha">  
+      <ion-col class="col_tex_fecha" size="12">
+        <ion-label  class="label_estadio">
+          {{match.fixture.venue.name}}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </div>
+
+  <div *ngFor="let modality of modalities" >
+    <ion-item>
+      <ion-label>
+        {{ modality.mod_name}}
+      </ion-label>
+    </ion-item>
+  
+  </div>
+
+
+  
+</div>
+
+
+  
+
+</ion-content>
+ -->
+

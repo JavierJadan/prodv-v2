@@ -153,6 +153,7 @@ export class PageLocalPage implements OnInit {
   grup9 = false;
   grup10 = false;
   des = false;
+  isActivePublicidad = true;
 
   constructor(public firestoreService: FirestoreService,
     public alertController: AlertController,
@@ -196,30 +197,56 @@ export class PageLocalPage implements OnInit {
     });
   }
 
-  async showBanner() {
-    const adId = isPlatform('ios') ? 'ca-app-pub-5567251641138923/4617221021' : 'ca-app-pub-5567251641138923/3143918917';
-    const options: BannerAdOptions = {
-      adId,
-      adSize: BannerAdSize.ADAPTIVE_BANNER,
-      position: BannerAdPosition.TOP_CENTER,
-      margin: 0,
-      isTesting: false,
-      // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
-      // Set this to true to request Non-Personalized Ads
-      // npa: true
-    };
-    await AdMob.showBanner(options);
-  }
+  // async showBanner() {
+  //   const adId = isPlatform('ios') ? 'ca-app-pub-5567251641138923/4617221021' : 'ca-app-pub-5567251641138923/3143918917';
+  //   const options: BannerAdOptions = {
+  //     adId,
+  //     adSize: BannerAdSize.ADAPTIVE_BANNER,
+  //     position: BannerAdPosition.TOP_CENTER,
+  //     margin: 0,
+  //     isTesting: false,
+  //     // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
+  //     // Set this to true to request Non-Personalized Ads
+  //     // npa: true
+  //   };
+  //   await AdMob.showBanner(options);
+  // }
   ///
 
+  async showRewardVideo() {
+    AdMob.addListener(
+      RewardAdPluginEvents.Rewarded,
+      (reward: AdMobRewardItem) => {
+        // Give the reward!
+        console.log('REWARD: ', reward);
+      }
+    );
+    const options: RewardAdOptions = {
+      adId: 'YOUR ADID',
+      isTesting: true,
+      // npa: true
+      // ssv: { ... }
+    };
+
+    await AdMob.prepareRewardVideoAd(options);
+    await AdMob.showRewardVideoAd();
+  }
+
+
   changeSegment(event: any) {
-    // this.showBanner();
+    
+    if (this.opcion == 'Partidos' && this.isActivePublicidad) {
+      this.showRewardVideo();
+      this.isActivePublicidad = false;
+    }
+
     const opc = event.detail.value;
     console.log(opc);
     this.opcion = opc;
     console.log(this.opcion);
-    (this.opcion == 'Clasificacion') ? this.isActiveM2 = true : this.isActiveM2 = false;
+    (this.opcion == 'Clasificacion') ? this.isActiveM2 = true  : this.isActiveM2 = false;
     (this.opcion == 'Partidos') ? this.isActiveM1 = true : this.isActiveM1 = false;
+
   }
   changeSegment2(event: any) {
     const opc = event.detail.value;
