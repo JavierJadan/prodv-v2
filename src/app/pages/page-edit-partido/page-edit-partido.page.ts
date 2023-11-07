@@ -5,7 +5,6 @@ import { FirestoreService } from 'src/app/services/firestore.service';
 import { Router } from '@angular/router';
 import { format, parseISO } from 'date-fns';
 import { Subscription } from 'rxjs';
-import { EncuentroPrueba } from '../../models';
 @Component({
   selector: 'app-page-edit-partido',
   templateUrl: './page-edit-partido.page.html',
@@ -22,6 +21,8 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
   showPicker = false;
   dateValue = format(new Date(), 'yyy-MM-dd') + 'T09:00:00.000Z';
 
+
+  penaltis=false;
 
 
   equipo1: Equipos = {
@@ -56,7 +57,7 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
 
   };
 
-  encuentro: EncuentroPrueba = {
+  encuentro: Encuentro = {
     uid: '',
     tipo: '',
     fechae: '',
@@ -72,6 +73,24 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
     escudo_e2: '',
     nombre_e1: '',
     nombre_e2: '',
+    puntose1: 0,
+    pje1: 0,
+    pge1: 0,
+    pee1: 0,
+    ppe1: 0,
+    gfe1: 0,
+    gce1: 0,
+    dge1: 0,
+    puntose2: 0,
+    pje2: 0,
+    pge2: 0,
+    pee2: 0,
+    ppe2: 0,
+    gfe2: 0,
+    gce2: 0,
+    dge2: 0,
+    penale1: 0,
+    penale2:0
   };
 
   infocampeonato: Campeonatos = {
@@ -93,6 +112,7 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
     public router: Router) { }
 
   ngOnInit() {
+    // this.restart();
     const match = this.firestoreService.getMatch();
     if (match !== undefined) {
       this.encuentro = match;
@@ -102,7 +122,6 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
     if (campeonatod !== undefined) {
       this.infocampeonato = campeonatod;
     }
-    console.log(this.infocampeonato);
   }
   ngOnDestroy(): void {
     console.log('Destroy - edit partido');
@@ -110,7 +129,6 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
       console.log('eqiposInfo estaba suscripto pero se destruyo');
       this.equiposInfo.unsubscribe();
       this.equiposInfo1.unsubscribe();
-
     }
   }
   dateChanged(value) {
@@ -121,6 +139,15 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
     console.log(value);
   }
 
+  handleChange(event: any){
+    const opc = event.detail.checked;
+    console.log(opc);
+    if(opc===true){
+      this.penaltis=true;
+    }else{
+      this.penaltis=false;
+    }
+  }
 
 
   close() {
@@ -138,24 +165,28 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
       if (res.length) {
         this.equipo1 = res[0];
 
-        if (this.encuentro.res_e1 == this.encuentro.res_e2) {
-          console.log('empate' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2)
-          this.equipo1.puntos = this.equipo1.puntos + 1;
-          this.equipo1.p_j = this.equipo1.p_j + 1;
-          this.equipo1.p_e = this.equipo1.p_e + 1;
-          this.equipo1.g_f = this.equipo1.g_f + this.encuentro.res_e1;
-          this.equipo1.g_c = this.equipo1.g_c + this.encuentro.res_e2;
+        if (this.encuentro.res_e1 === this.encuentro.res_e2) {
+          console.log('empate' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2);
+          this.equipo1.puntos = this.encuentro.puntose1 + 1;
+          this.equipo1.p_g = this.encuentro.pge1;
+          this.equipo1.p_p = this.encuentro.ppe1;
+          this.equipo1.p_j = this.encuentro.pje1 + 1;
+          this.equipo1.p_e = this.encuentro.pee1 + 1;
+          this.equipo1.g_f = this.encuentro.gfe1 + this.encuentro.res_e1;
+          this.equipo1.g_c = this.encuentro.gce1 + this.encuentro.res_e2;
           this.equipo1.d_g = this.equipo1.g_f - this.equipo1.g_c;
 
 
         } else if (this.encuentro.res_e1 > this.encuentro.res_e2) {
           console.log('resultado: ' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2);
           console.log('Gano: ' + this.encuentro.nombre_e1);
-          this.equipo1.puntos = this.equipo1.puntos + 3;
-          this.equipo1.p_j = this.equipo1.p_j + 1;
-          this.equipo1.p_g = this.equipo1.p_g + 1;
-          this.equipo1.g_f = this.equipo1.g_f + this.encuentro.res_e1;
-          this.equipo1.g_c = this.equipo1.g_c + this.encuentro.res_e2;
+          this.equipo1.puntos = this.encuentro.puntose1 + 3;
+          this.equipo1.p_j = this.encuentro.pje1 + 1;
+          this.equipo1.p_g = this.encuentro.pge1 + 1;
+          this.equipo1.p_e = this.encuentro.pee1;
+          this.equipo1.p_p = this.encuentro.ppe1;
+          this.equipo1.g_f = this.encuentro.gfe1 + this.encuentro.res_e1;
+          this.equipo1.g_c = this.encuentro.gce1 + this.encuentro.res_e2;
           this.equipo1.d_g = this.equipo1.g_f - this.equipo1.g_c;
 
 
@@ -163,10 +194,13 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
         } else if (this.encuentro.res_e1 < this.encuentro.res_e2) {
           console.log('resultado: ' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2);
           console.log('Gano: ' + this.encuentro.nombre_e2);
-          this.equipo1.p_j = this.equipo1.p_j + 1;
-          this.equipo1.p_p = this.equipo1.p_p + 1;
-          this.equipo1.g_f = this.equipo1.g_f + this.encuentro.res_e1;
-          this.equipo1.g_c = this.equipo1.g_c + this.encuentro.res_e2;
+          this.equipo1.puntos=this.encuentro.puntose1;
+          this.equipo1.p_j = this.encuentro.pje1 + 1;
+          this.equipo1.p_p = this.encuentro.ppe1 + 1;
+          this.equipo1.p_e = this.encuentro.pee1;
+          this.equipo1.p_g = this.encuentro.pge1;
+          this.equipo1.g_f = this.encuentro.gfe1 + this.encuentro.res_e1;
+          this.equipo1.g_c = this.encuentro.gce1 + this.encuentro.res_e2;
           this.equipo1.d_g = this.equipo1.g_f - this.equipo1.g_c;
         }
 
@@ -212,34 +246,40 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
         this.equipo2 = res[0];
         // console.log(this.equipo2);
 
-        if (this.encuentro.res_e1 == this.encuentro.res_e2) {
+        if (this.encuentro.res_e1 === this.encuentro.res_e2) {
 
           console.log('empate' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2);
-          this.equipo2.puntos = this.equipo2.puntos + 1;
-          this.equipo2.p_j = this.equipo2.p_j + 1;
-          this.equipo2.p_e = this.equipo2.p_e + 1;
-          this.equipo2.g_f = this.equipo2.g_f + this.encuentro.res_e2;
-          this.equipo2.g_c = this.equipo2.g_c + this.encuentro.res_e1;
+          this.equipo2.puntos = this.encuentro.puntose2 + 1;
+          this.equipo2.p_j = this.encuentro.pje2 + 1;
+          this.equipo2.p_e = this.encuentro.pee2 + 1;
+          this.equipo2.p_g = this.encuentro.pge2;
+          this.equipo2.p_p = this.encuentro.ppe2;
+          this.equipo2.g_f = this.encuentro.gfe2 + this.encuentro.res_e2;
+          this.equipo2.g_c = this.encuentro.gce2 + this.encuentro.res_e1;
           this.equipo2.d_g = this.equipo2.g_f - this.equipo2.g_c;
 
         } else if (this.encuentro.res_e1 > this.encuentro.res_e2) {
           console.log('resultado: ' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2);
           console.log('Gano: ' + this.encuentro.nombre_e1);
-
-          this.equipo2.p_j = this.equipo2.p_j + 1;
-          this.equipo2.p_p = this.equipo2.p_p + 1;
-          this.equipo2.g_f = this.equipo2.g_f + this.encuentro.res_e2;
-          this.equipo2.g_c = this.equipo2.g_c + this.encuentro.res_e1;
+          this.equipo2.puntos=this.encuentro.puntose2;
+          this.equipo2.p_j = this.encuentro.pje2 + 1;
+          this.equipo2.p_p = this.encuentro.ppe2 + 1;
+          this.equipo2.p_e = this.encuentro.pee2;
+          this.equipo2.p_g = this.encuentro.pge2;
+          this.equipo2.g_f = this.encuentro.gfe2 + this.encuentro.res_e2;
+          this.equipo2.g_c = this.encuentro.gce2 + this.encuentro.res_e1;
           this.equipo2.d_g = this.equipo2.g_f - this.equipo2.g_c;
 
         } else if (this.encuentro.res_e1 < this.encuentro.res_e2) {
           console.log('resultado: ' + this.encuentro.res_e1 + '-' + this.encuentro.res_e2);
           console.log('Gano: ' + this.encuentro.nombre_e2);
-          this.equipo2.puntos = this.equipo2.puntos + 3;
-          this.equipo2.p_j = this.equipo2.p_j + 1;
-          this.equipo2.p_g = this.equipo2.p_g + 1;
-          this.equipo2.g_f = this.equipo2.g_f + this.encuentro.res_e2;
-          this.equipo2.g_c = this.equipo2.g_c + this.encuentro.res_e1;
+          this.equipo2.puntos = this.encuentro.puntose2 + 3;
+          this.equipo2.p_e = this.encuentro.pee2;
+          this.equipo2.p_p = this.encuentro.ppe2;
+          this.equipo2.p_j = this.encuentro.pje2 + 1;
+          this.equipo2.p_g = this.encuentro.pge2 + 1;
+          this.equipo2.g_f = this.encuentro.gfe2 + this.encuentro.res_e2;
+          this.equipo2.g_c = this.encuentro.gce2 + this.encuentro.res_e1;
           this.equipo2.d_g = this.equipo2.g_f - this.equipo2.g_c;
 
         }
@@ -257,6 +297,7 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
         };
         console.log(data);
 
+
         this.firestoreService.actualizarpartido(data, path, uid2);
         this.equipo2={
           uid: '',
@@ -273,23 +314,21 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
           d_g: 0
       };
         this.equiposInfo1.unsubscribe();
+
       }
     });
     // console.log(this.equipo1);
     // console.log(this.equipo2);
 
-
   }
 
   async saveMatch() {
 
-
-    if (this.encuentro.estado == 'iniciado' || this.encuentro.estado == 'espera') {
+    if (this.encuentro.estado === 'espera') {
       console.log('El partido ha iniciado');
       const path = 'Campeonatos/'+this.infocampeonato.uid+'/Partidos';
       this.firestoreService.createDoc(this.encuentro, path, this.encuentro.uid).then(res => {
         console.log('guardado con exito');
-
         this.encuentro = {
           uid: '',
           tipo: '',
@@ -306,24 +345,43 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
           escudo_e2: '',
           nombre_e1: '',
           nombre_e2: '',
+          puntose1: 0,
+          pje1: 0,
+          pge1: 0,
+          pee1: 0,
+          ppe1: 0,
+          gfe1: 0,
+          gce1: 0,
+          dge1: 0,
+          puntose2: 0,
+          pje2: 0,
+          pge2: 0,
+          pee2: 0,
+          ppe2: 0,
+          gfe2: 0,
+          gce2: 0,
+          dge2: 0,
+          penale1: 0,
+          penale2:0
         };
         this.presentLoading('Actualizando datos', 1500);
-        setTimeout(() => {
-          this.router.navigate(['/tab-info-campeonato/page-encuentros-campeonato']);
-        }, 1000);
+        // setTimeout(() => {
+        //   this.router.navigate(['/tab-info-campeonato/page-encuentros-campeonato']);
+        // }, 1000);
 
       }).catch(error => {
-        console.log(error)
+        console.log(error);
       });
 
-    } else if (this.encuentro.estado == 'finalizado') {
+    } else if (this.encuentro.estado === 'finalizado' || this.encuentro.estado === 'iniciado') {
       console.log('El partido ha finalizadoo');
-      if (this.encuentro.tipo == 'Fase de grupos' || this.encuentro.tipo=='Descenso') {
+      if (this.encuentro.tipo === 'Fase de grupos' || this.encuentro.tipo === 'Descenso') {
         await this.actualizarpuntos(this.encuentro.uid_e1, this.encuentro.uid_e2);
+        this.encuentro.puntose1=this.encuentro.puntose1;
+        this.encuentro.puntose2=this.encuentro.puntose2;
         const path = 'Campeonatos/'+this.infocampeonato.uid+'/Partidos';
         this.firestoreService.createDoc(this.encuentro, path, this.encuentro.uid).then(res => {
           console.log('guardado con exito');
-
           this.encuentro = {
             uid: '',
             tipo: '',
@@ -340,6 +398,24 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
             escudo_e2: '',
             nombre_e1: '',
             nombre_e2: '',
+            puntose1: 0,
+            pje1: 0,
+            pge1: 0,
+            pee1: 0,
+            ppe1: 0,
+            gfe1: 0,
+            gce1: 0,
+            dge1: 0,
+            puntose2: 0,
+            pje2: 0,
+            pge2: 0,
+            pee2: 0,
+            ppe2: 0,
+            gfe2: 0,
+            gce2: 0,
+            dge2: 0,
+            penale1: 0,
+            penale2:0
           };
 
           this.equipo1={
@@ -376,7 +452,7 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
           // }, 1000);
 
         }).catch(error => {
-          console.log(error)
+          console.log(error,'erroooor');
         });
 
       } else {
@@ -399,13 +475,31 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
             escudo_e2: '',
             nombre_e1: '',
             nombre_e2: '',
+            puntose1: 0,
+            pje1: 0,
+            pge1: 0,
+            pee1: 0,
+            ppe1: 0,
+            gfe1: 0,
+            gce1: 0,
+            dge1: 0,
+            puntose2: 0,
+            pje2: 0,
+            pge2: 0,
+            pee2: 0,
+            ppe2: 0,
+            gfe2: 0,
+            gce2: 0,
+            dge2: 0,
+            penale1: 0,
+            penale2:0
           };
           this.presentLoading('Actualizando datos', 1500);
           // setTimeout(() => {
             this.router.navigate(['/tab-info-campeonato/page-encuentros-campeonato']);
           // }, 1000);
         }).catch(error => {
-          console.log(error);
+          console.log(error,'errpppppr');
         });
 
       }
@@ -422,8 +516,9 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
         this.router.navigate(['/tab-info-campeonato/page-encuentros-campeonato']);
       }, 1000);
     }).catch(error => {
-      console.log(error)
+      console.log(error);
     });
+    this.restart();
   }
 
 
@@ -448,8 +543,37 @@ export class PageEditPartidoPage implements OnInit, OnDestroy {
       escudo_e2: null,
       nombre_e1: null,
       nombre_e2: null,
-    }
+      puntose1: 0,
+      pje1: 0,
+      pge1: 0,
+      pee1: 0,
+      ppe1: 0,
+      gfe1: 0,
+      gce1: 0,
+      dge1: 0,
+      puntose2: 0,
+      pje2: 0,
+      pge2: 0,
+      pee2: 0,
+      ppe2: 0,
+      gfe2: 0,
+      gce2: 0,
+      dge2: 0,
+      penale1: 0,
+      penale2:0
+    };
 
+    this.infocampeonato = {
+    uid: '',
+    nombre: '',
+    fecha: null,
+    tipo: '',
+    lugar: '',
+    estado: 'iniciado',
+    grupos: 0,
+    fases: 0
+    };
+  console.log(this.encuentro);
   }
 
 

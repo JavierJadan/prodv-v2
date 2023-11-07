@@ -38,27 +38,8 @@ export interface Equipos{
     d_g: number;
 }
 
+
 export interface Encuentro{
-
-    uid: string;
-    fechae: string;
-    tipo: string;
-    fecha: string;
-    grupo: string;
-    uid_e1: string;
-    uid_e2: string;
-    estado: string;
-    res_e1: number;
-    res_e2: number;
-    escudo_e1: string;
-    escudo_e2: string;
-    nombre_e1: string;
-    nombre_e2: string;
-
-}
-
-
-export interface EncuentroPrueba{
     uid: string;
     fechae: string;
     numero: number;
@@ -74,7 +55,24 @@ export interface EncuentroPrueba{
     escudo_e2: string;
     nombre_e1: string;
     nombre_e2: string;
-
+    puntose1: number;
+    pje1: number;
+    pge1: number;
+    pee1: number;
+    ppe1: number;
+    gfe1: number;
+    gce1: number;
+    dge1: number;
+    puntose2: number;
+    pje2: number;
+    pge2: number;
+    pee2: number;
+    ppe2: number;
+    gfe2: number;
+    gce2: number;
+    dge2: number;
+    penale1: number;
+    penale2: number;
 }
 
 

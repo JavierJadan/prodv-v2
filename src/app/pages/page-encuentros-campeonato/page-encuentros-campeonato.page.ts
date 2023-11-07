@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { LoadingController, IonDatetime, AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
-import { Equipos, Campeonatos, EncuentroPrueba, fase } from 'src/app/models';
+import { Equipos, Campeonatos, Encuentro, fase } from 'src/app/models';
 import { FirestoreService } from '../../services/firestore.service';
 import { Router } from '@angular/router';
 import { format, parseISO } from 'date-fns';
@@ -43,46 +43,46 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   team2: Equipos[] = [];
   teamg: Equipos[] = [];
   teamd: Equipos[] = [];
-  genee: EncuentroPrueba[] = [];
-  genef: EncuentroPrueba[] = [];
-  geneinit: EncuentroPrueba[] = [];
-  geneida: EncuentroPrueba[] = [];
-  geneidainit: EncuentroPrueba[] = [];
-  geneidaf: EncuentroPrueba[] = [];
-  genevuel: EncuentroPrueba[] = [];
-  genevuelinit: EncuentroPrueba[] = [];
-  genevuelf: EncuentroPrueba[] = [];
+  genee: Encuentro[] = [];
+  genef: Encuentro[] = [];
+  geneinit: Encuentro[] = [];
+  geneida: Encuentro[] = [];
+  geneidainit: Encuentro[] = [];
+  geneidaf: Encuentro[] = [];
+  genevuel: Encuentro[] = [];
+  genevuelinit: Encuentro[] = [];
+  genevuelf: Encuentro[] = [];
 
-  grupoe1: EncuentroPrueba[] = [];
-  grupoe2: EncuentroPrueba[] = [];
-  grupoe3: EncuentroPrueba[] = [];
-  grupoe4: EncuentroPrueba[] = [];
-  grupoe5: EncuentroPrueba[] = [];
-  grupoe6: EncuentroPrueba[] = [];
-  grupoe7: EncuentroPrueba[] = [];
-  grupoe8: EncuentroPrueba[] = [];
-  grupoe9: EncuentroPrueba[] = [];
-  grupoe10: EncuentroPrueba[] = [];
-  grupoinit1: EncuentroPrueba[] = [];
-  grupoinit2: EncuentroPrueba[] = [];
-  grupoinit3: EncuentroPrueba[] = [];
-  grupoinit4: EncuentroPrueba[] = [];
-  grupoinit5: EncuentroPrueba[] = [];
-  grupoinit6: EncuentroPrueba[] = [];
-  grupoinit7: EncuentroPrueba[] = [];
-  grupoinit8: EncuentroPrueba[] = [];
-  grupoinit9: EncuentroPrueba[] = [];
-  grupoinit10: EncuentroPrueba[] = [];
-  grupof1: EncuentroPrueba[] = [];
-  grupof2: EncuentroPrueba[] = [];
-  grupof3: EncuentroPrueba[] = [];
-  grupof4: EncuentroPrueba[] = [];
-  grupof5: EncuentroPrueba[] = [];
-  grupof6: EncuentroPrueba[] = [];
-  grupof7: EncuentroPrueba[] = [];
-  grupof8: EncuentroPrueba[] = [];
-  grupof9: EncuentroPrueba[] = [];
-  grupof10: EncuentroPrueba[] = [];
+  grupoe1: Encuentro[] = [];
+  grupoe2: Encuentro[] = [];
+  grupoe3: Encuentro[] = [];
+  grupoe4: Encuentro[] = [];
+  grupoe5: Encuentro[] = [];
+  grupoe6: Encuentro[] = [];
+  grupoe7: Encuentro[] = [];
+  grupoe8: Encuentro[] = [];
+  grupoe9: Encuentro[] = [];
+  grupoe10: Encuentro[] = [];
+  grupoinit1: Encuentro[] = [];
+  grupoinit2: Encuentro[] = [];
+  grupoinit3: Encuentro[] = [];
+  grupoinit4: Encuentro[] = [];
+  grupoinit5: Encuentro[] = [];
+  grupoinit6: Encuentro[] = [];
+  grupoinit7: Encuentro[] = [];
+  grupoinit8: Encuentro[] = [];
+  grupoinit9: Encuentro[] = [];
+  grupoinit10: Encuentro[] = [];
+  grupof1: Encuentro[] = [];
+  grupof2: Encuentro[] = [];
+  grupof3: Encuentro[] = [];
+  grupof4: Encuentro[] = [];
+  grupof5: Encuentro[] = [];
+  grupof6: Encuentro[] = [];
+  grupof7: Encuentro[] = [];
+  grupof8: Encuentro[] = [];
+  grupof9: Encuentro[] = [];
+  grupof10: Encuentro[] = [];
 
   fase = '';
   titulo = '';
@@ -101,7 +101,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   descenso = false;
 
   escudo1 = '';
-  escudo2 = '';
+  escudo2 = ''
   uid1 = '';
   uid2 = '';
 
@@ -141,7 +141,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   dateValue = format(new Date(), 'yyy-MM-dd') + 'T09:00:00.000Z';
   formatedString = '';
 
-  encuentro: EncuentroPrueba = {
+  encuentro: Encuentro = {
     uid: '',
     fechae: '',
     numero: 0,
@@ -157,8 +157,26 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     escudo_e2: '',
     nombre_e1: '',
     nombre_e2: '',
-  }
-  encuentropri: EncuentroPrueba = {
+    puntose1: 0,
+    pje1: 0,
+    pge1: 0,
+    pee1: 0,
+    ppe1: 0,
+    gfe1: 0,
+    gce1: 0,
+    dge1: 0,
+    puntose2: 0,
+    pje2: 0,
+    pge2: 0,
+    pee2: 0,
+    ppe2: 0,
+    gfe2: 0,
+    gce2: 0,
+    dge2: 0,
+    penale1: 0,
+    penale2:0
+  };
+  encuentropri: Encuentro = {
     uid: '',
     fechae: '',
     numero: 0,
@@ -174,9 +192,28 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     escudo_e2: '',
     nombre_e1: '',
     nombre_e2: '',
-  }
+    puntose1: 0,
+    pje1: 0,
+    pge1: 0,
+    pee1: 0,
+    ppe1: 0,
+    gfe1: 0,
+    gce1: 0,
+    dge1: 0,
+    puntose2: 0,
+    pje2: 0,
+    pge2: 0,
+    pee2: 0,
+    ppe2: 0,
+    gfe2: 0,
+    gce2: 0,
+    dge2: 0,
+    penale1: 0,
+    penale2:0
+  };
 
   items;
+
   @ViewChild(IonDatetime) datetime: IonDatetime;
   constructor(public alertController: AlertController,
     public firestoreService: FirestoreService,
@@ -184,6 +221,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     public toastController: ToastController,) { }
 
   ngOnInit() {
+    // this.restart();
     const campeonato = this.firestoreService.getCampeonato();
     if (campeonato !== undefined) {
       this.infocampeonato = campeonato;
@@ -207,23 +245,25 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     }
   }
 
- obtenernumofstring(string){
+  async elegirgrupo(){
+  }
+
+obtenernumofstring(string){
     var tmp = string.split('');
     var map = tmp.map(function(current){
-      if (!isNaN(parseInt(current))){
-        return current;
-      }
+    if (!isNaN(parseInt(current))){
+      return current;
+    }
     });
     var numbers = map.filter(function (value) {
-      return value != undefined;
+    return value != undefined;
     });
-
     return numbers.join('');
 }
 
 
   onChange(evt) {
-    if (evt == -1) {
+    if (evt === -1) {
       this.items = this.numerofases.map(x => x.id);
     } else {
       let selectAllIndex = this.items.indexOf(-1);
@@ -291,7 +331,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.gru10 = false;
       this.ida = false;
       this.vuelta = false;
-    } else if (this.numero == this.infocampeonato.fases + 1) {
+    } else if (this.numero === this.infocampeonato.fases + 1) {
 
       this.titulo = 'Descenso';
       this.prueba('Descenso');
@@ -303,9 +343,9 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.genevuel = [];
       this.genevuelinit = [];
       this.genevuelf = [];
-     this.limpiargrupos();
+      this.limpiargrupos();
 
-    } else if (this.numero == this.infocampeonato.fases + 2) {
+    } else if (this.numero === this.infocampeonato.fases + 2) {
       this.titulo = 'Cuartos de final';
       this.prueba('Cuartos de final');
       this.pruebafina('Cuartos de final');
@@ -314,7 +354,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.partidos_ida_vuel_init('Cuartos de final');
       this.partidos_ida_vuel_fina('Cuartos de final');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 3) {
+    } else if (this.numero === this.infocampeonato.fases + 3) {
       this.titulo = 'Semifinal';
       this.prueba('Semifinal');
       this.pruebafina('Semifinal');
@@ -323,7 +363,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.partidos_ida_vuel_init('Semifinal');
       this.partidos_ida_vuel_fina('Semifinal');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 4) {
+    } else if (this.numero === this.infocampeonato.fases + 4) {
       this.titulo = 'Tercero y Cuarto';
       this.prueba('Tercero y Cuarto');
       this.pruebafina('Tercero y Cuarto');
@@ -332,7 +372,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.partidos_ida_vuel_init('Tercero y Cuarto');
       this.partidos_ida_vuel_fina('Tercero y Cuarto');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 5) {
+    } else if (this.numero === this.infocampeonato.fases + 5) {
       this.titulo = 'Final';
       this.prueba('Final');
       this.pruebafina('Final');
@@ -428,7 +468,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.gru10 = false;
       this.ida = false;
       this.vuelta = false;
-    } else if (this.numero == this.infocampeonato.fases + 1) {
+    } else if (this.numero === this.infocampeonato.fases + 1) {
 
       this.titulo = 'Descenso';
       this.prueba('Descenso');
@@ -443,7 +483,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.genevuel = [];
       this.limpiargrupos();
 
-    } else if (this.numero == this.infocampeonato.fases + 2) {
+    } else if (this.numero === this.infocampeonato.fases + 2) {
       this.titulo = 'Cuartos de final';
       this.prueba('Cuartos de final');
       this.pruebafina('Cuartos de final');
@@ -452,7 +492,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.partidos_ida_vuel_init('Cuartos de final');
       this.partidos_ida_vuel_fina('Cuartos de final');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 3) {
+    } else if (this.numero === this.infocampeonato.fases + 3) {
       this.titulo = 'Semifinal';
       this.prueba('Semifinal');
       this.pruebafina('Semifinal');
@@ -461,7 +501,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.partidos_ida_vuel_init('Semifinal');
       this.partidos_ida_vuel_fina('Semifinal');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 4) {
+    } else if (this.numero === this.infocampeonato.fases + 4) {
       this.titulo = 'Tercero y Cuarto';
       this.prueba('Tercero y Cuarto');
       this.pruebafina('Tercero y Cuarto');
@@ -470,7 +510,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.partidos_ida_vuel_init('Tercero y Cuarto');
       this.partidos_ida_vuel_fina('Tercero y Cuarto');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 5) {
+    } else if (this.numero === this.infocampeonato.fases + 5) {
       this.titulo = 'Final';
       this.prueba('Final');
       this.pruebafina('Final');
@@ -484,7 +524,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async getPartidos() {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getPartidos<EncuentroPrueba>(path).subscribe(res => {
+    this.equiposInfo = this.firestoreService.getPartidos<Encuentro>(path).subscribe(res => {
       console.log(res.length);
       if (res.length) {
         this.antsig = true;
@@ -500,7 +540,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.encuentropri = res[0];
 
 
-      if (this.encuentropri.fechae == 'ida' || this.encuentropri.fechae == 'vuelta' || this.encuentropri.fechae == 'unico') {
+      if (this.encuentropri.fechae === 'ida' || this.encuentropri.fechae === 'vuelta' || this.encuentropri.fechae === 'unico') {
         this.titulo = this.encuentropri.tipo;
       } else {
         this.titulo = this.encuentropri.fechae;
@@ -508,7 +548,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.numero = this.encuentropri.numero;
       this.fase = this.encuentropri.fechae;
 
-      if (this.fase == 'ida' || this.fase == 'vuelta' || this.fase == 'unico') {
+      if (this.fase === 'ida' || this.fase === 'vuelta' || this.fase === 'unico') {
         this.prueba(this.encuentropri.tipo);
         this.pruebafina(this.encuentropri.tipo);
         this.partidos_init(this.encuentropri.tipo);
@@ -529,7 +569,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async prueba(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getCollection<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getCollection<Encuentro>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.genee = res;
       this.grupoe1 = [];
       this.grupoe2 = [];
@@ -542,7 +582,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   }
   async pruebafina(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getCollectionfinalizados<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getCollectionfinalizados<Encuentro>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.genef = res;
       this.grupoe1 = [];
       this.grupoe2 = [];
@@ -555,7 +595,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   }
   async partidos_init(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getpartidos_init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getpartidos_init<Encuentro>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
 
       this.geneinit = res;
       this.grupoe1 = [];
@@ -573,7 +613,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async partidos_ida_vuel_E(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<Encuentro>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneida = res;
       this.grupoe1 = [];
       this.grupoe2 = [];
@@ -586,7 +626,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<Encuentro>(path, 'tipo', '==', tipo, 'vuelta').subscribe(res => {
       this.genevuel = res;
       this.grupoe1 = [];
       this.grupoe2 = [];
@@ -605,7 +645,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async partidos_ida_vuel_init(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<Encuentro>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneidainit = res;
       this.grupoe1 = [];
       this.grupoe2 = [];
@@ -617,7 +657,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta')
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
     .subscribe(res => {
       this.genevuelinit = res;
       this.grupoe1 = [];
@@ -636,7 +676,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async partidos_ida_vuel_fina(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<Encuentro>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneidaf = res;
       this.grupoe1 = [];
       this.grupoe2 = [];
@@ -648,7 +688,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta')
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
     .subscribe(res => {
       this.genevuelf = res;
       this.grupoe1 = [];
@@ -669,7 +709,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   async grupos(fase: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupoe1 = res;
       if (res.length) {
         this.gru1 = true;
@@ -678,7 +718,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
       this.grupoe2 = res;
       if (res.length) {
         this.gru2 = true;
@@ -687,7 +727,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
       this.grupoe3=res;
       if(res.length){
         this.gru3=true;
@@ -696,7 +736,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
       this.grupoe4=res;
       if(res.length){
         this.gru4=true;
@@ -705,7 +745,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
       this.grupoe5=res;
       if(res.length){
         this.gru5=true;
@@ -714,7 +754,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
       this.grupoe6=res;
       if(res.length){
         this.gru6=true;
@@ -723,7 +763,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
       this.grupoe7=res;
       if(res.length){
         this.gru7=true;
@@ -732,7 +772,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
       this.grupoe8=res;
       if(res.length){
         this.gru8=true;
@@ -741,7 +781,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
       this.grupoe9=res;
       if(res.length){
         this.gru9=true;
@@ -750,7 +790,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
       this.grupoe10=res;
       if(res.length){
         this.gru10=true;
@@ -764,7 +804,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   }
   async gruposfinalizados(fase: string){
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupof1 = res;
       if (res.length) {
         this.gru1 = true;
@@ -773,7 +813,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
       this.grupof2 = res;
       if (res.length) {
         this.gru2 = true;
@@ -781,7 +821,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
         // this.gru2=false;
       }
     });
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
       this.grupof3=res;
       if(res.length){
         this.gru3=true;
@@ -790,7 +830,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
       this.grupof4=res;
       if(res.length){
         this.gru4=true;
@@ -799,7 +839,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
       this.grupof5=res;
       if(res.length){
         this.gru5=true;
@@ -808,7 +848,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
       this.grupof6=res;
       if(res.length){
         this.gru6=true;
@@ -817,7 +857,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
       this.grupof7=res;
       if(res.length){
         this.gru7=true;
@@ -826,7 +866,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
       this.grupof8=res;
       if(res.length){
         this.gru8=true;
@@ -835,7 +875,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
       this.grupof9=res;
       if(res.length){
         this.gru9=true;
@@ -844,7 +884,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
       this.grupof10=res;
       if(res.length){
         this.gru10=true;
@@ -857,7 +897,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   }
   async partidos_init_fases(fase: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupoinit1 = res;
       if (res.length) {
         this.gru1 = true;
@@ -866,7 +906,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
       this.grupoinit2 = res;
       if (res.length) {
         this.gru2 = true;
@@ -875,7 +915,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
       this.grupoinit3=res;
       if(res.length){
         this.gru3=true;
@@ -884,7 +924,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
       this.grupoinit4=res;
       if(res.length){
         this.gru4=true;
@@ -893,7 +933,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
       this.grupoinit5=res;
       if(res.length){
         this.gru5=true;
@@ -902,7 +942,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
       this.grupoinit6=res;
       if(res.length){
         this.gru6=true;
@@ -911,7 +951,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
       this.grupoinit7=res;
       if(res.length){
         this.gru7=true;
@@ -920,7 +960,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
       this.grupoinit8=res;
       if(res.length){
         this.gru8=true;
@@ -929,7 +969,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
       this.grupoinit9=res;
       if(res.length){
         this.gru9=true;
@@ -938,7 +978,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
       this.grupoinit10=res;
       if(res.length){
         this.gru10=true;
@@ -988,6 +1028,24 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
       escudo_e2: '',
       nombre_e1: '',
       nombre_e2: '',
+      puntose1: 0,
+      pje1: 0,
+      pge1: 0,
+      pee1: 0,
+      ppe1: 0,
+      gfe1: 0,
+      gce1: 0,
+      dge1: 0,
+      puntose2: 0,
+      pje2: 0,
+      pge2: 0,
+      pee2: 0,
+      ppe2: 0,
+      gfe2: 0,
+      gce2: 0,
+      dge2: 0,
+      penale1: 0,
+      penale2:0
     };
 
   }
@@ -995,7 +1053,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async getEquiposG1() {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Equipos';
-    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'grupo', '==', 'grupo1').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'grupo', '==', this.encuentro.grupo).subscribe(res => {
       if (res.length) {
         this.team1 = res;
       }
@@ -1033,7 +1091,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Equipos';
     const pathp = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'nombre', '==', this.encuentro.nombre_e1).subscribe(res => {
+    this.equipo1Info = this.firestoreService.getgrupos<Equipos>(path, 'nombre', '==', this.encuentro.nombre_e1).subscribe(res => {
       if (res.length) {
         this.equipo1 = res[0];
         this.escudo1 = this.equipo1.escudo;
@@ -1042,15 +1100,24 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
         this.encuentro.uid_e1 = this.uid1;
         const data = {
           escudo_e1: this.escudo1,
-          uid_e1: this.uid1
+          uid_e1: this.uid1,
+          puntose1: this.equipo1.puntos,
+          pje1: this.equipo1.p_j,
+          pge1: this.equipo1.p_g,
+          pee1: this.equipo1.p_e,
+          ppe1: this.equipo1.p_e,
+          gfe1: this.equipo1.g_f,
+          gce1: this.equipo1.g_c,
+          dge1: this.equipo1.d_g,
         };
         console.log(data, this.equipo1);
 
         this.firestoreService.actualizarpartido(data, pathp, uid).then(res => { });
+        this.equipo1Info.unsubscribe();
       }
     });
 
-    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'nombre', '==', this.encuentro.nombre_e2).subscribe(res => {
+    this.equipo2sInfo = this.firestoreService.getgrupos<Equipos>(path, 'nombre', '==', this.encuentro.nombre_e2).subscribe(res => {
       if (res.length) {
         this.equipo2 = res[0];
         // console.log(res[0]);
@@ -1061,21 +1128,30 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
         this.encuentro.uid_e2 = this.uid2;
         const data = {
           escudo_e2: this.escudo2,
-          uid_e2: this.uid2
+          uid_e2: this.uid2,
+          puntose2: this.equipo2.puntos,
+          pje2: this.equipo2.p_j,
+          pge2: this.equipo2.p_g,
+          pee2: this.equipo2.p_e,
+          ppe2: this.equipo2.p_e,
+          gfe2: this.equipo2.g_f,
+          gce2: this.equipo2.g_c,
+          dge2: this.equipo2.d_g,
         };
         console.log(data);
         this.firestoreService.actualizarpartido(data, pathp, uid).then(res => { });
-
+        this.equipo2sInfo.unsubscribe();
 
       }
     });
 
+    // this.equiposInfo.unsubscribe();
     console.log(this.encuentro);
 
 
   }
 
-  async getMatch(equipo: EncuentroPrueba) {
+  async getMatch(equipo: Encuentro) {
     console.log('Click en getEquipo');
     console.log(equipo);
     this.firestoreService.setMatch(equipo);
@@ -1084,6 +1160,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
 
   async reset() {
     this.estado = false;
+    this.descenso = false;
     this.grupo = false;
     this.grupo1 = false;
     this.grupo2 = false;
@@ -1099,23 +1176,23 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   async saveMatch() {
     console.log(this.encuentro.fechae, this.encuentro.numero);
     this.encuentro.uid = this.firestoreService.getId();
-    if (this.encuentro.tipo == '') {
+    if (this.encuentro.tipo === '') {
       this.presentToast('Eliga el tipo de partido', 2000);
     } else {
-      if (this.encuentro.nombre_e1 == '' || this.encuentro.nombre_e2 == '') {
+      if (this.encuentro.nombre_e1 === '' || this.encuentro.nombre_e2 === '') {
         this.presentToast('Eliga los equipos', 2000);
       } else {
-        if (this.encuentro.nombre_e1 == this.encuentro.nombre_e2) {
+        if (this.encuentro.nombre_e1 === this.encuentro.nombre_e2) {
           this.presentToast('Los equipos son los mismos', 2000);
         } else {
 
           console.log(this.encuentro.nombre_e1 + ' ' + this.encuentro.nombre_e2);
-          if (this.encuentro.tipo == 'Descenso') {
+          if (this.encuentro.tipo === 'Descenso') {
             this.encuentro.fechae = 'unico';
           }
-          if (this.encuentro.tipo == 'Fase de grupos') {
+          if (this.encuentro.tipo === 'Fase de grupos') {
 
-            if(this.encuentro.fechae==''){
+            if(this.encuentro.fechae===''){
               this.presentToast('elija la fecha del encuentro', 2000);
 
             }else{
@@ -1143,6 +1220,24 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
                 escudo_e2: '',
                 nombre_e1: '',
                 nombre_e2: '',
+                puntose1: 0,
+                pje1: 0,
+                pge1: 0,
+                pee1: 0,
+                ppe1: 0,
+                gfe1: 0,
+                gce1: 0,
+                dge1: 0,
+                puntose2: 0,
+                pje2: 0,
+                pge2: 0,
+                pee2: 0,
+                ppe2: 0,
+                gfe2: 0,
+                gce2: 0,
+                dge2: 0,
+                penale1: 0,
+                penale2:0
               };
               this.estado = false;
               this.grupo = false;
@@ -1174,7 +1269,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
             });
 
           } else {
-            if (this.encuentro.fechae == '') {
+            if (this.encuentro.fechae === '') {
               this.presentToast('Eliga tipo de encuentro', 2000);
 
             } else {
@@ -1199,6 +1294,24 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
                   escudo_e2: '',
                   nombre_e1: '',
                   nombre_e2: '',
+                  puntose1: 0,
+                  pje1: 0,
+                  pge1: 0,
+                  pee1: 0,
+                  ppe1: 0,
+                  gfe1: 0,
+                  gce1: 0,
+                  dge1: 0,
+                  puntose2: 0,
+                  pje2: 0,
+                  pge2: 0,
+                  pee2: 0,
+                  ppe2: 0,
+                  gfe2: 0,
+                  gce2: 0,
+                  dge2: 0,
+                  penale1: 0,
+                  penale2:0
                 };
                 this.estado = false;
                 this.grupo = false;
@@ -1227,102 +1340,12 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
               }).catch(error => {
                 console.log(error);
               });
-
             }
-
-
           }
-
-
-
         }
       }
     }
-
-  }
-
-  async newFecha() {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Seleccione fecha: ',
-      inputs: [
-        {
-          name: 'radio1',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Fecha 1',
-          value: 'Fecha 1',
-          checked: true
-        },
-        {
-          name: 'radio2',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Fecha 2',
-          value: 'Fecha 2'
-        },
-        {
-          name: 'radio2',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Fecha 3',
-          value: 'Fecha 3'
-        },
-        {
-          name: 'radio2',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Fecha 4',
-          value: 'Fecha 4'
-        },
-        {
-          name: 'radio2',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Fecha 5',
-          value: 'Fecha 5'
-        },
-
-
-
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            console.log('Confirm Ok', data);
-            if (data === 'Fecha 1') {
-              this.encuentro.fechae = data;
-              this.encuentro.numero = 1;
-            }
-            if (data === 'Fecha 2') {
-              this.encuentro.fechae = data;
-              this.encuentro.numero = 2;
-            }
-            if (data === 'Fecha 3') {
-              this.encuentro.fechae = data;
-              this.encuentro.numero = 3;
-            }
-            if (data === 'Fecha 4') {
-              this.encuentro.fechae = data;
-              this.encuentro.numero = 4;
-            } if (data === 'Fecha 5') {
-              this.encuentro.fechae = data;
-              this.encuentro.numero = 5;
-            }
-
-          }
-        }
-      ]
-    });
-    await alert.present();
+    this.getPartidos();
   }
 
   async newMatch() {
@@ -1392,18 +1415,19 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
               this.descenso = false;
               this.grupo = true;
               this.fecha = true;
+              this.grupo1=true;
               this.encuentro.nombre_e1 = '';
               this.encuentro.nombre_e2 = '';
               this.getEquiposG();
 
             } if (data === 'Descenso') {
               this.encuentro.tipo = data;
-              this.descenso = true;
               this.gene = false;
               this.grupo = false;
               this.fecha = false;
               this.grupo1 = false;
               this.grupo2 = false;
+              this.descenso = true;
               this.encuentro.numero = this.infocampeonato.fases + 1;
               this.encuentro.nombre_e1 = '';
               this.encuentro.nombre_e2 = '';
@@ -1415,11 +1439,11 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
             if (data === 'Cuartos de final') {
               this.encuentro.tipo = data;
               this.descenso = false;
-              this.gene = true;
               this.grupo = false;
               this.fecha = false;
               this.grupo1 = false;
               this.grupo2 = false;
+              this.gene = true;
               this.encuentro.numero = this.infocampeonato.fases + 2;
               this.encuentro.nombre_e1 = '';
               this.encuentro.nombre_e2 = '';
@@ -1481,66 +1505,6 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     });
     await alert.present();
   }
-
-  async newTeam() {
-
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Partido del grupo: ',
-      inputs: [
-        {
-          name: 'radio1',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Grupo A',
-          value: 'Grupo 1',
-          checked: true
-        },
-        {
-          name: 'radio2',
-          type: 'radio',
-          cssClass: 'input',
-          label: 'Grupo B',
-          value: 'Grupo 2'
-        },
-
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            console.log('Confirm Ok', data);
-            if (data === 'Grupo 1') {
-              this.encuentro.grupo = data;
-              this.grupo1 = true;
-              this.grupo2 = false;
-              this.encuentro.nombre_e1 = '';
-              this.encuentro.nombre_e2 = '';
-              this.getEquiposG1();
-            }
-            if (data === 'Grupo 2') {
-              this.grupo1 = false;
-              this.grupo2 = true;
-              this.encuentro.nombre_e1 = '';
-              this.encuentro.nombre_e2 = '';
-              this.encuentro.grupo = data;
-              this.getEquiposG2();
-            }
-
-          }
-        }
-      ]
-    });
-    await alert.present();
-  }
-
   async presentToast(mensaje: string, tiempo: number) {
     const toast = await this.toastController.create({
       message: mensaje,

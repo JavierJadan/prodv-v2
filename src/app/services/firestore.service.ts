@@ -2,14 +2,14 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import {AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from '@angular/fire/firestore';
 import {finalize} from 'rxjs/operators';
-import { Equipos, Encuentro, EncuentroPrueba, Campeonatos} from '../models';
+import { Equipos, Encuentro, Campeonatos} from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
   editEquipo: Equipos;
-  editMatch: EncuentroPrueba;
+  editMatch: Encuentro;
   editCampeonato: Campeonatos;
 
   constructor(public FireStore: AngularFirestore,
@@ -60,7 +60,7 @@ export class FirestoreService {
   getgrupos<tipo>(path: string,  parametro: string, condicion: any, busqueda: string){
     const date = new Date();
     const collection = this.FireStore.collection<tipo>(path,
-      ref => ref.where(parametro,condicion,busqueda) 
+      ref => ref.where(parametro,condicion,busqueda),
       // .orderBy('fecha','desc')
       // // .startAt(date)
       );
@@ -173,7 +173,7 @@ export class FirestoreService {
   }
   getTeamsind<tipo>(path: string,  parametro: string, condicion: any, busqueda: string){
     const collection = this.FireStore.collection<tipo>(path,
-      ref => ref.where(parametro,condicion,busqueda) 
+      ref => ref.where(parametro,condicion,busqueda),
       // .orderBy('fecha','desc')
       // // .startAt(date)
       );
@@ -191,14 +191,14 @@ export class FirestoreService {
             const downloadURL = res;
             resolve(downloadURL);
             return;
-          })
+          });
                 })
 
 
       )
         .subscribe();
 
-    })
+    });
 
 
   }
@@ -211,14 +211,14 @@ export class FirestoreService {
   }
 
   setCampeonato(campeonato: Campeonatos){
-    this.editCampeonato= campeonato;
+    this.editCampeonato = campeonato;
   }
 
   getCampeonato(){
     return this.editCampeonato;
   }
 
-  setMatch(match:EncuentroPrueba){
+  setMatch(match: Encuentro){
     return this.editMatch=match;
 
   }

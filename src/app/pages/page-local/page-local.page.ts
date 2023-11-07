@@ -3,7 +3,7 @@ import { Campeonatos } from 'src/app/models';
 import { AlertController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { FirestoreService } from 'src/app/services/firestore.service';
-import { EncuentroPrueba, Equipos } from 'src/app/models';
+import { Encuentro, Equipos } from 'src/app/models';
 import { MenuController } from '@ionic/angular';
 import {
   AdMob,
@@ -28,45 +28,45 @@ export class PageLocalPage implements OnInit {
   equipoInfo: Subscription;
   equiposInfo: Subscription;
   campeonatos: Campeonatos[] = [];
-  genef: EncuentroPrueba[] = [];
-  gene: EncuentroPrueba[] = [];
-  geneinit: EncuentroPrueba[] = [];
-  grupo1: EncuentroPrueba[] = [];
-  grupo2: EncuentroPrueba[] = [];
-  grupo3: EncuentroPrueba[] = [];
-  grupo4: EncuentroPrueba[] = [];
-  grupo5: EncuentroPrueba[] = [];
-  grupo6: EncuentroPrueba[] = [];
-  grupo7: EncuentroPrueba[] = [];
-  grupo8: EncuentroPrueba[] = [];
-  grupo9: EncuentroPrueba[] = [];
-  grupo10: EncuentroPrueba[] = [];
-  grupoinit1: EncuentroPrueba[] = [];
-  grupoinit2: EncuentroPrueba[] = [];
-  grupoinit3: EncuentroPrueba[] = [];
-  grupoinit4: EncuentroPrueba[] = [];
-  grupoinit5: EncuentroPrueba[] = [];
-  grupoinit6: EncuentroPrueba[] = [];
-  grupoinit7: EncuentroPrueba[] = [];
-  grupoinit8: EncuentroPrueba[] = [];
-  grupoinit9: EncuentroPrueba[] = [];
-  grupoinit10: EncuentroPrueba[] = [];
-  grupof1: EncuentroPrueba[] = [];
-  grupof2: EncuentroPrueba[] = [];
-  grupof3: EncuentroPrueba[] = [];
-  grupof4: EncuentroPrueba[] = [];
-  grupof5: EncuentroPrueba[] = [];
-  grupof6: EncuentroPrueba[] = [];
-  grupof7: EncuentroPrueba[] = [];
-  grupof8: EncuentroPrueba[] = [];
-  grupof9: EncuentroPrueba[] = [];
-  grupof10: EncuentroPrueba[] = [];
-  geneida: EncuentroPrueba[] = [];
-  geneidainit: EncuentroPrueba[] = [];
-  geneidaf: EncuentroPrueba[] = [];
-  genevuel: EncuentroPrueba[] = [];
-  genevuelinit: EncuentroPrueba[] = [];
-  genevuelf: EncuentroPrueba[] = [];
+  genef: Encuentro[] = [];
+  gene: Encuentro[] = [];
+  geneinit: Encuentro[] = [];
+  grupo1: Encuentro[] = [];
+  grupo2: Encuentro[] = [];
+  grupo3: Encuentro[] = [];
+  grupo4: Encuentro[] = [];
+  grupo5: Encuentro[] = [];
+  grupo6: Encuentro[] = [];
+  grupo7: Encuentro[] = [];
+  grupo8: Encuentro[] = [];
+  grupo9: Encuentro[] = [];
+  grupo10: Encuentro[] = [];
+  grupoinit1: Encuentro[] = [];
+  grupoinit2: Encuentro[] = [];
+  grupoinit3: Encuentro[] = [];
+  grupoinit4: Encuentro[] = [];
+  grupoinit5: Encuentro[] = [];
+  grupoinit6: Encuentro[] = [];
+  grupoinit7: Encuentro[] = [];
+  grupoinit8: Encuentro[] = [];
+  grupoinit9: Encuentro[] = [];
+  grupoinit10: Encuentro[] = [];
+  grupof1: Encuentro[] = [];
+  grupof2: Encuentro[] = [];
+  grupof3: Encuentro[] = [];
+  grupof4: Encuentro[] = [];
+  grupof5: Encuentro[] = [];
+  grupof6: Encuentro[] = [];
+  grupof7: Encuentro[] = [];
+  grupof8: Encuentro[] = [];
+  grupof9: Encuentro[] = [];
+  grupof10: Encuentro[] = [];
+  geneida: Encuentro[] = [];
+  geneidainit: Encuentro[] = [];
+  geneidaf: Encuentro[] = [];
+  genevuel: Encuentro[] = [];
+  genevuelinit: Encuentro[] = [];
+  genevuelf: Encuentro[] = [];
 
 
   cuarto = false;
@@ -108,7 +108,7 @@ export class PageLocalPage implements OnInit {
   };
 
 
-  encuentro: EncuentroPrueba = {
+  encuentro: Encuentro = {
     uid: '',
     tipo: '',
     fechae: '',
@@ -124,7 +124,25 @@ export class PageLocalPage implements OnInit {
     escudo_e2: '',
     nombre_e1: '',
     nombre_e2: '',
-  }
+    puntose1: 0,
+    pje1: 0,
+    pge1: 0,
+    pee1: 0,
+    ppe1: 0,
+    gfe1: 0,
+    gce1: 0,
+    dge1: 0,
+    puntose2: 0,
+    pje2: 0,
+    pge2: 0,
+    pee2: 0,
+    ppe2: 0,
+    gfe2: 0,
+    gce2: 0,
+    dge2: 0,
+    penale1: 0,
+    penale2:0
+  };
 
 
   // Tabla
@@ -400,7 +418,7 @@ export class PageLocalPage implements OnInit {
 
   async getPartidos(uid: string) {
     const path = 'Campeonatos/' + uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getPartidos<EncuentroPrueba>(path).subscribe(res => {
+    this.equiposInfo = this.firestoreService.getPartidos<Encuentro>(path).subscribe(res => {
       if (res.length) {
         this.antsig = true;
       } else {
@@ -437,7 +455,7 @@ export class PageLocalPage implements OnInit {
 
   async prueba(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getCollection<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getCollection<Encuentro>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.gene = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -449,7 +467,7 @@ export class PageLocalPage implements OnInit {
   }
   async partidos_init(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getpartidos_init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getpartidos_init<Encuentro>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.geneinit = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -462,7 +480,7 @@ export class PageLocalPage implements OnInit {
   }
   async pruebafina(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.getCollectionfinalizados<EncuentroPrueba>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
+    this.equiposInfo = this.firestoreService.getCollectionfinalizados<Encuentro>(path, 'tipo', '==', tipo, 'unico').subscribe(res => {
       this.genef = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -476,7 +494,7 @@ export class PageLocalPage implements OnInit {
   async grupos(fase: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupo1 = res;
       if (res.length) {
         this.gru1 = true;
@@ -485,7 +503,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
       this.grupo2 = res;
       if (res.length) {
         this.gru2 = true;
@@ -494,7 +512,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
       this.grupo3 = res;
       if (res.length) {
         this.gru3 = true;
@@ -503,7 +521,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
       this.grupo4 = res;
       if (res.length) {
         this.gru4 = true;
@@ -512,7 +530,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
       this.grupo5 = res;
       if (res.length) {
         this.gru5 = true;
@@ -521,7 +539,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
       this.grupo6 = res;
       if (res.length) {
         this.gru6 = true;
@@ -530,7 +548,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
       this.grupo7 = res;
       if (res.length) {
         this.gru7 = true;
@@ -539,7 +557,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
       this.grupo8 = res;
       if (res.length) {
         this.gru8 = true;
@@ -548,7 +566,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
       this.grupo9 = res;
       if (res.length) {
         this.gru9 = true;
@@ -557,7 +575,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongrupos<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
       this.grupo10 = res;
       if (res.length) {
         this.gru10 = true;
@@ -571,7 +589,7 @@ export class PageLocalPage implements OnInit {
   }
   async gruposfinalizados(fase: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupof1 = res;
       if (res.length) {
         this.gru1 = true;
@@ -580,7 +598,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
       this.grupof2 = res;
       if (res.length) {
         this.gru2 = true;
@@ -589,7 +607,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
       this.grupof3 = res;
       if (res.length) {
         this.gru3 = true;
@@ -598,7 +616,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
       this.grupof4 = res;
       if (res.length) {
         this.gru4 = true;
@@ -607,7 +625,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
       this.grupof5 = res;
       if (res.length) {
         this.gru5 = true;
@@ -616,7 +634,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
       this.grupof6 = res;
       if (res.length) {
         this.gru6 = true;
@@ -625,7 +643,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
       this.grupof7 = res;
       if (res.length) {
         this.gru7 = true;
@@ -634,7 +652,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
       this.grupof8 = res;
       if (res.length) {
         this.gru8 = true;
@@ -643,7 +661,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
       this.grupof9 = res;
       if (res.length) {
         this.gru9 = true;
@@ -652,7 +670,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
       this.grupof10 = res;
       if (res.length) {
         this.gru10 = true;
@@ -665,7 +683,7 @@ export class PageLocalPage implements OnInit {
   }
   async partidos_init_fases(fase: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupoinit1 = res;
       if (res.length) {
         this.gru1 = true;
@@ -674,7 +692,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 2', fase).subscribe(res => {
       this.grupoinit2 = res;
       if (res.length) {
         this.gru2 = true;
@@ -683,7 +701,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
       this.grupoinit3 = res;
       if (res.length) {
         this.gru3 = true;
@@ -692,7 +710,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
       this.grupoinit4 = res;
       if (res.length) {
         this.gru4 = true;
@@ -701,7 +719,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
       this.grupoinit5 = res;
       if (res.length) {
         this.gru5 = true;
@@ -710,7 +728,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
       this.grupoinit6 = res;
       if (res.length) {
         this.gru6 = true;
@@ -719,7 +737,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
       this.grupoinit7 = res;
       if (res.length) {
         this.gru7 = true;
@@ -728,7 +746,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
       this.grupoinit8 = res;
       if (res.length) {
         this.gru8 = true;
@@ -737,7 +755,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
       this.grupoinit9 = res;
       if (res.length) {
         this.gru9 = true;
@@ -746,7 +764,7 @@ export class PageLocalPage implements OnInit {
       }
     });
 
-    this.firestoreService.getgruposinit<EncuentroPrueba>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
       this.grupoinit10 = res;
       if (res.length) {
         this.gru10 = true;
@@ -761,7 +779,7 @@ export class PageLocalPage implements OnInit {
 
   async partidos_ida_vuel_E(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<Encuentro>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneida = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -774,7 +792,7 @@ export class PageLocalPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_E<Encuentro>(path, 'tipo', '==', tipo, 'vuelta').subscribe(res => {
       this.genevuel = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -793,7 +811,7 @@ export class PageLocalPage implements OnInit {
 
   async partidos_ida_vuel_init(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<Encuentro>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneidainit = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -805,7 +823,7 @@ export class PageLocalPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta')
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
     .subscribe(res => {
       this.genevuelinit = res;
       this.grupo1 = [];
@@ -824,7 +842,7 @@ export class PageLocalPage implements OnInit {
 
   async partidos_ida_vuel_fina(tipo: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<Encuentro>(path, 'tipo', '==', tipo, 'ida').subscribe(res => {
       this.geneidaf = res;
       this.grupo1 = [];
       this.grupo2 = [];
@@ -836,7 +854,7 @@ export class PageLocalPage implements OnInit {
       this.gru1 = false;
       this.gru2 = false;
     });
-    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<EncuentroPrueba>(path, 'tipo', '==', tipo, 'vuelta')
+    this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
     .subscribe(res => {
       this.genevuelf = res;
       this.grupo1 = [];

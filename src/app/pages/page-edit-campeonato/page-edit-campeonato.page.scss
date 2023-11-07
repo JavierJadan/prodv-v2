@@ -27,6 +27,11 @@
     text-align: center;
     width: 100%;
 }
+.botoneliminar{
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
 
 .button-cancelar{ 
     --color: #075E54;
@@ -44,4 +49,14 @@
     --background:#075E54;
     font-weight: bold;
     width: 40%;
+}
+
+.button-eliminar{
+    --color: #075E54;
+    text-align: center;
+    --background: #ffffff;
+    --border-radius:10px;
+    width:50%;
+    font-weight: bold;
+
 }

@@ -17,13 +17,13 @@ export class FirebaseauthService {
   logout(){
     this.auth.signOut();
   }
-   async resetpassword(email:string): Promise<void>{
+  async resetpassword(email:string): Promise<void>{
     try {
       return this.auth.sendPasswordResetEmail(email);
     } catch (error) {
-      console.log("Error=>",error)
+      console.log('Error=>',error);
     }
-   }
+  }
 
   
 
@@ -36,18 +36,17 @@ export class FirebaseauthService {
       const {user}= await this.auth.createUserWithEmailAndPassword(email,password);
       await this.verificacion();
       return user;
-      
     } catch (error) {
-      console.log("Error ->", error);
+      console.log('Error ->', error);
     }
 
   }
 
-  async verificacion(): Promise<void> { 
+  async verificacion(): Promise<void> {
     try {
       return (await this.auth.currentUser).sendEmailVerification();
     } catch (error) {
-      console.log("Error ->", error);
+      console.log('Error ->', error);
     }
   }
 
