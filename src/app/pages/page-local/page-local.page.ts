@@ -240,8 +240,8 @@ export class PageLocalPage implements OnInit {
       }
     );
     const options: RewardAdOptions = {
-      adId: 'YOUR ADID',
-      isTesting: true,
+      adId: isPlatform('ios') ? 'ca-app-pub-5567251641138923/3326349999' : 'ca-app-pub-5567251641138923/8705835032',
+      isTesting: false,
       // npa: true
       // ssv: { ... }
     };
@@ -252,7 +252,7 @@ export class PageLocalPage implements OnInit {
 
 
   changeSegment(event: any) {
-    
+
     if (this.opcion == 'Partidos' && this.isActivePublicidad) {
       this.showRewardVideo();
       this.isActivePublicidad = false;
