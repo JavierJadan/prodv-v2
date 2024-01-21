@@ -1,234 +1,266 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <!-- <ion-buttons slot="start">
-      
-   </ion-buttons> -->
-    <ion-title style="text-align: center;">PRODV</ion-title> 
-
-    <!-- <ion-buttons slot="end">
-      
-    </ion-buttons>  -->
- 
-  </ion-toolbar>
-
-</ion-header>
-
-<ion-content>
-
-  <div class="container-main">
-    <div class="container-sub">
-      <ion-grid fixed>
-        <ion-row>
-          <ion-col size="12">
-            <img src="assets/imgs/logo-liga-pro.png" width="200" alt="" srcset="">
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="12">
-            <p class="text-local-page" >
-              PROXIMAMENTE
-            </p>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-    </div>
-  </div>
-
-</ion-content>
-
-<!--% CODE TO SOCCER   -->
-
-<!-- <ion-header>
-  <ion-toolbar mode="ios">
     <ion-title style="text-align: center;">PRODV</ion-title> 
   </ion-toolbar>
 </ion-header>
 
-<ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
-  <ion-segment-button value="live">
-    <ion-label>En Vivo</ion-label>
+<ion-segment value="buttons" (ionChange)="changeOpctionSerieLigaPro($event)" value='{{opcionSerie}}'>
+  <ion-segment-button value="seriea">
+    <ion-label>SERIE A</ion-label>
   </ion-segment-button>
-  <ion-segment-button value="dates">
-    <ion-label>Fechas</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="stadium">
-    <ion-label>Estadios</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="playes">
-    <ion-label>Jugadores</ion-label>
+  <ion-segment-button value="serieb">
+    <ion-label>SERIE B</ion-label>
   </ion-segment-button>
 </ion-segment>
 
 
- <ion-content class="content_pri" >
 
 
-<div *ngIf="opcion==='live' && matches.length != 0 " >
+<ion-content class="content_pri" >
 
-  <!-- <h2>Tengo datos</h2> -->
-  <!-- <div  *ngFor="let match of matches, let i = index" class="div-partidos" [routerLink]="['/details/' + match.fixture.id ]" >
-    <ion-row class="row_fecha">  
 
-      <ion-col class="col_tex_country" size="4">
-        <ion-label  class="label_fecha">
-          {{match.league.country}}
-        </ion-label>
-      </ion-col>
-      
-      <ion-col class="col_tex_fecha" size="4">
-        <ion-label  class="label_fecha">
-          {{match.fixture.date | date : "dd/MM/yyyy"}}
-        </ion-label>
-      </ion-col>
 
-      <ion-col class="col_tex_league" size="4">
-        <ion-label  class="label_fecha">
-          {{match.league.name}}
-        </ion-label>
-      </ion-col>
-    
-    </ion-row>
-      
-    <ion-row>
-      <ion-col class="col_nom_eq1" size="3">
-        <ion-label class="label_e1">
-          {{match.teams.home.name}}
-        </ion-label>
-      </ion-col>
-      
-      <ion-col class="col_img" size="2">
-        <ion-item lines="none" class="item_avatar">
-          
-          <img class="con_img" src="{{match.teams.home.logo}}" >
-        </ion-item>
-        
-      </ion-col>
-      <ion-col class="col_vs" size="2">
-        <ion-label class="label_tittle_vs">
-          {{match.goals.home}} - {{match.goals.away}}
-        </ion-label>
-      </ion-col>
-      
-      <ion-col class="col_img" size="2">
-        <ion-item lines="none" class="item_avatar">
-          <img class="con_img" src="{{match.teams.away.logo}}" >
-        </ion-item>
-      </ion-col>
-      
-      <ion-col class="col_nom_eq2" size="3">
-        <ion-label class="label_e2">
-          {{match.teams.away.name}}
-        </ion-label>
-      </ion-col>
-    </ion-row> 
 
-    <ion-row class="row_fecha">  
-      <ion-col class="col_tex_fecha" size="12">
-        <ion-label  class="label_estadio">
-          {{match.fixture.status.long}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
+<div *ngIf="opcionSerie =='seriea'">
 
-    <ion-row class="row_fecha">  
-      <ion-col class="col_tex_fecha" size="12">
-        <ion-label  class="label_estadio">
-          {{match.fixture.venue.name}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
-  </div>
-</div>  -->
+  <ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
+    <ion-segment-button value="partidos">
+      <ion-label>Partidos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="clasificacion">
+      <ion-label>Clasificación</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="stadium">
+      <ion-label>Estadios</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="playes">
+      <ion-label>Jugadores</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+   
+  <div *ngIf="opcion =='partidos'">
 
-<!-- <div *ngIf="matches.length === 0" style="margin-top: auto; margin-bottom: auto; " >
-  <img src="../../../assets/imgs/wait_soccer.gif" alt="" srcset="">
-</div> -->
-<!-- 
-<div *ngIf="opcion==='dates'" >
+    <div *ngFor="let match of matches, let i = index"  class="div-partidos" [routerLink]="['/details/' + match.match_id] ">
 
-  <div  *ngFor="let match of matches1, let i = index" class="div-partidos" [routerLink]="['/details/' + match.fixture.id ]" >
-    <ion-row class="row_fecha">  
-
-      <ion-col class="col_tex_country" size="4">
-        <ion-label  class="label_fecha">
-          {{match.league.country}}
-        </ion-label>
-      </ion-col>
-      
-      <ion-col class="col_tex_fecha" size="4">
-        <ion-label  class="label_fecha">
-          {{match.fixture.date | date : "dd/MM/yyyy"}}
-        </ion-label>
-      </ion-col>
-
-      <ion-col class="col_tex_league" size="4">
-        <ion-label  class="label_fecha">
-          {{match.league.name}}
-        </ion-label>
-      </ion-col>
-    
-    </ion-row>
-      
-    <ion-row>
-      <ion-col class="col_nom_eq1" size="3">
-        <ion-label class="label_e1">
-          {{match.teams.home.name}}
-        </ion-label>
-      </ion-col>
-      
-      <ion-col class="col_img" size="2">
-        <ion-item lines="none" class="item_avatar">
-          
-          <img class="con_img" src="{{match.teams.home.logo}}" >
-        </ion-item>
-        
-      </ion-col>
-      <ion-col class="col_vs" size="2">
-        <ion-label class="label_tittle_vs">
-          {{match.goals.home}} - {{match.goals.away}}
-        </ion-label>
-      </ion-col>
-      
-      <ion-col class="col_img" size="2">
-        <ion-item lines="none" class="item_avatar">
-          <img class="con_img" src="{{match.teams.away.logo}}" >
-        </ion-item>
-      </ion-col>
-      
-      <ion-col class="col_nom_eq2" size="3">
-        <ion-label class="label_e2">
-          {{match.teams.away.name}}
-        </ion-label>
-      </ion-col>
-    </ion-row> 
-
-    <ion-row class="row_fecha">  
-      <ion-col class="col_tex_fecha" size="12">
-        <ion-label  class="label_estadio">
-          {{match.fixture.status.long}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
-
-    <ion-row class="row_fecha">  
-      <ion-col class="col_tex_fecha" size="12">
-        <ion-label  class="label_estadio">
-          {{match.fixture.venue.name}}
-        </ion-label>
-      </ion-col>
-    </ion-row>
-  </div>
-
-  <div *ngFor="let modality of modalities" >
-    <ion-item>
-      <ion-label>
-        {{ modality.mod_name}}
-      </ion-label>
-    </ion-item>
+      <ion-row class="row_fecha">  
   
+        <ion-col class="col_tex_country" size="4">
+          <ion-label  class="label_fecha">
+            {{match.country_name}}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_tex_fecha" size="4">
+          <ion-label  class="label_fecha">
+            {{match.match_date | date : "yyyy-mm-dd"}}
+          </ion-label>
+        </ion-col>
+  
+        <ion-col class="col_tex_league" size="4">
+          <ion-label  class="label_fecha">
+            {{match.league_name}}
+          </ion-label>
+        </ion-col>
+      
+      </ion-row>
+        
+      <ion-row>
+        <ion-col class="col_nom_eq1" size="3">
+          <ion-label class="label_e1">
+            {{match.match_hometeam_name}}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_img" size="2">
+          <ion-item lines="none" class="item_avatar">
+            
+            <img class="con_img" src="{{match.team_home_badge}}" >
+          </ion-item>
+          
+        </ion-col>
+        <ion-col class="col_vs" size="2">
+          <ion-label class="label_tittle_vs">
+            {{match.match_hometeam_ft_score}} - {{match.match_awayteam_ft_score
+            }}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_img" size="2">
+          <ion-item lines="none" class="item_avatar">
+            <img class="con_img" src="{{match.team_away_badge}}" >
+          </ion-item>
+        </ion-col>
+        
+        <ion-col class="col_nom_eq2" size="3">
+          <ion-label class="label_e2">
+            {{match.match_awayteam_name}}
+          </ion-label>
+        </ion-col>
+      </ion-row> 
+  
+      <ion-row class="row_fecha">  
+        <ion-col class="col_tex_fecha" size="12">
+          <ion-label  class="label_estadio">
+            {{match.match_stadium}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="row_fecha">  
+        <ion-col class="col_tex_fecha" size="12">
+          <ion-label  class="label_estadio">
+            {{match.match_status}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+  
+  
+    </div>
   </div>
+
+  <div  *ngIf="opcion =='clasificacion'" >
+
+    <ion-segment value="buttons" (ionChange)="changeStadingLigaPro($event)" value='opcStading'>
+      <ion-segment-button value="firstStading">
+        <ion-label>Primera Etapa</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="secondStading">
+        <ion-label>Segunda Etapa</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="acumulada">
+        <ion-label>Acumulada</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <div *ngIf="opcStading == 'firstStading'">
+      <ion-grid>
+        <ion-row>
+  
+          <ion-col size="5" class="col-cla-title">Equipo</ion-col>
+          <ion-col size="1" class="col-cla-title">PTS</ion-col>
+          <ion-col size="1" class="col-cla-title">PJ</ion-col>
+          <ion-col size="1" class="col-cla-title">PG</ion-col>
+          <ion-col size="1" class="col-cla-title">PE</ion-col>
+          <ion-col size="1" class="col-cla-title">PP</ion-col>
+          <ion-col size="1" class="col-cla-title">GF</ion-col>
+          <ion-col size="1" class="col-cla-title">GC</ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <ion-grid>
+        <ion-row *ngFor="let stadingOne of stadingOneRound" >
+          <ion-col class="col-cla" size="1">{{ stadingOne.overall_league_position }}</ion-col>
+          <ion-col size="1.1" class="col-cla">
+            <img class="con_img" src="{{stadingOne.team_badge}}" >
+          </ion-col>
+          <ion-col size="2.9" class="col-cla-name">{{ stadingOne.team_name}}</ion-col>
+          <ion-col size="1" class="col-cla-pts"> {{ stadingOne.overall_league_PTS }} </ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_payed }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_W }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_D }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_L }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_GF }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_GA }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngIf="opcStading == 'secondStading'">
+      <ion-grid>
+        <ion-row>
+  
+          <ion-col size="5" class="col-cla-title">Equipo</ion-col>
+          <ion-col size="1" class="col-cla-title">PTS</ion-col>
+          <ion-col size="1" class="col-cla-title">PJ</ion-col>
+          <ion-col size="1" class="col-cla-title">PG</ion-col>
+          <ion-col size="1" class="col-cla-title">PE</ion-col>
+          <ion-col size="1" class="col-cla-title">PP</ion-col>
+          <ion-col size="1" class="col-cla-title">GF</ion-col>
+          <ion-col size="1" class="col-cla-title">GC</ion-col>
+        </ion-row>
+      </ion-grid>
+  
+      <ion-grid>
+        <ion-row *ngFor="let stadingOne of stadingSecondRound" >
+          <ion-col class="col-cla" size="1">{{ stadingOne.overall_league_position }}</ion-col>
+          <ion-col size="1.1" class="col-cla">
+            <img class="con_img" src="{{stadingOne.team_badge}}" >
+          </ion-col>
+          <ion-col size="2.9" class="col-cla-name">{{ stadingOne.team_name}}</ion-col>
+          <ion-col size="1" class="col-cla-pts"> {{ stadingOne.overall_league_PTS }} </ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_payed }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_W }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_D }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_L }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_GF }}</ion-col>
+          <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_GA }}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngIf="opcStading == 'acumulada'">
+      <ion-grid>
+        <ion-row>
+  
+          <ion-col size="5" class="col-cla-title">Equipo</ion-col>
+          <ion-col size="3" class="col-cla-title">PTS</ion-col>
+          <ion-col size="2" class="col-cla-title">GD</ion-col>
+          <ion-col size="2" class="col-cla-title">PT</ion-col>
+          <!-- <ion-col size="1" class="col-cla-title">PJ</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla-title">PG</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla-title">PE</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla-title">PP</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla-title">GF</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla-title">GC</ion-col> -->
+        </ion-row>
+      </ion-grid>
+  
+      <ion-grid>
+        <ion-row *ngFor="let acumulada of newAcumulada" >
+          <!-- <ion-col class="col-cla" size="1">{{ acumulada.team }}</ion-col> -->
+          <!-- <ion-col size="1.1" class="col-cla"> -->
+            <!-- <img class="con_img" src="{{stadingOne.team_badge}}" > -->
+          <!-- </ion-col> -->
+          <ion-col size="5" class="col-cla-name">{{ acumulada.team }}  </ion-col>
+          <ion-col size="3" class="col-cla"> {{ acumulada.pts }} </ion-col>
+          <ion-col size="2" class="col-cla"> {{ acumulada.gd }} </ion-col>
+          <ion-col size="2" class="col-cla"> {{ acumulada.pt }} </ion-col>
+          <!-- <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_payed }}</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_W }}</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_D }}</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_L }}</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_GF }}</ion-col> -->
+          <!-- <ion-col size="1" class="col-cla">{{ stadingOne.overall_league_GA }}</ion-col> -->
+        </ion-row>
+      </ion-grid>
+    </div>
+
+  </div>
+
+</div>
+
+
+
+
+<div *ngIf="opcionSerie==='serieb'" >
+
+  <ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
+    <ion-segment-button value="live">
+      <ion-label>En Vivo</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dates">
+      <ion-label>Fechas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="stadium">
+      <ion-label>Estadios</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="playes">
+      <ion-label>Jugadores</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  SERIE B
+
 
 
   
@@ -238,5 +270,5 @@
   
 
 </ion-content>
- -->
+
 
