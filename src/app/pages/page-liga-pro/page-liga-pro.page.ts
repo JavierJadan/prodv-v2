@@ -14,9 +14,10 @@ export class PageLigaProPage implements OnInit {
   // datePipe = new DatePipe('en-US');
 
   matches= [];
-  matches1= [];
+  matchesB= [];
   opcion='';
   opcionSerie='';
+  opcionB='';
   stadingOneRound=[];
   stadingSecondRound=[];
   newAcumulada = [];
@@ -67,10 +68,12 @@ export class PageLigaProPage implements OnInit {
     this.opcion='partidos';
     this.opcionSerie='seriea';
     this.opcStading='firstStading';
+    this.opcionB='partidosB';
     // if (this.opcion ==='dates') {
       this.ionViewDidLoad();
       this.getAllMatchesLigaPro();
       this.getStandingsSerieA();
+      this.getAllMatchesLigaProB();
 
 
      
@@ -89,10 +92,37 @@ export class PageLigaProPage implements OnInit {
     this.opcion=opc;
   }
 
+  changeSegmentLeagueProB(event: any){
+    const opc = event.detail.value;
+    console.log(opc);
+    this.opcionB=opc;
+  }
+
   changeStadingLigaPro(event: any){
     const opcStading = event.detail.value;
     this.opcStading = opcStading;
     console.log(this.opcStading);
+  }
+
+  getAllMatchesLigaProB(){
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
+        action: 'get_events',
+        league_id: 139,
+        from:'2023-09-05',
+        to:'2023-10-18' 
+      }
+    }).subscribe(res =>{
+
+      if (res) {
+        console.log(res);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this.matchesB = res;
+      }else{
+        console.log('Dont get DATA');
+      }
+    });
   }
 
   getAllMatchesLigaPro(){
@@ -146,14 +176,14 @@ export class PageLigaProPage implements OnInit {
 
         this.ptdOneRound = this.stadingOneRound.filter( standings => standings.overall_league_payed);
         this.ptdTwoRound = this.stadingOneRound.filter( standings => standings.overall_league_payed);
-        
 
         for (let index = 0; index < this.acumulada1.length ; index++) {
           this.filterAcumulada(index);
+
         }
 
         this.newAcumulada = this.stadingAcumulada.sort((a,b) => (b.pts - a.pts));
-        console.log(this.newAcumulada);
+        // console.log(this.newAcumulada);
 
       }else{
         console.log('Dont get DATA');

@@ -244,12 +244,12 @@
 
 <div *ngIf="opcionSerie==='serieb'" >
 
-  <ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
-    <ion-segment-button value="live">
-      <ion-label>En Vivo</ion-label>
+  <ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcionB}}'>
+    <ion-segment-button value="partidosB">
+      <ion-label>Partidos</ion-label>
     </ion-segment-button>
     <ion-segment-button value="dates">
-      <ion-label>Fechas</ion-label>
+      <ion-label>Clasificación</ion-label>
     </ion-segment-button>
     <ion-segment-button value="stadium">
       <ion-label>Estadios</ion-label>
@@ -259,7 +259,88 @@
     </ion-segment-button>
   </ion-segment>
 
-  SERIE B
+  <!--% CARD PARTIDOS SERIE B  -->
+
+  <div *ngIf="opcionB =='partidosB'">
+
+    <div *ngFor="let match of matchesB, let i = index"  class="div-partidos" [routerLink]="['/details/' + match.match_id] ">
+
+      <ion-row class="row_fecha">  
+  
+        <ion-col class="col_tex_country" size="4">
+          <ion-label  class="label_fecha">
+            {{match.country_name}}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_tex_fecha" size="4">
+          <ion-label  class="label_fecha">
+            {{match.match_date | date : "yyyy-mm-dd"}}
+          </ion-label>
+        </ion-col>
+  
+        <ion-col class="col_tex_league" size="4">
+          <ion-label  class="label_fecha">
+            {{match.league_name}}
+          </ion-label>
+        </ion-col>
+      
+      </ion-row>
+        
+      <ion-row>
+        <ion-col class="col_nom_eq1" size="3">
+          <ion-label class="label_e1">
+            {{match.match_hometeam_name}}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_img" size="2">
+          <ion-item lines="none" class="item_avatar">
+            
+            <img class="con_img" src="{{match.team_home_badge}}" >
+          </ion-item>
+          
+        </ion-col>
+        <ion-col class="col_vs" size="2">
+          <ion-label class="label_tittle_vs">
+            {{match.match_hometeam_ft_score}} - {{match.match_awayteam_ft_score
+            }}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_img" size="2">
+          <ion-item lines="none" class="item_avatar">
+            <img class="con_img" src="{{match.team_away_badge}}" >
+          </ion-item>
+        </ion-col>
+        
+        <ion-col class="col_nom_eq2" size="3">
+          <ion-label class="label_e2">
+            {{match.match_awayteam_name}}
+          </ion-label>
+        </ion-col>
+      </ion-row> 
+  
+      <ion-row class="row_fecha">  
+        <ion-col class="col_tex_fecha" size="12">
+          <ion-label  class="label_estadio">
+            {{match.match_stadium}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="row_fecha">  
+        <ion-col class="col_tex_fecha" size="12">
+          <ion-label  class="label_estadio">
+            {{match.match_status}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+  
+  
+    </div>
+  </div>
+
 
 
 
