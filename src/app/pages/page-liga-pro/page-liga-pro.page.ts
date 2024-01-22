@@ -55,12 +55,17 @@ export class PageLigaProPage implements OnInit {
 
   opcStading='';
   stadingRound= [];
-
+  
   modalities= [];
   response=[];
   currentDateMatch = new Date();
   formatDateToMatch='';
-
+  
+  //^ Variables for the SERIE B
+  stadingOneRoundB=[];
+  stadingSecondRoundB=[]; 
+  opcStadingB='';
+  
   constructor(private http: HttpClient) {
    }
 
@@ -96,6 +101,12 @@ export class PageLigaProPage implements OnInit {
     const opc = event.detail.value;
     console.log(opc);
     this.opcionB=opc;
+  }
+
+  changeStadingLigaPrB(event: any){
+    const opcStadingB = event.detail.value;
+    this.opcStadingB = opcStadingB;
+    console.log(this.opcStadingB);
   }
 
   changeStadingLigaPro(event: any){
