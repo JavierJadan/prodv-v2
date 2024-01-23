@@ -65,6 +65,12 @@ export class PageLigaProPage implements OnInit {
   stadingOneRoundB=[];
   stadingSecondRoundB=[]; 
   opcStadingB='';
+
+  //^ Variables for filter the matches
+  
+  matchesFilterOneRound = [];
+  round = 1;
+  roundValue = 1;
   
   constructor(private http: HttpClient) {
    }
@@ -85,6 +91,10 @@ export class PageLigaProPage implements OnInit {
 
 
 
+  }
+
+  ionViewDidEnter(){
+    this.getAllMatchesLigaPro();
   }
 
   ionViewDidLoad(){
@@ -136,6 +146,14 @@ export class PageLigaProPage implements OnInit {
     });
   }
 
+  changeRound(){
+    if(this.round === 1){
+      this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "1" );
+      } else if(this.round === 2){
+      this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "2" );
+      }
+  }
+
   getAllMatchesLigaPro(){
 
     // this.formatDateToMatch = this.datePipe.transform(this.currentDateMatch,'yyyy-MM-dd');
@@ -156,12 +174,21 @@ export class PageLigaProPage implements OnInit {
         
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matches = res;
-        console.log(this.matches);
+        // console.log(this.matches);
+
+        this.changeRound();
+
+        console.log(this.matchesFilterOneRound);
+
+
       }else{
         console.log('Dont get DATA');
       }
     });
   }
+
+  
+
 
   getStandingsSerieA(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
