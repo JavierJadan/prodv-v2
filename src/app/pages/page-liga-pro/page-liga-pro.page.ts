@@ -127,7 +127,7 @@ export class PageLigaProPage implements OnInit {
     }).subscribe(res =>{
 
       if (res) {
-        console.log(res);
+        // console.log(res);
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matchesB = res;
       }else{
@@ -147,15 +147,16 @@ export class PageLigaProPage implements OnInit {
         APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
         action: 'get_events',
         league_id: 140,
-        from:'2023-12-05',
-        to:'2023-12-18' 
+        from:'2023-01-05',
+        to:'2023-12-20' 
       }
     }).subscribe(res =>{
 
       if (res) {
-        // console.log(res);
+        
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matches = res;
+        console.log(this.matches);
       }else{
         console.log('Dont get DATA');
       }
@@ -170,6 +171,8 @@ export class PageLigaProPage implements OnInit {
         league_id: 140,
       }
     }).subscribe(res =>{
+
+      
 
       if (res) {
 
