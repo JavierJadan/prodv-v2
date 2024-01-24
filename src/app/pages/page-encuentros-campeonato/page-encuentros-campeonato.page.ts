@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { LoadingController, IonDatetime, AlertController, ToastController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Equipos, Campeonatos, Encuentro, fase } from 'src/app/models';
@@ -13,6 +13,7 @@ import { format, parseISO } from 'date-fns';
 })
 export class PageEncuentrosCampeonatoPage implements OnInit {
 
+  relampago = false;
   infocampeonato: Campeonatos = {
     uid: '',
     nombre: '',
@@ -21,13 +22,14 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     lugar: '',
     estado: 'iniciado',
     grupos: 0,
-    fases: 0
+    fases: 0,
+    init: ''
   };
   antsig = false;
 
 
   numerofases = [];
-  numerogrupos=[];
+  numerogrupos = [];
 
   estado = false;
   grupo = false;
@@ -42,6 +44,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   team1: Equipos[] = [];
   team2: Equipos[] = [];
   teamg: Equipos[] = [];
+  teamrela: Equipos[] = [];
   teamd: Equipos[] = [];
   genee: Encuentro[] = [];
   genef: Encuentro[] = [];
@@ -101,7 +104,7 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
   descenso = false;
 
   escudo1 = '';
-  escudo2 = ''
+  escudo2 = '';
   uid1 = '';
   uid2 = '';
 
@@ -174,7 +177,14 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     gce2: 0,
     dge2: 0,
     penale1: 0,
-    penale2:0
+    penale2: 0,
+    statuspen: 'no',
+    update: 'outdated',
+    estadio: '',
+    ciudad: '',
+    esquemae1: '',
+    esquemae2: '',
+    typematch: ''
   };
   encuentropri: Encuentro = {
     uid: '',
@@ -209,7 +219,14 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     gce2: 0,
     dge2: 0,
     penale1: 0,
-    penale2:0
+    penale2: 0,
+    statuspen: 'no',
+    update: 'outdated',
+    estadio: '',
+    ciudad: '',
+    esquemae1: '',
+    esquemae2: '',
+    typematch: ''
   };
 
   items;
@@ -225,6 +242,12 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     const campeonato = this.firestoreService.getCampeonato();
     if (campeonato !== undefined) {
       this.infocampeonato = campeonato;
+      if (this.infocampeonato.tipo === 'Relampago') {
+        this.relampago = true;
+        this.getEquiposRelampago();
+      } else {
+        this.relampago = false;
+      }
 
     }
     console.log(this.infocampeonato);
@@ -232,34 +255,36 @@ export class PageEncuentrosCampeonatoPage implements OnInit {
     this.fases();
     this.numerogrup();
 
-    const name_1= 'Fecha 10';
+    const name_1 = 'Fecha 10';
 
     console.log(this.obtenernumofstring(name_1));// Nos devolverá 136140
   }
 
+
+
   async numerogrup() {
     const n = this.infocampeonato.grupos;
-    this.numerogrupos=['Descenso'];
+    this.numerogrupos = ['Descenso'];
     for (let a = 1; a <= n; a++) {
       this.numerogrupos = [...this.numerogrupos, 'Grupo ' + a];
     }
   }
 
-  async elegirgrupo(){
+  async elegirgrupo() {
   }
 
-obtenernumofstring(string){
+  obtenernumofstring(string) {
     var tmp = string.split('');
-    var map = tmp.map(function(current){
-    if (!isNaN(parseInt(current))){
-      return current;
-    }
+    var map = tmp.map(function (current) {
+      if (!isNaN(parseInt(current))) {
+        return current;
+      }
     });
     var numbers = map.filter(function (value) {
-    return value != undefined;
+      return value != undefined;
     });
     return numbers.join('');
-}
+  }
 
 
   onChange(evt) {
@@ -384,7 +409,7 @@ obtenernumofstring(string){
     }
   }
 
-  async limpiargrupos(){
+  async limpiargrupos() {
     this.grupoinit1 = [];
     this.grupoinit2 = [];
     this.grupoinit3 = [];
@@ -394,7 +419,7 @@ obtenernumofstring(string){
     this.grupoinit7 = [];
     this.grupoinit8 = [];
     this.grupoinit9 = [];
-    this.grupoinit10= [];
+    this.grupoinit10 = [];
 
     this.grupoe1 = [];
     this.grupoe2 = [];
@@ -522,6 +547,139 @@ obtenernumofstring(string){
     }
   }
 
+
+  async anteriorrelampago() {
+
+  if(this.infocampeonato.init !== this.titulo){
+    if (this.numero >= 1) {
+      this.numero=this.numero-1;
+      if (this.numero === 1) {
+        this.titulo = 'Dieciseisavos';
+        this.prueba('Dieciseisavos');
+        this.pruebafina('Dieciseisavos');
+        this.partidos_init('Dieciseisavos');
+        this.partidos_ida_vuel_E('Dieciseisavos');
+        this.partidos_ida_vuel_init('Dieciseisavos');
+        this.partidos_ida_vuel_fina('Dieciseisavos');
+        this.limpiargrupos();
+      } if (this.numero === 2) {
+        this.titulo = 'Octavos';
+        this.prueba('Octavos');
+        this.pruebafina('Octavos');
+        this.partidos_init('Octavos');
+        this.partidos_ida_vuel_E('Octavos');
+        this.partidos_ida_vuel_init('Octavos');
+        this.partidos_ida_vuel_fina('Octavos');
+        this.limpiargrupos();
+
+      } else if (this.numero === 3) {
+        this.titulo = 'Cuartos';
+        this.prueba('Cuartos');
+        this.pruebafina('Cuartos');
+        this.partidos_init('Cuartos');
+        this.partidos_ida_vuel_E('Cuartos');
+        this.partidos_ida_vuel_init('Cuartos');
+        this.partidos_ida_vuel_fina('Cuartos');
+        this.limpiargrupos();
+      } else if (this.numero === 4) {
+        this.titulo = 'Semifinal';
+        this.prueba('Semifinal');
+        this.pruebafina('Semifinal');
+        this.partidos_init('Semifinal');
+        this.partidos_ida_vuel_E('Semifinal');
+        this.partidos_ida_vuel_init('Semifinal');
+        this.partidos_ida_vuel_fina('Semifinal');
+        this.limpiargrupos();
+      }else if(this.numero === 5 ){
+        this.titulo = 'Tercero y Cuarto';
+        this.prueba('Tercero y Cuarto');
+        this.pruebafina('Tercero y Cuarto');
+        this.partidos_init('Tercero y Cuarto');
+        this.partidos_ida_vuel_E('Tercero y Cuarto');
+        this.partidos_ida_vuel_init('Tercero y Cuarto');
+        this.partidos_ida_vuel_fina('Tercero y Cuarto');
+        this.limpiargrupos();
+      }else if(this.numero === 6){
+        this.titulo = 'Final';
+        this.prueba('Final');
+        this.pruebafina('Final');
+        this.partidos_init('Final');
+        this.partidos_ida_vuel_E('Final');
+        this.partidos_ida_vuel_init('Final');
+        this.partidos_ida_vuel_fina('Final');
+        this.limpiargrupos();
+      }
+    }
+  }
+
+  }
+  async siguienterelampago() {
+
+    if (this.numero <= 6) {
+      this.numero=this.numero+1;
+      if (this.numero === 1) {
+        this.titulo = 'Dieciseisavos';
+        this.prueba('Dieciseisavos');
+        this.pruebafina('Dieciseisavos');
+        this.partidos_init('Dieciseisavos');
+        this.partidos_ida_vuel_E('Dieciseisavos');
+        this.partidos_ida_vuel_init('Dieciseisavos');
+        this.partidos_ida_vuel_fina('Dieciseisavos');
+        this.limpiargrupos();
+      }else if (this.numero === 2) {
+        this.titulo = 'Octavos';
+        this.prueba('Octavos');
+        this.pruebafina('Octavos');
+        this.partidos_init('Octavos');
+        this.partidos_ida_vuel_E('Octavos');
+        this.partidos_ida_vuel_init('Octavos');
+        this.partidos_ida_vuel_fina('Octavos');
+        this.limpiargrupos();
+
+      } else if (this.numero === 3) {
+        this.titulo = 'Cuartos';
+        this.prueba('Cuartos');
+        this.pruebafina('Cuartos');
+        this.partidos_init('Cuartos');
+        this.partidos_ida_vuel_E('Cuartos');
+        this.partidos_ida_vuel_init('Cuartos');
+        this.partidos_ida_vuel_fina('Cuartos');
+        this.limpiargrupos();
+
+      } else if (this.numero === 4) {
+        this.titulo = 'Semifinal';
+        this.prueba('Semifinal');
+        this.pruebafina('Semifinal');
+        this.partidos_init('Semifinal');
+        this.partidos_ida_vuel_E('Semifinal');
+        this.partidos_ida_vuel_init('Semifinal');
+        this.partidos_ida_vuel_fina('Semifinal');
+        this.limpiargrupos();
+
+      }else if (this.numero === 5) {
+        this.titulo = 'Tercero y Cuarto';
+        this.prueba('Tercero y Cuarto');
+        this.pruebafina('Tercero y Cuarto');
+        this.partidos_init('Tercero y Cuarto');
+        this.partidos_ida_vuel_E('Tercero y Cuarto');
+        this.partidos_ida_vuel_init('Tercero y Cuarto');
+        this.partidos_ida_vuel_fina('Tercero y Cuarto');
+        this.limpiargrupos();
+      }else if(this.numero === 6 ){
+        this.titulo = 'Final';
+        this.prueba('Final');
+        this.pruebafina('Final');
+        this.partidos_init('Final');
+        this.partidos_ida_vuel_E('Final');
+        this.partidos_ida_vuel_init('Final');
+        this.partidos_ida_vuel_fina('Final');
+        this.limpiargrupos();
+
+      }
+    }
+
+  }
+
   async getPartidos() {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
     this.equiposInfo = this.firestoreService.getPartidos<Encuentro>(path).subscribe(res => {
@@ -546,6 +704,7 @@ obtenernumofstring(string){
         this.titulo = this.encuentropri.fechae;
       }
       this.numero = this.encuentropri.numero;
+      // console.log('Numero es igual a '+this.numero);
       this.fase = this.encuentropri.fechae;
 
       if (this.fase === 'ida' || this.fase === 'vuelta' || this.fase === 'unico') {
@@ -658,18 +817,18 @@ obtenernumofstring(string){
       this.gru2 = false;
     });
     this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
-    .subscribe(res => {
-      this.genevuelinit = res;
-      this.grupoe1 = [];
-      this.grupoe2 = [];
-      this.grupof1 = [];
-      this.grupof2 = [];
-      if (res.length) {
-        this.vuelta = true;
-      }
-      this.gru1 = false;
-      this.gru2 = false;
-    });
+      .subscribe(res => {
+        this.genevuelinit = res;
+        this.grupoe1 = [];
+        this.grupoe2 = [];
+        this.grupof1 = [];
+        this.grupof2 = [];
+        if (res.length) {
+          this.vuelta = true;
+        }
+        this.gru1 = false;
+        this.gru2 = false;
+      });
 
   }
 
@@ -689,18 +848,18 @@ obtenernumofstring(string){
       this.gru2 = false;
     });
     this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
-    .subscribe(res => {
-      this.genevuelf = res;
-      this.grupoe1 = [];
-      this.grupoe2 = [];
-      this.grupof1 = [];
-      this.grupof2 = [];
-      if (res.length) {
-        this.vuelta = true;
-      }
-      this.gru1 = false;
-      this.gru2 = false;
-    });
+      .subscribe(res => {
+        this.genevuelf = res;
+        this.grupoe1 = [];
+        this.grupoe2 = [];
+        this.grupof1 = [];
+        this.grupof2 = [];
+        if (res.length) {
+          this.vuelta = true;
+        }
+        this.gru1 = false;
+        this.gru2 = false;
+      });
 
   }
 
@@ -727,74 +886,74 @@ obtenernumofstring(string){
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
-      this.grupoe3=res;
-      if(res.length){
-        this.gru3=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
+      this.grupoe3 = res;
+      if (res.length) {
+        this.gru3 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
-      this.grupoe4=res;
-      if(res.length){
-        this.gru4=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
+      this.grupoe4 = res;
+      if (res.length) {
+        this.gru4 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
-      this.grupoe5=res;
-      if(res.length){
-        this.gru5=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
+      this.grupoe5 = res;
+      if (res.length) {
+        this.gru5 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
-      this.grupoe6=res;
-      if(res.length){
-        this.gru6=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
+      this.grupoe6 = res;
+      if (res.length) {
+        this.gru6 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
-      this.grupoe7=res;
-      if(res.length){
-        this.gru7=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
+      this.grupoe7 = res;
+      if (res.length) {
+        this.gru7 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
-      this.grupoe8=res;
-      if(res.length){
-        this.gru8=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
+      this.grupoe8 = res;
+      if (res.length) {
+        this.gru8 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
-      this.grupoe9=res;
-      if(res.length){
-        this.gru9=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
+      this.grupoe9 = res;
+      if (res.length) {
+        this.gru9 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
-      this.grupoe10=res;
-      if(res.length){
-        this.gru10=true;
-      }else{
+    this.firestoreService.getCollectiongrupos<Encuentro>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
+      this.grupoe10 = res;
+      if (res.length) {
+        this.gru10 = true;
+      } else {
         // this.gru2=false;
       }
     });
@@ -802,7 +961,7 @@ obtenernumofstring(string){
 
 
   }
-  async gruposfinalizados(fase: string){
+  async gruposfinalizados(fase: string) {
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
     this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 1', fase).subscribe(res => {
       this.grupof1 = res;
@@ -821,74 +980,74 @@ obtenernumofstring(string){
         // this.gru2=false;
       }
     });
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
-      this.grupof3=res;
-      if(res.length){
-        this.gru3=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
+      this.grupof3 = res;
+      if (res.length) {
+        this.gru3 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
-      this.grupof4=res;
-      if(res.length){
-        this.gru4=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
+      this.grupof4 = res;
+      if (res.length) {
+        this.gru4 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
-      this.grupof5=res;
-      if(res.length){
-        this.gru5=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
+      this.grupof5 = res;
+      if (res.length) {
+        this.gru5 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
-      this.grupof6=res;
-      if(res.length){
-        this.gru6=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
+      this.grupof6 = res;
+      if (res.length) {
+        this.gru6 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
-      this.grupof7=res;
-      if(res.length){
-        this.gru7=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
+      this.grupof7 = res;
+      if (res.length) {
+        this.gru7 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
-      this.grupof8=res;
-      if(res.length){
-        this.gru8=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
+      this.grupof8 = res;
+      if (res.length) {
+        this.gru8 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
-      this.grupof9=res;
-      if(res.length){
-        this.gru9=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
+      this.grupof9 = res;
+      if (res.length) {
+        this.gru9 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
-      this.grupof10=res;
-      if(res.length){
-        this.gru10=true;
-      }else{
+    this.firestoreService.getCollectiongruposfinalizados<Encuentro>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
+      this.grupof10 = res;
+      if (res.length) {
+        this.gru10 = true;
+      } else {
         // this.gru2=false;
       }
     });
@@ -915,74 +1074,74 @@ obtenernumofstring(string){
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 3', fase).subscribe(res=>{
-      this.grupoinit3=res;
-      if(res.length){
-        this.gru3=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 3', fase).subscribe(res => {
+      this.grupoinit3 = res;
+      if (res.length) {
+        this.gru3 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 4', fase).subscribe(res=>{
-      this.grupoinit4=res;
-      if(res.length){
-        this.gru4=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 4', fase).subscribe(res => {
+      this.grupoinit4 = res;
+      if (res.length) {
+        this.gru4 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 5', fase).subscribe(res=>{
-      this.grupoinit5=res;
-      if(res.length){
-        this.gru5=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 5', fase).subscribe(res => {
+      this.grupoinit5 = res;
+      if (res.length) {
+        this.gru5 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 6', fase).subscribe(res=>{
-      this.grupoinit6=res;
-      if(res.length){
-        this.gru6=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 6', fase).subscribe(res => {
+      this.grupoinit6 = res;
+      if (res.length) {
+        this.gru6 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 7', fase).subscribe(res=>{
-      this.grupoinit7=res;
-      if(res.length){
-        this.gru7=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 7', fase).subscribe(res => {
+      this.grupoinit7 = res;
+      if (res.length) {
+        this.gru7 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 8', fase).subscribe(res=>{
-      this.grupoinit8=res;
-      if(res.length){
-        this.gru8=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 8', fase).subscribe(res => {
+      this.grupoinit8 = res;
+      if (res.length) {
+        this.gru8 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 9', fase).subscribe(res=>{
-      this.grupoinit9=res;
-      if(res.length){
-        this.gru9=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 9', fase).subscribe(res => {
+      this.grupoinit9 = res;
+      if (res.length) {
+        this.gru9 = true;
+      } else {
         // this.gru2=false;
       }
     });
 
-    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo','==','Grupo 10', fase).subscribe(res=>{
-      this.grupoinit10=res;
-      if(res.length){
-        this.gru10=true;
-      }else{
+    this.firestoreService.getgruposinit<Encuentro>(path, 'grupo', '==', 'Grupo 10', fase).subscribe(res => {
+      this.grupoinit10 = res;
+      if (res.length) {
+        this.gru10 = true;
+      } else {
         // this.gru2=false;
       }
     });
@@ -1045,15 +1204,24 @@ obtenernumofstring(string){
       gce2: 0,
       dge2: 0,
       penale1: 0,
-      penale2:0
+      penale2: 0,
+      statuspen: 'no',
+      update: 'outdated',
+      estadio: '',
+      ciudad: '',
+      esquemae1: '',
+      esquemae2: '',
+      typematch: ''
     };
 
   }
 
 
   async getEquiposG1() {
+    const grupo = this.encuentro.grupo;
+    this.team1 = [];
     const path = 'Campeonatos/' + this.infocampeonato.uid + '/Equipos';
-    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'grupo', '==', this.encuentro.grupo).subscribe(res => {
+    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'grupo', '==', grupo).subscribe(res => {
       if (res.length) {
         this.team1 = res;
       }
@@ -1073,6 +1241,15 @@ obtenernumofstring(string){
     this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'grupo', '!=', 'Descenso').subscribe(res => {
       if (res.length) {
         this.teamg = res;
+      }
+    });
+  }
+
+  async getEquiposRelampago() {
+    const path = 'Campeonatos/' + this.infocampeonato.uid + '/Equipos';
+    this.equiposInfo = this.firestoreService.getgrupos<Equipos>(path, 'grupo', '==', 'Relampago').subscribe(res => {
+      if (res.length) {
+        this.teamrela = res;
       }
     });
   }
@@ -1159,6 +1336,7 @@ obtenernumofstring(string){
   }
 
   async reset() {
+    this.team1 = [];
     this.estado = false;
     this.descenso = false;
     this.grupo = false;
@@ -1185,20 +1363,16 @@ obtenernumofstring(string){
         if (this.encuentro.nombre_e1 === this.encuentro.nombre_e2) {
           this.presentToast('Los equipos son los mismos', 2000);
         } else {
-
           console.log(this.encuentro.nombre_e1 + ' ' + this.encuentro.nombre_e2);
           if (this.encuentro.tipo === 'Descenso') {
             this.encuentro.fechae = 'unico';
           }
           if (this.encuentro.tipo === 'Fase de grupos') {
-
-            if(this.encuentro.fechae===''){
-              this.presentToast('elija la fecha del encuentro', 2000);
-
-            }else{
-              this.encuentro.numero=parseInt(this.obtenernumofstring(this.encuentro.fechae));
+            if (this.encuentro.fechae === '') {
+              this.presentToast('Elija la fecha del encuentro', 2000);
+            } else {
+              this.encuentro.numero = parseInt(this.obtenernumofstring(this.encuentro.fechae));
             }
-
             const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
             this.firestoreService.createDoc(this.encuentro, path, this.encuentro.uid).then(res => {
               console.log('guardado con exito');
@@ -1237,7 +1411,14 @@ obtenernumofstring(string){
                 gce2: 0,
                 dge2: 0,
                 penale1: 0,
-                penale2:0
+                penale2: 0,
+                statuspen: 'no',
+                update: 'outdated',
+                estadio: '',
+                ciudad: '',
+                esquemae1: '',
+                esquemae2: '',
+                typematch: ''
               };
               this.estado = false;
               this.grupo = false;
@@ -1263,16 +1444,18 @@ obtenernumofstring(string){
               this.genevuel = [];
               this.genevuelinit = [];
               this.genevuelf = [];
+              this.reset();
 
             }).catch(error => {
               console.log(error);
             });
 
-          } else {
+          } else if(this.infocampeonato.tipo === 'Relampago') {
             if (this.encuentro.fechae === '') {
               this.presentToast('Eliga tipo de encuentro', 2000);
 
             } else {
+              this.setnumerrelampago(this.encuentro.tipo);
               const path = 'Campeonatos/' + this.infocampeonato.uid + '/Partidos';
               this.firestoreService.createDoc(this.encuentro, path, this.encuentro.uid).then(res => {
                 console.log('guardado con exito');
@@ -1311,7 +1494,14 @@ obtenernumofstring(string){
                   gce2: 0,
                   dge2: 0,
                   penale1: 0,
-                  penale2:0
+                  penale2: 0,
+                  statuspen: 'no',
+                  update: 'outdated',
+                  estadio: '',
+                  ciudad: '',
+                  esquemae1: '',
+                  esquemae2: '',
+                  typematch: ''
                 };
                 this.estado = false;
                 this.grupo = false;
@@ -1347,6 +1537,24 @@ obtenernumofstring(string){
     }
     this.getPartidos();
   }
+
+  async setnumerrelampago(tipo:  string){
+    if(tipo === 'Dieciseisavos'){
+      this.encuentro.numero=1;
+    }else if(tipo === 'Octavos'){
+      this.encuentro.numero=2;
+    }else if(tipo === 'Cuartos' ){
+      this.encuentro.numero=3;
+    }else if(tipo === 'Semifinal'){
+      this.encuentro.numero=4;
+    }else if(tipo === 'Tercer y Cuarto'){
+      this.encuentro.numero=5;
+    }else if(tipo === 'Final'){
+      this.encuentro.numero=6;
+    }
+
+  }
+
 
   async newMatch() {
     const alert = await this.alertController.create({
@@ -1415,7 +1623,7 @@ obtenernumofstring(string){
               this.descenso = false;
               this.grupo = true;
               this.fecha = true;
-              this.grupo1=true;
+              this.grupo1 = true;
               this.encuentro.nombre_e1 = '';
               this.encuentro.nombre_e2 = '';
               this.getEquiposG();
@@ -1500,6 +1708,86 @@ obtenernumofstring(string){
             }
           }
 
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+
+  async tipoinit() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Fase inicial: ',
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Dieciseisavos',
+          value: 'Dieciseisavos',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Octavos',
+          value: 'Octavos',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Cuartos',
+          value: 'Cuartos',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Semifinal',
+          value: 'Semifinal',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Tercer y Cuarto',
+          value: 'Tercer y Cuarto',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Final',
+          value: 'Final',
+          checked: false
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log('Confirm Ok', data);
+            if (data !== '') {
+              this.relampago = true;
+              this.encuentro.tipo = data;
+            } else {
+            }
+          }
         }
       ]
     });

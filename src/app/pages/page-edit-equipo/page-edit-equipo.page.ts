@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class PageEditEquipoPage implements OnInit {
   newFoto: any;
   numerogrupos = [];
+  relampago=false;
   equipo: Equipos = {
     uid: '',
     nombre: '',
@@ -34,7 +35,8 @@ export class PageEditEquipoPage implements OnInit {
     lugar: '',
     estado: 'iniciado',
     grupos: 0,
-    fases: 0
+    fases: 0,
+    init: ''
   };
   constructor(public firestoreService: FirestoreService,
     public loadingController: LoadingController,
@@ -55,6 +57,10 @@ export class PageEditEquipoPage implements OnInit {
     }
     this.numerogrup();
     console.log(this.infocampeonato);
+
+    if(this.infocampeonato.tipo === 'Relampago'){
+      this.relampago=true;
+    }
   }
   async numerogrup() {
     const n = this.infocampeonato.grupos;
@@ -109,7 +115,7 @@ export class PageEditEquipoPage implements OnInit {
 
     const path = 'Campeonatos/'+this.infocampeonato.uid+'/Equipos';
     const equipo = this.equipo.nombre;
-    if (this.equipo.nombre == '' || this.equipo.grupo == null) {
+    if (this.equipo.nombre === '' || this.equipo.grupo == null) {
       // this.presentAlert("Complete el nombre del equipo");
       this.presentToast('Complete todos los datos', 2000);
 

@@ -22,10 +22,9 @@
     </ion-avatar>
     <h3 *ngIf="dataUpdate" class="ionic-sub" style="text-align: center;">Actualizar datos</h3>
     <!-- <ion-img *ngIf="ingresarEnable" class="ion-img" src='/assets/img/edit.svg'></ion-img> -->
-   
     <div lines="none" *ngIf="!dataUpdate" class="items-email">
       <ion-label class="normal">
-        {{ (datauser.email) ? datauser.email : 'joe@gmail.com' }}
+        {{ (datauser.email) ? datauser.email : 'joe@gmail.com' }} 
       </ion-label>
     </div>
 
@@ -43,8 +42,6 @@
         Correo: {{datauser.email}}
       </ion-label>
     </ion-item>
-
-   
   </ion-card>
 
 
@@ -270,7 +267,7 @@
     <!-- <div class="activeData" *ngIf="!activeData" >
       <ion-button  class="activeDataButton" (click)="activeData=true" (click)="salir()" >
         <ion-icon name="log-out-outline"></ion-icon>
-         Cerrar Sesión
+        Cerrar Sesión
       </ion-button>
     </div> -->
 
@@ -324,9 +321,9 @@
 
   </ion-segment>
   
- </div>
+</div>
 
-  <div *ngIf="opcion=='entrar'" class="content_items" mode="ios">
+  <div *ngIf="opcion === 'entrar'" class="content_items" mode="ios">
     <ion-item class="Item_input">
       <ion-input  type="email" placeholder="Correo" #email required>  </ion-input>
       <ion-icon class="icon" name="person-outline"></ion-icon>
@@ -356,7 +353,7 @@
   </div>
 
 
-  <div *ngIf="opcion=='crear'" class="content_items"  mode="ios">
+  <div *ngIf="opcion === 'crear'" class="content_items"  mode="ios">
     
     <ion-item lines="none" class="Item_input" >
       <ion-input  [(ngModel)]="datauser.email" type="email" placeholder="Correo" #email required>

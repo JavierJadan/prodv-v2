@@ -15,13 +15,12 @@
       <ion-input class="campos" [(ngModel)]="equipo.nombre"></ion-input>
     </ion-item>
 
-    <ion-item lines="none" class="IonInput">
+    <ion-item *ngIf="!relampago" lines="none" class="IonInput">
       <ion-label class="ion-label-itemin">Grupo:</ion-label>
       <ion-select class="campos" [(ngModel)]="equipo.grupo"  placeholder="Seleccione fase">
           <ion-select-option *ngFor="let fases of numerogrupos" value={{fases}}>{{fases}}</ion-select-option>
       </ion-select>
     </ion-item> 
-
     <!-- <ion-item lines="none" class="IonInput">
       <ion-label>Grupo</ion-label>
       <ion-select class="campos" [(ngModel)]="equipo.grupo" placeholder="Seleccione grupo">
@@ -30,8 +29,6 @@
         <ion-select-option value="Descenso">Descenso</ion-select-option>
       </ion-select>
     </ion-item> -->
-
-
     <ion-item lines="none" class="IonInput">
       <ion-label class="normal">
         Escudo:

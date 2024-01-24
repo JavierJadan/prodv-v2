@@ -13,6 +13,7 @@ export class PageCreateCampeonatoPage implements OnInit {
 
   estado = false;
   grupos = false;
+  relampago = false;
   // numero = [];
   equipoInfo: Subscription;
   grupose: Campeonatos[] = [];
@@ -28,7 +29,8 @@ export class PageCreateCampeonatoPage implements OnInit {
     lugar: '',
     estado: 'iniciado',
     grupos: 0,
-    fases: 0
+    fases: 0,
+    init: ''
   };
 
 
@@ -103,7 +105,8 @@ export class PageCreateCampeonatoPage implements OnInit {
       lugar: '',
       estado: 'iniciado',
       grupos: 0,
-      fases: 0
+      fases: 0,
+      init: ''
     };
     this.formatedString='';
   }
@@ -147,13 +150,14 @@ export class PageCreateCampeonatoPage implements OnInit {
     console.log(this.newcampeonato);
 
     this.newcampeonato.uid = this.firestoreService.getId();
-    if (this.newcampeonato.nombre == '') {
+
+    if (this.newcampeonato.nombre === '') {
       this.presentToast('Complete el nombre del campeonato', 2000);
-    } else if (this.newcampeonato.tipo == '') {
+    } else if (this.newcampeonato.tipo === '') {
       this.presentToast('Selecione el tipo de campeonato', 2000);
-    } else if (this.newcampeonato.tipo == 'Fase de grupos') {
-      if (this.newcampeonato.grupos == 0) {
-        this.presentToast('Especifique el numero de grupos', 2000);
+    } else if (this.newcampeonato.tipo === 'Fase de grupos') {
+      if (this.newcampeonato.grupos === 0 || this.newcampeonato.fases === 0) {
+        this.presentToast('Especifique el numero de grupos o fases', 2000);
       } else {
         const path = 'Campeonatos';
         // this.gruposnumero(this.newcampeonato.grupos, this.newcampeonato.uid);
@@ -169,7 +173,8 @@ export class PageCreateCampeonatoPage implements OnInit {
             lugar: '',
             estado: 'iniciado',
             grupos: 0,
-            fases: 0
+            fases: 0,
+            init: ''
           };
           this.estado = false;
 
@@ -178,7 +183,28 @@ export class PageCreateCampeonatoPage implements OnInit {
         });
 
       }
-    } else {
+    } else if (this.newcampeonato.tipo==='Relampago'){
+
+      const path = 'Campeonatos';
+        // this.gruposnumero(this.newcampeonato.grupos, this.newcampeonato.uid);
+        this.firestoreService.createDoc(this.newcampeonato, path, this.newcampeonato.uid).then(res => {
+          this.presentLoading('Guardando campeonato', 1500);
+          this.newcampeonato = {
+            uid: '',
+            nombre: '',
+            fecha: null,
+            tipo: '',
+            lugar: '',
+            estado: 'iniciado',
+            grupos: 0,
+            fases: 0,
+            init: ''
+          };
+          this.estado = false;
+
+        }).catch(error => {
+          console.log(error);
+        });
 
     }
 
@@ -197,7 +223,15 @@ export class PageCreateCampeonatoPage implements OnInit {
           cssClass: 'input',
           label: 'Fase de grupos',
           value: 'Fase de grupos',
-          checked: true
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Relampago',
+          value: 'Relampago',
+          checked: false
         }
       ],
       buttons: [
@@ -214,12 +248,72 @@ export class PageCreateCampeonatoPage implements OnInit {
             console.log('Confirm Ok', data);
             if (data === 'Fase de grupos') {
               this.grupos = true;
+              this.relampago=false;
+              this.newcampeonato.tipo = data;
+
+            }else if (data === 'Relampago') {
+              this.grupos = false;
+              this.relampago=true;
               this.newcampeonato.tipo = data;
 
             }
 
           }
 
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+  async tipoinit(){
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Fase inicial: ',
+      inputs: [
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Dieciseisavos',
+          value: 'Dieciseisavos',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Octavos',
+          value: 'Octavos',
+          checked: false
+        },
+        {
+          name: 'radio1',
+          type: 'radio',
+          cssClass: 'input',
+          label: 'Cuartos',
+          value: 'Cuartos',
+          checked: false
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: 'Ok',
+          handler: (data) => {
+            console.log('Confirm Ok', data);
+            if (data !== '') {
+              this.relampago = true;
+              this.newcampeonato.init = data;
+            }
+          }
         }
       ]
     });

@@ -142,17 +142,18 @@ export class FirestoreService {
   }
 
 
-  actualizarpartido(data:any, path :string, id:string){
+  actualizarpartido(data: any, path: string, id: string){
     const collection= this.FireStore.collection(path);
     return collection.doc(id).update(data);
 
   }
-  actualizarrefe(data:any, path:string, id:string){
+
+  actualizarrefe(data: any, path: string, id: string){
     const collection= this.FireStore.collection(path);
     return collection.doc(id).update(data);
   }
 
-  deletepartido(path:string,id:string){
+  deletepartido(path: string,id: string){
     const collection = this.FireStore.collection(path);
     return collection.doc(id).delete();
   }
@@ -166,7 +167,7 @@ export class FirestoreService {
     return collection.valueChanges();
   }
 
-  getTeamfecha<tipo>(path:string){
+  getTeamfecha<tipo>(path: string){
     const collection = this.FireStore.collection<tipo>(path,
       ref => ref.where('estado','==','iniciado').orderBy('fecha','desc'),);
     return collection.valueChanges();
@@ -193,14 +194,9 @@ export class FirestoreService {
             return;
           });
                 })
-
-
       )
         .subscribe();
-
     });
-
-
   }
 
   setEquipo(equipo: Equipos){
@@ -251,7 +247,7 @@ export class FirestoreService {
   get_partidos_ida_vuel_Fina<tipo>(path: string,  parametro: string, condicion: any, busqueda: string,encuentro: string){
     const date = new Date();
     const collection = this.FireStore.collection<tipo>(path,
-      ref => ref.where(parametro,condicion,busqueda).where('fechae','==',encuentro).where('estado','==', 'finalizado') 
+      ref => ref.where(parametro,condicion,busqueda).where('fechae','==',encuentro).where('estado','==', 'finalizado')
       // .orderBy('fecha','desc')
       // // .startAt(date)
       );

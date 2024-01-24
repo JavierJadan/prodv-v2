@@ -5,17 +5,8 @@
       <ion-button  routerLink="/page-main-menu/page-profile">
         <ion-icon class="icon_return" name="arrow-back"></ion-icon>
       </ion-button>
-      <!-- <ion-button>
-        <ion-menu-button></ion-menu-button>
-      </ion-button> -->
+      
     </ion-buttons>
-    <!-- <ion-title slot="secondary">Campeonatos</ion-title> -->
-<!-- 
-    <ion-buttons slot="end">
-      <ion-button [routerLink]="['/perfil']">
-        <ion-icon slot="icon-only" name="person-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
 
   </ion-toolbar>
 </ion-header>
@@ -60,14 +51,6 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-
-    <ion-item lines="none" class="IonInput">
-      <ion-label>
-        Fases:
-      </ion-label>
-      <ion-input type="number" class="campos" [(ngModel)]="newcampeonato.fases"></ion-input>
-    </ion-item>
-
     <ion-item lines="none" class="IonInput">
       <ion-label>
         Lugar:
@@ -79,6 +62,20 @@
       <ion-input slot="" class="campos" (click)="tipocam()" [(ngModel)]="newcampeonato.tipo"
         placeholder="Seleccione tipo">
       </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="relampago" lines="none" class="IonInput">
+      <ion-label class="ion-label-itemin">Fase inicial:</ion-label>
+      <ion-input slot="" class="campos" (click)="tipoinit()" [(ngModel)]="newcampeonato.init"
+        placeholder="Seleccione tipo">
+      </ion-input>
+    </ion-item>
+
+    <ion-item *ngIf="grupos" lines="none" class="IonInput">
+      <ion-label>
+        Fases:
+      </ion-label>
+      <ion-input type="number" class="campos" [(ngModel)]="newcampeonato.fases"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="grupos" lines="none" class="IonInput">
@@ -128,7 +125,7 @@
         </ion-col>
         
         <ion-col class="col_icon" size="2">
-         
+      
           <ion-buttons class="button">
             <ion-button  routerLink="/page-edit-campeonato" (click)="getCampeonato(campeonato)">
               <ion-icon class="icon_edit" slot="icon-only" name="create-outline"></ion-icon>

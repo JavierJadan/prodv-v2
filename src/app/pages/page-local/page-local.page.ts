@@ -27,6 +27,7 @@ export class PageLocalPage implements OnInit {
 
   equipoInfo: Subscription;
   equiposInfo: Subscription;
+  relampago = false;
   campeonatos: Campeonatos[] = [];
   genef: Encuentro[] = [];
   gene: Encuentro[] = [];
@@ -104,7 +105,8 @@ export class PageLocalPage implements OnInit {
     lugar: '',
     estado: 'iniciado',
     grupos: 0,
-    fases: 0
+    fases: 0,
+    init: ''
   };
 
 
@@ -141,7 +143,14 @@ export class PageLocalPage implements OnInit {
     gce2: 0,
     dge2: 0,
     penale1: 0,
-    penale2:0
+    penale2: 0,
+    statuspen: 'no',
+    update: 'outdated',
+    estadio: '',
+    ciudad: '',
+    esquemae1: '',
+    esquemae2: '',
+    typematch: ''
   };
 
 
@@ -187,6 +196,7 @@ export class PageLocalPage implements OnInit {
     this.getCampeonatos();
     const campeonatod = this.firestoreService.getCampeonato();
     console.log(campeonatod);
+
     // if (campeonatod == undefined) {
     //   this.infocampeonato.uid = '3BuPLlNAQ7yA4yo8Karg';
     //   this.infocampeonato.nombre = 'Copa Gualaquiza';
@@ -253,7 +263,7 @@ export class PageLocalPage implements OnInit {
 
   changeSegment(event: any) {
 
-    if (this.opcion == 'Partidos' && this.isActivePublicidad) {
+    if (this.opcion === 'Partidos' && this.isActivePublicidad) {
       this.showRewardVideo();
       this.isActivePublicidad = false;
     }
@@ -262,7 +272,7 @@ export class PageLocalPage implements OnInit {
     console.log(opc);
     this.opcion = opc;
     console.log(this.opcion);
-    (this.opcion == 'Clasificacion') ? this.isActiveM2 = true  : this.isActiveM2 = false;
+    (this.opcion == 'Clasificacion') ? this.isActiveM2 = true : this.isActiveM2 = false;
     (this.opcion == 'Partidos') ? this.isActiveM1 = true : this.isActiveM1 = false;
 
   }
@@ -293,7 +303,11 @@ export class PageLocalPage implements OnInit {
         this.getGrupo9(this.infocampeonato.uid);
         this.getGrupo10(this.infocampeonato.uid);
         this.getDescenso(this.infocampeonato.uid);
-
+        if(this.infocampeonato.tipo==='Relampago'){
+          this.relampago=true;
+        }else{
+          this.relampago=false;
+        }
 
       }
     });
@@ -393,6 +407,9 @@ export class PageLocalPage implements OnInit {
 
   async getCampeonato(campeonato: Campeonatos) {
     console.log('Click en getEquipo');
+    this.relampago=false;
+    this.numero=0;
+    this.opcion='Partidos'
     console.log(campeonato);
     this.firestoreService.setCampeonato(campeonato);
 
@@ -413,6 +430,11 @@ export class PageLocalPage implements OnInit {
     this.getGrupo9(this.infocampeonato.uid);
     this.getGrupo10(this.infocampeonato.uid);
     this.getDescenso(this.infocampeonato.uid);
+    if(this.infocampeonato.tipo==='Relampago'){
+      this.relampago=true;
+    }else{
+      this.relampago=false;
+    }
 
   }
 
@@ -425,7 +447,7 @@ export class PageLocalPage implements OnInit {
         this.antsig = false;
       }
       this.encuentro = res[0];
-      if (this.encuentro.fechae == 'ida' || this.encuentro.fechae == 'vuelta' || this.encuentro.fechae == 'unico') {
+      if (this.encuentro.fechae === 'ida' || this.encuentro.fechae === 'vuelta' || this.encuentro.fechae === 'unico') {
         this.titulo = this.encuentro.tipo;
       } else {
         this.titulo = this.encuentro.fechae;
@@ -433,7 +455,7 @@ export class PageLocalPage implements OnInit {
       this.numero = this.encuentro.numero;
       this.fase = this.encuentro.fechae;
 
-      if (this.fase == 'ida' || this.fase == 'vuelta' || this.fase == 'unico') {
+      if (this.fase === 'ida' || this.fase === 'vuelta' || this.fase === 'unico') {
         this.prueba(this.encuentro.tipo);
         this.pruebafina(this.encuentro.tipo);
         this.partidos_init(this.encuentro.tipo);
@@ -824,18 +846,18 @@ export class PageLocalPage implements OnInit {
       this.gru2 = false;
     });
     this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Init<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
-    .subscribe(res => {
-      this.genevuelinit = res;
-      this.grupo1 = [];
-      this.grupo2 = [];
-      this.grupof1 = [];
-      this.grupof2 = [];
-      if (res.length) {
-        this.vuelta = true;
-      }
-      this.gru1 = false;
-      this.gru2 = false;
-    });
+      .subscribe(res => {
+        this.genevuelinit = res;
+        this.grupo1 = [];
+        this.grupo2 = [];
+        this.grupof1 = [];
+        this.grupof2 = [];
+        if (res.length) {
+          this.vuelta = true;
+        }
+        this.gru1 = false;
+        this.gru2 = false;
+      });
 
   }
 
@@ -855,18 +877,18 @@ export class PageLocalPage implements OnInit {
       this.gru2 = false;
     });
     this.equiposInfo = this.firestoreService.get_partidos_ida_vuel_Fina<Encuentro>(path, 'tipo', '==', tipo, 'vuelta')
-    .subscribe(res => {
-      this.genevuelf = res;
-      this.grupo1 = [];
-      this.grupo2 = [];
-      this.grupof1 = [];
-      this.grupof2 = [];
-      if (res.length) {
-        this.vuelta = true;
-      }
-      this.gru1 = false;
-      this.gru2 = false;
-    });
+      .subscribe(res => {
+        this.genevuelf = res;
+        this.grupo1 = [];
+        this.grupo2 = [];
+        this.grupof1 = [];
+        this.grupof2 = [];
+        if (res.length) {
+          this.vuelta = true;
+        }
+        this.gru1 = false;
+        this.gru2 = false;
+      });
 
   }
 
@@ -907,7 +929,7 @@ export class PageLocalPage implements OnInit {
       this.gru10 = false;
       this.ida = false;
       this.vuelta = false;
-    } else if (this.numero == this.infocampeonato.fases + 1) {
+    } else if (this.numero === this.infocampeonato.fases + 1) {
 
       this.titulo = 'Descenso';
       this.prueba('Descenso');
@@ -922,7 +944,7 @@ export class PageLocalPage implements OnInit {
       this.genevuelf = [];
       this.limpiargrupos();
 
-    } else if (this.numero == this.infocampeonato.fases + 2) {
+    } else if (this.numero === this.infocampeonato.fases + 2) {
       this.titulo = 'Cuartos de final';
       this.prueba('Cuartos de final');
       this.pruebafina('Cuartos de final');
@@ -931,7 +953,7 @@ export class PageLocalPage implements OnInit {
       this.partidos_ida_vuel_init('Cuartos de final');
       this.partidos_ida_vuel_fina('Cuartos de final');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 3) {
+    } else if (this.numero === this.infocampeonato.fases + 3) {
       this.titulo = 'Semifinal';
       this.prueba('Semifinal');
       this.pruebafina('Semifinal');
@@ -940,7 +962,7 @@ export class PageLocalPage implements OnInit {
       this.partidos_ida_vuel_init('Semifinal');
       this.partidos_ida_vuel_fina('Semifinal');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 4) {
+    } else if (this.numero === this.infocampeonato.fases + 4) {
       this.titulo = 'Tercero y Cuarto';
       this.prueba('Tercero y Cuarto');
       this.pruebafina('Tercero y Cuarto');
@@ -949,7 +971,7 @@ export class PageLocalPage implements OnInit {
       this.partidos_ida_vuel_init('Tercero y Cuarto');
       this.partidos_ida_vuel_fina('Tercero y Cuarto');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 5) {
+    } else if (this.numero === this.infocampeonato.fases + 5) {
       this.titulo = 'Final';
       this.prueba('Final');
       this.pruebafina('Final');
@@ -995,7 +1017,7 @@ export class PageLocalPage implements OnInit {
       this.gru10 = false;
       this.ida = false;
       this.vuelta = false;
-    } else if (this.numero == this.infocampeonato.fases + 1) {
+    } else if (this.numero === this.infocampeonato.fases + 1) {
 
       this.titulo = 'Descenso';
       this.prueba('Descenso');
@@ -1010,7 +1032,7 @@ export class PageLocalPage implements OnInit {
       this.genevuelf = [];
 
 
-    } else if (this.numero == this.infocampeonato.fases + 2) {
+    } else if (this.numero === this.infocampeonato.fases + 2) {
       this.titulo = 'Cuartos de final';
       this.prueba('Cuartos de final');
       this.pruebafina('Cuartos de final');
@@ -1019,7 +1041,7 @@ export class PageLocalPage implements OnInit {
       this.partidos_ida_vuel_init('Cuartos de final');
       this.partidos_ida_vuel_fina('Cuartos de final');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 3) {
+    } else if (this.numero === this.infocampeonato.fases + 3) {
       this.titulo = 'Semifinal';
       this.prueba('Semifinal');
       this.pruebafina('Semifinal');
@@ -1028,7 +1050,7 @@ export class PageLocalPage implements OnInit {
       this.partidos_ida_vuel_init('Semifinal');
       this.partidos_ida_vuel_fina('Semifinal');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 4) {
+    } else if (this.numero === this.infocampeonato.fases + 4) {
       this.titulo = 'Tercero y Cuarto';
       this.prueba('Tercero y Cuarto');
       this.pruebafina('Tercero y Cuarto');
@@ -1037,7 +1059,7 @@ export class PageLocalPage implements OnInit {
       this.partidos_ida_vuel_init('Tercero y Cuarto');
       this.partidos_ida_vuel_fina('Tercero y Cuarto');
       this.limpiargrupos();
-    } else if (this.numero == this.infocampeonato.fases + 5) {
+    } else if (this.numero === this.infocampeonato.fases + 5) {
       this.titulo = 'Final';
       this.prueba('Final');
       this.pruebafina('Final');
@@ -1049,6 +1071,138 @@ export class PageLocalPage implements OnInit {
     }
   }
 
+  async anteriorrelampago() {
+
+    if (this.infocampeonato.init !== this.titulo) {
+      if (this.numero >= 1) {
+        console.log('numero es '+this.numero);
+        this.numero = this.numero - 1;
+        if (this.numero === 1) {
+          this.titulo = 'Dieciseisavos';
+          this.prueba('Dieciseisavos');
+          this.pruebafina('Dieciseisavos');
+          this.partidos_init('Dieciseisavos');
+          this.partidos_ida_vuel_E('Dieciseisavos');
+          this.partidos_ida_vuel_init('Dieciseisavos');
+          this.partidos_ida_vuel_fina('Dieciseisavos');
+          this.limpiargrupos();
+        } if (this.numero === 2) {
+          this.titulo = 'Octavos';
+          this.prueba('Octavos');
+          this.pruebafina('Octavos');
+          this.partidos_init('Octavos');
+          this.partidos_ida_vuel_E('Octavos');
+          this.partidos_ida_vuel_init('Octavos');
+          this.partidos_ida_vuel_fina('Octavos');
+          this.limpiargrupos();
+
+        } else if (this.numero === 3) {
+          this.titulo = 'Cuartos';
+          this.prueba('Cuartos');
+          this.pruebafina('Cuartos');
+          this.partidos_init('Cuartos');
+          this.partidos_ida_vuel_E('Cuartos');
+          this.partidos_ida_vuel_init('Cuartos');
+          this.partidos_ida_vuel_fina('Cuartos');
+          this.limpiargrupos();
+        } else if (this.numero === 4) {
+          this.titulo = 'Semifinal';
+          this.prueba('Semifinal');
+          this.pruebafina('Semifinal');
+          this.partidos_init('Semifinal');
+          this.partidos_ida_vuel_E('Semifinal');
+          this.partidos_ida_vuel_init('Semifinal');
+          this.partidos_ida_vuel_fina('Semifinal');
+          this.limpiargrupos();
+        } else if (this.numero === 5) {
+          this.titulo = 'Tercero y Cuarto';
+          this.prueba('Tercero y Cuarto');
+          this.pruebafina('Tercero y Cuarto');
+          this.partidos_init('Tercero y Cuarto');
+          this.partidos_ida_vuel_E('Tercero y Cuarto');
+          this.partidos_ida_vuel_init('Tercero y Cuarto');
+          this.partidos_ida_vuel_fina('Tercero y Cuarto');
+          this.limpiargrupos();
+        } else if (this.numero === 6) {
+          this.titulo = 'Final';
+          this.prueba('Final');
+          this.pruebafina('Final');
+          this.partidos_init('Final');
+          this.partidos_ida_vuel_E('Final');
+          this.partidos_ida_vuel_init('Final');
+          this.partidos_ida_vuel_fina('Final');
+          this.limpiargrupos();
+        }
+      }
+    }
+
+  }
+  async siguienterelampago() {
+
+    if (this.numero <= 6) {
+      this.numero = this.numero + 1;
+      if (this.numero === 1) {
+        this.titulo = 'Dieciseisavos';
+        this.prueba('Dieciseisavos');
+        this.pruebafina('Dieciseisavos');
+        this.partidos_init('Dieciseisavos');
+        this.partidos_ida_vuel_E('Dieciseisavos');
+        this.partidos_ida_vuel_init('Dieciseisavos');
+        this.partidos_ida_vuel_fina('Dieciseisavos');
+        this.limpiargrupos();
+      } else if (this.numero === 2) {
+        this.titulo = 'Octavos';
+        this.prueba('Octavos');
+        this.pruebafina('Octavos');
+        this.partidos_init('Octavos');
+        this.partidos_ida_vuel_E('Octavos');
+        this.partidos_ida_vuel_init('Octavos');
+        this.partidos_ida_vuel_fina('Octavos');
+        this.limpiargrupos();
+
+      } else if (this.numero === 3) {
+        this.titulo = 'Cuartos';
+        this.prueba('Cuartos');
+        this.pruebafina('Cuartos');
+        this.partidos_init('Cuartos');
+        this.partidos_ida_vuel_E('Cuartos');
+        this.partidos_ida_vuel_init('Cuartos');
+        this.partidos_ida_vuel_fina('Cuartos');
+        this.limpiargrupos();
+
+      } else if (this.numero === 4) {
+        this.titulo = 'Semifinal';
+        this.prueba('Semifinal');
+        this.pruebafina('Semifinal');
+        this.partidos_init('Semifinal');
+        this.partidos_ida_vuel_E('Semifinal');
+        this.partidos_ida_vuel_init('Semifinal');
+        this.partidos_ida_vuel_fina('Semifinal');
+        this.limpiargrupos();
+
+      } else if (this.numero === 5) {
+        this.titulo = 'Tercero y Cuarto';
+        this.prueba('Tercero y Cuarto');
+        this.pruebafina('Tercero y Cuarto');
+        this.partidos_init('Tercero y Cuarto');
+        this.partidos_ida_vuel_E('Tercero y Cuarto');
+        this.partidos_ida_vuel_init('Tercero y Cuarto');
+        this.partidos_ida_vuel_fina('Tercero y Cuarto');
+        this.limpiargrupos();
+      } else if (this.numero === 6) {
+        this.titulo = 'Final';
+        this.prueba('Final');
+        this.pruebafina('Final');
+        this.partidos_init('Final');
+        this.partidos_ida_vuel_E('Final');
+        this.partidos_ida_vuel_init('Final');
+        this.partidos_ida_vuel_fina('Final');
+        this.limpiargrupos();
+
+      }
+    }
+
+  }
 
   async limpiargrupos() {
     this.grupoinit1 = [];

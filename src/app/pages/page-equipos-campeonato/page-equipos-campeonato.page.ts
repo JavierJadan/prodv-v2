@@ -38,7 +38,8 @@ export class PageEquiposCampeonatoPage implements OnInit {
     lugar: '',
     estado: 'iniciado',
     grupos: 0,
-    fases: 0
+    fases: 0,
+    init: ''
   };
 
   constructor(public firestoreService: FirestoreService,
@@ -69,7 +70,7 @@ export class PageEquiposCampeonatoPage implements OnInit {
 
     const path = 'Campeonatos/'+this.infocampeonato.uid+'/Equipos';
     const equipo = this.equipo.nombre;
-    if (this.equipo.nombre == '') {
+    if (this.equipo.nombre === '') {
       // this.presentAlert("Complete el nombre del equipo");
       this.presentToast('Complete el nombre del equipo',2000);
     } else {
@@ -77,6 +78,9 @@ export class PageEquiposCampeonatoPage implements OnInit {
         this.equipo.uid = this.firestoreService.getId();
         const res = await this.firestoreService.uploadImage(this.newFoto, path, equipo);
         this.equipo.escudo = res;
+        if(this.infocampeonato.tipo === 'Relampago'){
+          this.equipo.grupo='Relampago';
+        }
         this.firestoreService.createDoc(this.equipo, path, this.equipo.uid).then(res=>{
           console.log('guardado con exito');
           this.presentLoading('Guardando', 1000);

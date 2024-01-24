@@ -73,6 +73,13 @@ export interface Encuentro{
     dge2: number;
     penale1: number;
     penale2: number;
+    statuspen: string;
+    update: string;
+    estadio: string;
+    ciudad: string;
+    esquemae1: string;
+    esquemae2: string;
+    typematch: string;
 }
 
 
@@ -94,6 +101,7 @@ export interface Campeonatos{
     lugar: string;
     grupos: number;
     fases: number;
+    init: string;
 
 }
 export interface fase{

@@ -99,7 +99,7 @@ export class PageProfilePage implements OnInit {
     });
     this.firebaseauth.stateAuth().subscribe(res => {
       if (res != null) {
-        if (res.uid=='LikZN15qNiQi1pFEAT8frapWt243'||res.uid=='sYOl5vJntAWPUoDMoBZsrd05KAu1'||res.uid=='meSq5AahaXWo6ZYSkwSw0TJtt6f1'){
+        if (res.uid==='LikZN15qNiQi1pFEAT8frapWt243'||res.uid==='sYOl5vJntAWPUoDMoBZsrd05KAu1'||res.uid==='meSq5AahaXWo6ZYSkwSw0TJtt6f1'){
           this.adminA = true;
           this.getUserInfo(res.uid);
         } else {
@@ -113,7 +113,7 @@ export class PageProfilePage implements OnInit {
     });
   }
 
- async ngOnInit() {
+async ngOnInit() {
     const uid  = await this.firebaseauth.getUid();
     console.log(uid);
     this.menuLateral.enable(true);
@@ -162,7 +162,7 @@ export class PageProfilePage implements OnInit {
       this.firestoreService.createDoc(this.datauser, path, this.datauser.uid ). then(res=> {
       console.log('guardado con exito');
       // this.presentLoading('Guardando',1000);
-      this.datauser = { 
+      this.datauser = {
         uid: null,
         email: null,
         celular: null,
@@ -234,7 +234,16 @@ export class PageProfilePage implements OnInit {
               this.adminA =true;
               this.referente=false;
               this.referencias(email);
+              this.getAllUser();
               this.getreferencias();
+              this.usuariorefe('');
+              // this.usuariorefe('Todo Deportes');
+              // this.usuariorefe('Radio Cenepa');
+              // this.usuariorefe('Guala tu Destino');
+              // this.usuariorefe('Miguel');
+              // this.usuariorefe('Campionato Solo Joyas');
+              // this.usuariorefe('Copa Danny Sport F-7');
+              // this.usuariorefe('');
         break;
       default:
         // this.referente = false;
@@ -264,7 +273,7 @@ export class PageProfilePage implements OnInit {
     const path ='Usuarios';
     this.firestoreService.getusersrefe<DataUser>(path,'referencia','==', referencia).subscribe(res =>{
       console.log(referencia+ ' num: '+res.length);
-      if(referencia==''){
+      if(referencia === ''){
 
         this.usersinrefe=res.length;
       }
