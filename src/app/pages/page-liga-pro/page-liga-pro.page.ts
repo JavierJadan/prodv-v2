@@ -151,6 +151,8 @@ export class PageLigaProPage implements OnInit {
       this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "1" );
       } else if(this.round === 2){
       this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "2" );
+    } else if(this.round === 3){
+      this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "3" );
       }
   }
 
