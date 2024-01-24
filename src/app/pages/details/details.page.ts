@@ -10,7 +10,9 @@ import {HttpClient} from "@angular/common/http";
 export class DetailsPage implements OnInit {
 
   detailsId: string;
-  details;
+  details = [];
+  golesNumber;
+  
   opcion="";
   constructor(
     private activateddRouter: ActivatedRoute, 
@@ -18,20 +20,30 @@ export class DetailsPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.opcion="detalles";
+    this.opcion="estadisticas";
     this.detailsId = this.activateddRouter.snapshot.paramMap.get('id');
-    this.http.get<any>('https://v3.football.api-sports.io/fixtures',{
-        headers:{
-          'x-rapidapi-host' : 'v3.football.api-sports.io',
-          'x-rapidapi-key'  : '057eb7678fa2d34dca7c319ce9a57a7d'
-        },
-        params:{
-          'id' : this.detailsId
-        }
-    }).subscribe(resp =>{
-      console.log(resp);
-      this.details = resp.response
-    });
+    console.log(this.detailsId);
+
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+    params:{
+      APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
+      action: 'get_events',
+      match_id: this.detailsId,      
+
+    }
+  }).subscribe(res =>{
+
+    if (res) {
+      console.log(res);
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      this.details = res;
+      console.log(this.details);
+
+    }else{
+      console.log('Dont get DATA');
+    }
+  });
+
   }
 
   changeSegment(event: any) {

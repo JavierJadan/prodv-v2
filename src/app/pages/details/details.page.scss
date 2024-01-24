@@ -1,140 +1,173 @@
-.content-main{
-    --background: #dee2e6;
-}
-.div-partido{
-    width: 100%;
-    height: auto;
-    background: #6a994e ;
-    color: white;
-}
-.row-division{
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 20px;
+
+ion-col{
     text-align: center;
-    font-weight: 200;
+    --ion-grid-column-padding-lg: 0px;
+    // background-color: bisque;
 }
-.label-marcador{
-    font-size: 50px;
-    font-weight: 300;
-}
-.col-marcador{
-    text-align: center;
+.col-player{
+    text-align: start;
+    --background: #7d4e57;
+    // background-color: bisque;
 }
 
-.col-division{
-    text-align: center;
+p{
+    font-weight: 700;
+    font-size: 27px;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+ion-badge {
+    --background: #003554;
+    --color: white;
+  }
+.badge-number{
+    --background: #463f3a;
+
 }
 
-.avatar-aways{
-    // display: inline-block;
-    --background: white;
-    margin-left: auto;
-    // margin-right: auto;
-}
-.avatar-teams{
-    // display: inline-block;
-    --background: white;
-    // margin-left: auto;
-    margin-right: auto;
-}
-
-.col-name-team{
-    text-align: center;
-}
-.col-time-status{
-    text-align: center;
-}
-.col-venue-name{
-    text-align: center;
-}
-.col-venue-city{
-    text-align: left;
-}
-.segment-values{
-    --background: #ffffff;
-}
-
-.label-text-segment{
-    color: #3a2f1a;
-}
-
-ion-segment-button{
-    --background: #4f772d;
-    // --background-checked: #4ad66d  ;
-    --background-hover: #8ac926 ;
-}
-
-.main-content{
-    width: 100%;
+ion-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     height: 100%;
+}
+// .content-main{
+//     --background: #dee2e6;
+// }
+// .div-partido{
+//     width: 100%;
+//     height: auto;
+//     background: #6a994e ;
+//     color: white;
+// }
+// .row-division{
+//     margin-left: auto;
+//     margin-right: auto;
+//     font-size: 20px;
+//     text-align: center;
+//     font-weight: 200;
+// }
+// .label-marcador{
+//     font-size: 50px;
+//     font-weight: 300;
+// }
+// .col-marcador{
+//     text-align: center;
+// }
+
+// .col-division{
+//     text-align: center;
+// }
+
+// .avatar-aways{
+//     // display: inline-block;
+//     --background: white;
+//     margin-left: auto;
+//     // margin-right: auto;
+// }
+// .avatar-teams{
+//     // display: inline-block;
+//     --background: white;
+//     // margin-left: auto;
+//     margin-right: auto;
+// }
+
+// .col-name-team{
+//     text-align: center;
+// }
+// .col-time-status{
+//     text-align: center;
+// }
+// .col-venue-name{
+//     text-align: center;
+// }
+// .col-venue-city{
+//     text-align: left;
+// }
+// .segment-values{
+//     --background: #ffffff;
+// }
+
+// .label-text-segment{
+//     color: #3a2f1a;
+// }
+
+// ion-segment-button{
+//     --background: #4f772d;
+//     // --background-checked: #4ad66d  ;
+//     --background-hover: #8ac926 ;
+// }
+
+// .main-content{
+//     width: 100%;
+//     height: 100%;
     
-}
+// }
 
-.container-detalles{
-    width: 100%;
-    height: 100%;
-    background: #31572c;
-}
+// .container-detalles{
+//     width: 100%;
+//     height: 100%;
+//     background: #31572c;
+// }
 
-.main-content{
-    width: 100%;
-    height: auto;
+// .main-content{
+//     width: 100%;
+//     height: auto;
 
-}
+// }
 
-.container-otros{
-    width: 100%;
-    height: 100%;
-    background: #4f772d;
+// .container-otros{
+//     width: 100%;
+//     height: 100%;
+//     background: #4f772d;
 
-}
+// }
 
-.grid-card-content{
-    background: #ffffff;
-}
+// .grid-card-content{
+//     background: #ffffff;
+// }
 
-.content-players{
-    align-items: center;
-    display: flex;
-    background: #6a994e;
-    width: 100%;
-    height: auto;
-}
-.content-row-players{
-    background: #386641;
-    color: #ffffff;
-    height: 60px;
-}
+// .content-players{
+//     align-items: center;
+//     display: flex;
+//     background: #6a994e;
+//     width: 100%;
+//     height: auto;
+// }
+// .content-row-players{
+//     background: #386641;
+//     color: #ffffff;
+//     height: 60px;
+// }
 
-.content-row-players{
-    display: flex;
-    align-items: center;
-}
+// .content-row-players{
+//     display: flex;
+//     align-items: center;
+// }
 
-.circle-number-home{
-    background: #606c38;
-    border: 1px solid;
-    border-radius: 20px;
-    color: #ffffff;
-    height: 25px;
-    width: 25px;
-    font-size: 11px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.circle-number-away{
-    background: #283618;
-    border: 1px solid;
-    border-radius: 20px;
-    color: #ffffff;
-    height: 25px;
-    width: 25px;
-    font-size: 11px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
+// .circle-number-home{
+//     background: #606c38;
+//     border: 1px solid;
+//     border-radius: 20px;
+//     color: #ffffff;
+//     height: 25px;
+//     width: 25px;
+//     font-size: 11px;
+//     text-align: center;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }
+// .circle-number-away{
+//     background: #283618;
+//     border: 1px solid;
+//     border-radius: 20px;
+//     color: #ffffff;
+//     height: 25px;
+//     width: 25px;
+//     font-size: 11px;
+//     text-align: center;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+// }

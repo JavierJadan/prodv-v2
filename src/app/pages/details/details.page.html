@@ -9,312 +9,488 @@
   
 </ion-header>
 
-<ion-content class="content-main" >
-  <div *ngFor="let detail of details" class="div-partido" >
+<ion-content class="content-main-match">
+  
+<ion-card *ngFor="let detail of details" class="content-detail-match" >
+  <ion-grid class="card-match">
 
-    <ion-grid >
-      <ion-row class="row-division" >
-        <ion-col class="col-division" size="12">
-          <ion-label>
-            {{detail.league.name}} - {{detail.league.round}}
-          </ion-label>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <h4>{{ detail.league_name }}</h4>
+      </ion-col>
+    </ion-row>
 
-      <ion-row class="row-encabezado">
-        <ion-col class="col-away" size="3" >
+    <ion-row>
+      <ion-col size="12">
+        <ion-label>{{ detail.stage_name}}</ion-label>
+      </ion-col>
+    </ion-row>
 
-          <ion-avatar class="avatar-aways">
-            <img src="{{detail.teams.home.logo}}">
-          </ion-avatar>
-        
-        </ion-col>
 
-        <ion-col class="col-marcador" size="6">
-          <ion-label class="label-marcador">
-            {{detail.goals.home}} - {{detail.goals.away}}
-          </ion-label>
-        </ion-col>
-
-        <ion-col class="col-team" size="3" >
-
-          <ion-avatar class="avatar-teams" >
-            <img src="{{detail.teams.away.logo}} ">
-          </ion-avatar>
-        
-        </ion-col>
-      </ion-row>
-
-      <ion-row class="row-names-details">
-        
-        <ion-col class="col-name-team" size="5">
-          <ion-label> {{detail.teams.home.name}} </ion-label>
-        </ion-col>
-        
-        <ion-col class="col-time-status" size="2">
-          <ion-label>{{detail.fixture.status.short}}</ion-label>
-          
-        </ion-col>
-        
-        <ion-col class="col-name-team" size="5">
-          <ion-label> {{detail.teams.away.name}} </ion-label>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-col class="col-venue-name" size="12">
-          <ion-label>{{detail.fixture.venue.name}}</ion-label>
-        </ion-col>
-      </ion-row>
+    <ion-row>
+      <ion-col size="1" ></ion-col>
+      <ion-col size="2">
+        <img src="{{detail.team_home_badge}}">
+      </ion-col>
+      <ion-col size="2">
+        <p>{{ detail.match_hometeam_score}}</p>
+      </ion-col>
+      <ion-col size="2">
+        <p>:</p>
+      </ion-col>
+      <ion-col size="2">
+        <p>{{ detail.match_awayteam_score}}</p>
+      </ion-col>
+      <ion-col size="2">
+        <img src="{{detail.team_away_badge}}">
+      </ion-col>
+      <ion-col size="1" ></ion-col>
+    </ion-row>
     
+    <ion-row>
+      <ion-col size="12">
+        <ion-label>{{ detail.match_status }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <img src="assets/imgs/cancha.png" alt="" srcset="">
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-label>{{ detail.match_stadium }}</ion-label>
+      </ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+</ion-card>
+
+<ion-segment mode="ios" class="segment-values" (ionChange)="changeSegment($event)" value="estadisticas">
+  <ion-segment-button  value="estadisticas">
+    <ion-label class="label-text-segment" >Estadísticas</ion-label>
+  </ion-segment-button>
+
+  <ion-segment-button value="goles">
+    <ion-label class="label-text-segment" >Goles</ion-label>
+  </ion-segment-button>
+
+  <ion-segment-button value="alineaciones">
+    <ion-label class="label-text-segment" >Alineaciones</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+
+<div *ngIf=" opcion =='estadisticas'">
+  <ion-card *ngFor="let detail of details" class="content-detail-match">
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[18].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Posesión del balón</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[18].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[4].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Sustitución</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[4].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[5].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Ataques</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[5].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[6].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Ataques peligrosos</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[6].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[9].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Disparos totales</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[9].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[10].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Tiros a puerta</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[10].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[11].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Tiros fuera de portería</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[11].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[12].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Disparos bloqueados</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[12].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[15].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Faltas</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[15].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[16].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Corners</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[16].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[17].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Fueras de juego</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[17].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[21].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Pases Totales</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[21].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+    <ion-row>
+      <ion-col size="3" >
+        <ion-label>
+          {{ detail.statistics[22].home }}
+        </ion-label>
+      </ion-col>
+      <ion-col size="6" >
+        <ion-label>Pases precisos</ion-label>
+      </ion-col>
+      <ion-col size="3">
+        <ion-label>
+          {{ detail.statistics[22].away }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  
+  </ion-card>
+  
+</div>
+
+<div *ngIf=" opcion =='goles'">
+  <ion-card>
+    <ion-grid>
+      <ion-row>
+        <ion-col size="2" >
+          <ion-label>Minuto</ion-label>
+        </ion-col>
+        <ion-col size="4" >
+          <ion-label>Jugador</ion-label>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-label>Tiempo</ion-label>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-label>Marcador</ion-label>
+        </ion-col>
+      </ion-row>
     </ion-grid>
 
-  </div>
+    <ion-grid>
+      <ion-row *ngFor="let detail of details[0].goalscorer">
+        <ion-col size="2" >
+          <ion-label> {{ detail.time }}'</ion-label>
+        </ion-col>
+        <ion-col size="4" >
+          <ion-label>{{ detail.home_scorer || detail.away_scorer }}</ion-label>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-label>{{ detail.score_info_time }}</ion-label>
+        </ion-col>
+        <ion-col size="3" >
+          <ion-label>{{ detail.score }}</ion-label>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+</div>
 
-  <ion-segment mode="ios" class="segment-values" (ionChange)="changeSegment($event)" value="detalles">
+<div *ngIf=" opcion =='alineaciones'">
+  <ion-card>
+    <ion-grid >
+      <ion-row *ngFor="let lineup of details" >
+        <ion-col size="6" >
+          <ion-badge >{{ lineup.match_hometeam_system}}</ion-badge>
+        </ion-col>
+        <ion-col size="6" >
+          <ion-badge >{{ lineup.match_awayteam_system}}</ion-badge>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
 
-    <ion-segment-button  value="detalles">
-      <ion-label class="label-text-segment" >Detalles</ion-label>
-    </ion-segment-button>
+    <ion-grid>
+      <ion-row>
 
-    <ion-segment-button value="otros">
-      <ion-label class="label-text-segment" >Otros</ion-label>
-    </ion-segment-button>
+        <ion-col size="6">
 
-  </ion-segment>
+          <ion-grid>
 
-  <div class="main-content" *ngIf="opcion=='detalles'" >
-    <div class="container-detalles" *ngFor="let detail of details">
+            <ion-row>
+              <ion-col class="col-player" size="8"> <ion-label>Jugador</ion-label></ion-col>
+              <ion-col class="col-player" size="4"> <ion-badge  color="success" > Dorsal </ion-badge></ion-col>
+            </ion-row>
 
-      <ion-grid class="grid-card-content" >
-        <ion-row>
-          <ion-col size="12" >
-            <ion-label>Árbitro: {{ (detail.fixture.referee == null ) ? 'Anonimo' : detail.fixture.referee }} </ion-label>
-          </ion-col>
-        </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[0].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[0].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[1].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[1].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[2].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[2].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[3].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[3].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[4].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[4].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[5].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[5].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[6].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[6].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[7].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[7].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[8].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[8].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[9].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[9].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.home.starting_lineups[10].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.home.starting_lineups[10].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
 
-        <ion-row>
-          <ion-col size="6" >
-            <ion-label>Entrenador: {{ (detail.lineups[1] == undefined ) ? 'Anonimo' : detail.lineups[0].coach.name }} </ion-label>
-          </ion-col>
+          </ion-grid>
+
+
+        </ion-col>
+
+        <ion-col size="6" >
+          <ion-grid>
+
+            <ion-row>
+              <ion-col class="col-player" size="8"> <ion-label>Jugador</ion-label></ion-col>
+              <ion-col class="col-player" size="4"> <ion-badge  color="success" > Dorsal </ion-badge></ion-col>
+            </ion-row>
+
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[0].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[0].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[1].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[1].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[2].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[2].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[3].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[3].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[4].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[4].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[5].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[5].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[6].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[6].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[7].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[7].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[8].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[8].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[9].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[9].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+            
+            <ion-row>
+              <ion-col class="col-player" size="9"> <ion-label>{{ details[0].lineup.away.starting_lineups[10].lineup_player }}</ion-label></ion-col>
+              <ion-col class="col-player" size="3"> <ion-badge class="badge-number"> {{ details[0].lineup.away.starting_lineups[10].lineup_number }} </ion-badge></ion-col>
+            </ion-row>
+
+          </ion-grid>
           
-          <ion-col size="6" >
-            <ion-label>Entrenador: {{ (detail.lineups[0] == undefined ) ? 'Anonimo' : detail.lineups[1].coach.name }} </ion-label>
-          </ion-col>
-        </ion-row>
-        
-        <ion-row>
-          <ion-col size="6" >
-            <!-- <ion-label>Entrenador: {{ (detail.lineups[1] == undefined ) ? 'Anonimo' : detail.lineups[1].coach.name }} </ion-label> -->
-            <ion-avatar class="avatar-teams" >
-              <img src="{{detail.lineups[0].coach.photo}} ">
-            </ion-avatar>
-          </ion-col>
 
-          <ion-col size="6" >
-            <!-- <ion-label>Entrenador: {{ (detail.lineups[0] == undefined ) ? 'Anonimo' : detail.lineups[0].coach.name }} </ion-label> -->
-            <ion-avatar class="avatar-teams" >
-              <img src="{{detail.lineups[1].coach.photo}} ">
-            </ion-avatar>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <div class="content-players" >
-
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <div class="content-scoccer">
-                <ion-grid>
-                  <ion-row class="content-row-players">
-                    <ion-col size="5">
-                      <ion-avatar>
-                        <img src="{{detail.teams.home.logo}}" alt="" srcset="">
-                      </ion-avatar>
-                    </ion-col>
-                    <ion-col size="7" >{{detail.lineups[0].formation}}</ion-col>
-                  </ion-row>
-                </ion-grid>
-              </div>
-
-
-
-            </ion-col>
-            <ion-col size="6">
-
-              <div class="content-scoccer">
-                <ion-grid>
-                  <ion-row class="content-row-players">
-                    <ion-col size="5" >
-                      <ion-avatar>
-                        <img src="{{detail.teams.away.logo}}" alt="" srcset="">
-                      </ion-avatar>
-                    </ion-col>
-                    <ion-col size="7" >{{detail.lineups[1].formation}}</ion-col>
-                  </ion-row>
+          <!-- <ion-label>{{ details[0].lineup.away.starting_lineups[0].lineup_player }}</ion-label> -->
       
-                </ion-grid>
-              </div>
-
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        
-
-      </div>
-      <ion-grid style="background: #6a994e; color: white; " >
-        <ion-row>
-          <ion-col size="6">
-
-            <ion-grid>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[0].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[0].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[1].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[1].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[2].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[2].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[3].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[3].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[4].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[4].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[5].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[5].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[6].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[6].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[7].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[7].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[8].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[8].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[9].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[9].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-home"><p class="number-player-home">{{detail.lineups[0].startXI[10].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[0].startXI[10].player.name}}</ion-col>
-              </ion-row>
-            </ion-grid>
-
-          </ion-col>
-          <ion-col size="6">
-
-            <ion-grid>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[0].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[0].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[1].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[1].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[2].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[2].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[3].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[3].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[4].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[4].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[5].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[5].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[6].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[6].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[7].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[7].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[8].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[8].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[9].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[9].player.name}}</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="3"><div class="circle-number-away"><p class="number-player-home">{{detail.lineups[1].startXI[10].player.number}}</p></div></ion-col>
-                <ion-col size="9">{{detail.lineups[1].startXI[10].player.name}}</ion-col>
-              </ion-row>
-            </ion-grid>
-
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-
-
-
-
-
-    </div>
-  </div>
-
-  <div class="main-content" *ngIf="opcion=='otros'" >
-    <div class="container-otros" *ngFor="let detail of details">
-      <ion-grid>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-label>LIGA</ion-label>
-          </ion-col>
-          <ion-col size="6" >
-            <ion-label>PAIS</ion-label>
-          </ion-col>
-        </ion-row>
-        
-        <ion-row>
-          <ion-col size="6" >
-            <img src="{{detail.league.logo}}">
-          </ion-col>
-          <ion-col size="6" >
-            <img src="{{detail.league.flag}}">
-          </ion-col>
-        </ion-row>
-        
-        <ion-row>
-          <ion-col size="6" >
-            <ion-label>
-               ETAPA: {{detail.league.round}}
-            </ion-label>
-          </ion-col>
-          <ion-col size="6" >
-            <ion-label>
-               NOMBRE: {{detail.league.country}}
-            </ion-label>
-          </ion-col>
-
-        </ion-row>
+        </ion-col>
       
-      </ion-grid>
-    </div>
-  </div>
+      </ion-row>
+      
+    </ion-grid>
 
+
+  </ion-card>
+</div>
 
 </ion-content>
+
+
