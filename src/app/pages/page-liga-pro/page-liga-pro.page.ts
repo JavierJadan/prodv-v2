@@ -69,8 +69,10 @@ export class PageLigaProPage implements OnInit {
   //^ Variables for filter the matches
   
   matchesFilterOneRound = [];
-  round = 1;
+  round = '1';
   roundValue = 1;
+
+  opcMatchR1 = '';
   
   constructor(private http: HttpClient) {
    }
@@ -80,16 +82,12 @@ export class PageLigaProPage implements OnInit {
     this.opcionSerie='seriea';
     this.opcStading='firstStading';
     this.opcionB='partidosB';
+    this.opcMatchR1= 'round1';
     // if (this.opcion ==='dates') {
       this.ionViewDidLoad();
       this.getAllMatchesLigaPro();
       this.getStandingsSerieA();
       this.getAllMatchesLigaProB();
-
-
-     
-
-
 
   }
 
@@ -125,14 +123,31 @@ export class PageLigaProPage implements OnInit {
     console.log(this.opcStading);
   }
 
+  changeMatchRound(event: any){
+    const opcMatchR1 = event.detail.value;
+    this.opcMatchR1 = opcMatchR1;
+    console.log(this.opcMatchR1);
+
+  }
+  nextMatch(){
+    let convertRound = parseInt(this.round);
+    convertRound = convertRound + 1;
+    this.round = convertRound.toString();
+    if (this.round === '16') {
+      this.round = '1';
+    }
+    this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
+
+  }
+
   getAllMatchesLigaProB(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
         APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
         action: 'get_events',
         league_id: 139,
-        from:'2023-09-05',
-        to:'2023-10-18' 
+        from:'2024-01-05',
+        to:'2024-12-18' 
       }
     }).subscribe(res =>{
 
@@ -146,15 +161,6 @@ export class PageLigaProPage implements OnInit {
     });
   }
 
-  changeRound(){
-    if(this.round === 1){
-      this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "1" );
-      } else if(this.round === 2){
-      this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "2" );
-    } else if(this.round === 3){
-      this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === "3" );
-      }
-  }
 
   getAllMatchesLigaPro(){
 
@@ -167,8 +173,8 @@ export class PageLigaProPage implements OnInit {
         APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
         action: 'get_events',
         league_id: 140,
-        from:'2023-01-05',
-        to:'2023-12-20' 
+        from:'2024-01-05',
+        to:'2024-12-20' 
       }
     }).subscribe(res =>{
 
@@ -178,7 +184,7 @@ export class PageLigaProPage implements OnInit {
         this.matches = res;
         // console.log(this.matches);
 
-        this.changeRound();
+        // this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
 
         console.log(this.matchesFilterOneRound);
 
