@@ -30,38 +30,41 @@
     <ion-segment-button value="clasificacion">
       <ion-label>Clasificación</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="stadium">
-      <ion-label>Estadios</ion-label>
-    </ion-segment-button>
     <ion-segment-button value="playes">
       <ion-label>Jugadores</ion-label>
     </ion-segment-button>
   </ion-segment>
 
 
-  <ion-segment value="buttons" (ionChange)="changeMatchRound($event)" value='{{opcMatchR1}}'>
-    <ion-segment-button value="round1">
-      <ion-label>Primera Etapa</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="round2">
-      <ion-label>Segunda Etapa</ion-label>
-    </ion-segment-button>
-  </ion-segment>
 
   
    
   <div *ngIf="opcion =='partidos'">
 
+    <ion-list>
+      <ion-item>
+        <ion-label>Proximos partidos</ion-label>
+        <ion-select interface="action-sheet" placeholder="Seleccionar etapa"  (ionChange)="changeMatchRound($event)" value='{{opcMatchR1}}'>
+          <ion-select-option value="round1">Primera Etapa</ion-select-option>
+          <ion-select-option value="round2">Segunda Etapa</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  
+
+
+   <div *ngIf="opcMatchR1 =='round1' ">
+
     <div class="div_cuarto">
       <ion-grid class="grid_cuarto">
         <ion-row class="row_cuarto">
-          <ion-col  class="col_ant" size="3">
+          <ion-col (click)="antMatchRoundOne()" class="col_ant" size="3">
             <ion-label class="text_ant">ANT</ion-label>
           </ion-col>
           <ion-col class="col_grupo" size="6">
             <ion-label class="ion-label-item-cuarto">Fecha {{round}}</ion-label>
           </ion-col>
-          <ion-col (click)="nextMatch()" class="col_sig" size="3">
+          <ion-col (click)="nextMatchRoundOne()" class="col_sig" size="3">
             <ion-label class="text_sig">SIG</ion-label>
           </ion-col>
     
@@ -69,7 +72,8 @@
       </ion-grid>
     </div>
 
-   <div *ngIf="opcMatchR1 =='round1' ">
+
+
     <div *ngFor="let match of matchesFilterOneRound, let i = index"  class="div-partidos" [routerLink]="['/details/' + match.match_id] ">
 
       <ion-row class="row_fecha">  
@@ -149,21 +153,120 @@
 
    </div>
 
+   <div *ngIf="opcMatchR1 =='round2'">
+
+    <div class="div_cuarto">
+      <ion-grid class="grid_cuarto">
+        <ion-row class="row_cuarto">
+          <ion-col (click)="antMatchRoundTwo()" class="col_ant" size="3">
+            <ion-label class="text_ant">ANT</ion-label>
+          </ion-col>
+          <ion-col class="col_grupo" size="6">
+            <ion-label class="ion-label-item-cuarto">Fecha {{roundValue}}</ion-label>
+          </ion-col>
+          <ion-col (click)="nextMatchRoundTwo()" class="col_sig" size="3">
+            <ion-label class="text_sig">SIG</ion-label>
+          </ion-col>
+    
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div *ngFor="let match of matchesFilterSecondRound, let i = index"  class="div-partidos" [routerLink]="['/details/' + match.match_id] ">
+
+      <ion-row class="row_fecha">  
+  
+        <ion-col class="col_tex_country" size="4">
+          <ion-label  class="label_fecha">
+            {{match.country_name}}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_tex_fecha" size="4">
+          <ion-label  class="label_fecha">
+            {{match.match_date | date : "yyyy-mm-dd"}}
+          </ion-label>
+        </ion-col>
+  
+        <ion-col class="col_tex_league" size="4">
+          <ion-label  class="label_fecha">
+            {{match.league_name}}
+          </ion-label>
+        </ion-col>
+      
+      </ion-row>
+        
+      <ion-row>
+        <ion-col class="col_nom_eq1" size="3">
+          <ion-label class="label_e1">
+            {{match.match_hometeam_name}}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_img" size="2">
+          <ion-item lines="none" class="item_avatar">
+            
+            <img class="con_img" src="{{match.team_home_badge}}" >
+          </ion-item>
+          
+        </ion-col>
+        <ion-col class="col_vs" size="2">
+          <ion-label class="label_tittle_vs">
+            {{match.match_hometeam_ft_score}} - {{match.match_awayteam_ft_score
+            }}
+          </ion-label>
+        </ion-col>
+        
+        <ion-col class="col_img" size="2">
+          <ion-item lines="none" class="item_avatar">
+            <img class="con_img" src="{{match.team_away_badge}}" >
+          </ion-item>
+        </ion-col>
+        
+        <ion-col class="col_nom_eq2" size="3">
+          <ion-label class="label_e2">
+            {{match.match_awayteam_name}}
+          </ion-label>
+        </ion-col>
+      </ion-row> 
+  
+      <ion-row class="row_fecha">  
+        <ion-col class="col_tex_fecha" size="12">
+          <ion-label  class="label_estadio">
+            {{match.match_stadium}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+  
+      <ion-row class="row_fecha">  
+        <ion-col class="col_tex_fecha" size="12">
+          <ion-label  class="label_estadio">
+            {{match.match_status}}
+          </ion-label>
+        </ion-col>
+      </ion-row>
+  
+  
+    </div>
+
+   </div>
+   
+
+
   </div>
 
   <div  *ngIf="opcion =='clasificacion'" >
 
-    <ion-segment value="buttons" (ionChange)="changeStadingLigaPro($event)" value='opcStading'>
-      <ion-segment-button value="firstStading">
-        <ion-label>Primera Etapa</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="secondStading">
-        <ion-label>Segunda Etapa</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="acumulada">
-        <ion-label>Acumulada</ion-label>
-      </ion-segment-button>
-    </ion-segment>
+    <ion-list>
+      <ion-item>
+        <ion-label>Tabla de posición</ion-label>
+        <ion-select interface="action-sheet" placeholder="Seleccionar etapa"  (ionChange)="changeStadingLigaPro($event)" value='opcStading'>
+          <ion-select-option value="firstStading">Primera Etapa</ion-select-option>
+          <ion-select-option value="secondStading">Segunda Etapa</ion-select-option>
+          <ion-select-option value="acumulada">Acumulada</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
     <div *ngIf="opcStading == 'firstStading'">
       <ion-grid>
@@ -270,9 +373,6 @@
     </ion-segment-button>
     <ion-segment-button value="clasificacionB">
       <ion-label>Clasificación</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="stadium">
-      <ion-label>Estadios</ion-label>
     </ion-segment-button>
     <ion-segment-button value="playes">
       <ion-label>Jugadores</ion-label>

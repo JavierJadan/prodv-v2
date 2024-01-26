@@ -69,8 +69,9 @@ export class PageLigaProPage implements OnInit {
   //^ Variables for filter the matches
   
   matchesFilterOneRound = [];
+  matchesFilterSecondRound = [];
   round = '1';
-  roundValue = 1;
+  roundValue = '1';
 
   opcMatchR1 = '';
   
@@ -129,7 +130,7 @@ export class PageLigaProPage implements OnInit {
     console.log(this.opcMatchR1);
 
   }
-  nextMatch(){
+  nextMatchRoundOne(){
     let convertRound = parseInt(this.round);
     convertRound = convertRound + 1;
     this.round = convertRound.toString();
@@ -137,8 +138,39 @@ export class PageLigaProPage implements OnInit {
       this.round = '1';
     }
     this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
-
   }
+
+  antMatchRoundOne(){
+    let convertRound = parseInt(this.round);
+    convertRound = convertRound - 1;
+    this.round = convertRound.toString();
+    if (this.round === '0') {
+      this.round = '15';
+    }
+    this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
+  }
+
+  nextMatchRoundTwo(){
+    let convertRound = parseInt(this.roundValue);
+    convertRound = convertRound + 1;
+    this.roundValue = convertRound.toString();
+    if (this.roundValue === '16') {
+      this.roundValue = '1';
+    }
+    this.matchesFilterSecondRound = this.matches.filter( match => match.stage_name === '2nd Round' && match.match_round === this.roundValue );
+  }
+
+  antMatchRoundTwo(){
+    let convertRound = parseInt(this.round);
+    convertRound = convertRound - 1;
+    this.round = convertRound.toString();
+    if (this.round === '0') {
+      this.round = '15';
+    }
+    this.matchesFilterSecondRound = this.matches.filter( match => match.stage_name === '2nd Round' && match.match_round === this.roundValue );
+  }
+
+
 
   getAllMatchesLigaProB(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
@@ -206,8 +238,6 @@ export class PageLigaProPage implements OnInit {
         league_id: 140,
       }
     }).subscribe(res =>{
-
-      
 
       if (res) {
 
