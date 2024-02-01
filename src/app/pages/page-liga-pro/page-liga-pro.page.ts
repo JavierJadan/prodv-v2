@@ -150,6 +150,7 @@ export class PageLigaProPage implements OnInit {
     this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
   }
 
+  //? Add the function to the second round
   nextMatchRoundTwo(){
     let convertRound = parseInt(this.roundValue);
     convertRound = convertRound + 1;
