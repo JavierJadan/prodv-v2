@@ -36,6 +36,16 @@
     </ng-template>
   </ion-modal>
 
+  <ion-item lines="none" class="IonInput">
+    <ion-label>Estadio:</ion-label>
+    <ion-input class="campos" [(ngModel)]="encuentro.estadio"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none" class="IonInput">
+    <ion-label>Ciudad:</ion-label>
+    <ion-input class="campos" [(ngModel)]="encuentro.ciudad"></ion-input>
+  </ion-item>
+
     <ion-item lines="none" class="IonInput">
       <ion-label  class="ion-label-item">{{encuentro.nombre_e1}}</ion-label>
       <ion-input type="number" slot="end" class="campos"  [(ngModel)]="encuentro.res_e1">
