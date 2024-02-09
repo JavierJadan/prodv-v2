@@ -4,6 +4,20 @@
   </ion-toolbar>
 </ion-header>
 
+<div class="campeonatos">
+  <ion-toolbar class="toolbar_campeonato" mode="ios">
+    <ion-segment scrollable slot="start" class="segment_campeonatos" mode="md" >
+      <ion-segment-button  mode="ios"    class="segment_botones_campeonatos"  >
+        <ion-label class="text_segment" > SERIE A</ion-label> 
+      </ion-segment-button>
+      <ion-segment-button  mode="ios"    class="segment_botones_campeonatos"  >
+        <ion-label class="text_segment" > SERIE B</ion-label> 
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</div>
+
+
 <ion-segment value="buttons" (ionChange)="changeOpctionSerieLigaPro($event)" value='{{opcionSerie}}'>
   <ion-segment-button value="seriea">
     <ion-label>SERIE A</ion-label>
