@@ -3,7 +3,7 @@
   --padding-bottom: 50px;
 }
 
-ion-toolbar {
+.header-league-name {
 --background: #075E54;
 color: white;
 }
@@ -260,4 +260,32 @@ color: white;
   font-size: 10px;
   // border: 1px red solid;
 }
+
+
+.tolbar {
+  border: 0px;
+}
+.segment_init {
+  --height: auto;
+}
+.segment_seg {
+  --color-checked:#075E54;
+  --border-radius: 0px;
+  // --color: black;
+  --border-color: transparent;
+  --indicator-color: #075E54;
+}
+.text-selected-item_pri {
+  font-size: 12px;
+}
+
+ion-segment-button {
+  font-size: 14px;
+  font-weight: bold;
+  --border-color: #404041;
+  --indicator-color: #128C7E;
+  // --color: white;
+  // padding: 3px;
+}
+
 

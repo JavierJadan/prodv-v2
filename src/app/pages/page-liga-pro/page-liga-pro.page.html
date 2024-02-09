@@ -1,34 +1,29 @@
 <ion-header>
-  <ion-toolbar mode="ios">
+  <ion-toolbar class="header-league-name" mode="ios">
     <ion-title style="text-align: center;">PRODV</ion-title> 
   </ion-toolbar>
 </ion-header>
 
 <div class="campeonatos">
   <ion-toolbar class="toolbar_campeonato" mode="ios">
-    <ion-segment scrollable slot="start" class="segment_campeonatos" mode="md" >
-      <ion-segment-button  mode="ios"    class="segment_botones_campeonatos"  >
-        <ion-label class="text_segment" > SERIE A</ion-label> 
+    <ion-segment scrollable slot="start" class="segment_campeonatos" mode="md" (ionChange)="changeOpctionSerieLigaPro($event)" value='{{opcionSerie}}'  >
+      <ion-segment-button  value="seriea"  mode="ios"    class="segment_botones_campeonatos"  >
+        <ion-label class="text_segment" >LIGA PRO SERIE A</ion-label> 
       </ion-segment-button>
-      <ion-segment-button  mode="ios"    class="segment_botones_campeonatos"  >
-        <ion-label class="text_segment" > SERIE B</ion-label> 
+      <ion-segment-button value="serieb" mode="ios"    class="segment_botones_campeonatos"  >
+        <ion-label class="text_segment" >LIGA PRO SERIE B</ion-label> 
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
 </div>
-
-
-<ion-segment value="buttons" (ionChange)="changeOpctionSerieLigaPro($event)" value='{{opcionSerie}}'>
+<!-- <ion-segment value="buttons" (ionChange)="changeOpctionSerieLigaPro($event)" value='{{opcionSerie}}'>
   <ion-segment-button value="seriea">
     <ion-label>SERIE A</ion-label>
   </ion-segment-button>
   <ion-segment-button value="serieb">
     <ion-label>SERIE B</ion-label>
   </ion-segment-button>
-</ion-segment>
-
-
-
+</ion-segment> -->
 
 <ion-content class="content_pri" >
 
@@ -37,7 +32,7 @@
 
 <div *ngIf="opcionSerie =='seriea'">
 
-  <ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
+  <!-- <ion-segment value="buttons" (ionChange)="changeSegmentLeaguePro($event)" value='{{opcion}}'>
     <ion-segment-button value="partidos">
       <ion-label>Partidos</ion-label>
     </ion-segment-button>
@@ -47,7 +42,28 @@
     <ion-segment-button value="playes">
       <ion-label>Jugadores</ion-label>
     </ion-segment-button>
-  </ion-segment>
+  </ion-segment> -->
+
+  <div class="div_segmet_de">
+    <ion-toolbar class="tolbar" mode="ios">
+      
+      <ion-segment class="segment_init"  slot="start" mode="md" (ionChange)="changeSegmentLeaguePro($event)" value="{{opcion}}">
+        <ion-segment-button  class="segment_seg"  value="partidos">
+          <ion-label class="text-selected-item_pri">Partidos</ion-label>
+        </ion-segment-button>
+        
+        <ion-segment-button class="segment_seg"  value="clasificacion">
+          <ion-label class="text-selected-item_pri" >Clasificación</ion-label>
+        </ion-segment-button>
+
+        <ion-segment-button class="segment_seg"  value="playes">
+          <ion-label class="text-selected-item_pri" >Jugadores</ion-label>
+        </ion-segment-button>
+        
+      </ion-segment>
+    </ion-toolbar>
+    
+  </div>
 
 
 
