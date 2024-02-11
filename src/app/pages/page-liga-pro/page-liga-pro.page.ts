@@ -176,7 +176,7 @@ export class PageLigaProPage implements OnInit {
   getAllMatchesLigaProB(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
-        APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
         action: 'get_events',
         league_id: 139,
         from:'2024-01-05',
@@ -203,7 +203,7 @@ export class PageLigaProPage implements OnInit {
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       
       params:{
-        APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
         action: 'get_events',
         league_id: 140,
         from:'2024-01-05',
@@ -234,7 +234,7 @@ export class PageLigaProPage implements OnInit {
   getStandingsSerieA(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
-        APIkey: '30f1a389afbdc15fffdecb663c68a28e0d8b41541ae31af007875a9b99545a41',
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
         action: 'get_standings',
         league_id: 140,
       }
