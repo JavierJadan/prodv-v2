@@ -74,7 +74,7 @@
     <ion-list>
       <ion-item>
         <ion-label>Proximos partidos</ion-label>
-        <ion-select interface="action-sheet" placeholder="Seleccionar etapa"  (ionChange)="changeMatchRound($event)" value='{{opcMatchR1}}'>
+        <ion-select interface="action-sheet" placeholder="Seleccionar etapa"  (ionChange)="changeMatchRound($event)" value='{{opcMatchRound}}'>
           <ion-select-option value="round1">Primera Etapa</ion-select-option>
           <ion-select-option value="round2">Segunda Etapa</ion-select-option>
         </ion-select>
@@ -83,7 +83,7 @@
   
 
 
-   <div *ngIf="opcMatchR1 =='round1' ">
+   <div *ngIf="opcMatchRound =='round1' ">
 
     <div class="div_cuarto">
       <ion-grid class="grid_cuarto">
@@ -110,7 +110,7 @@
   
         <ion-col class="col_tex_country" size="4">
           <ion-label  class="label_fecha">
-            {{match.country_name}}
+            <!-- {{match.country_name}} -->
           </ion-label>
         </ion-col>
         
@@ -122,7 +122,7 @@
   
         <ion-col class="col_tex_league" size="4">
           <ion-label  class="label_fecha">
-            {{match.league_name}}
+            <!-- {{match.league_name}} -->
           </ion-label>
         </ion-col>
       
@@ -183,7 +183,7 @@
 
    </div>
 
-   <div *ngIf="opcMatchR1 =='round2'">
+   <div *ngIf="opcMatchRound =='round2'">
 
     <div class="div_cuarto">
       <ion-grid class="grid_cuarto">

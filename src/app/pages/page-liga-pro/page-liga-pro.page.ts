@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { getTestBed } from '@angular/core/testing';
-import { DatePipe } from '@angular/common';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-page-liga-pro',
@@ -73,9 +71,9 @@ export class PageLigaProPage implements OnInit {
   round = '1';
   roundValue = '1';
 
-  opcMatchR1 = '';
+  opcMatchRound = '';
   
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private loadingCtrl: LoadingController) {
    }
 
   ngOnInit() {
@@ -83,21 +81,21 @@ export class PageLigaProPage implements OnInit {
     this.opcionSerie='seriea';
     this.opcStading='firstStading';
     this.opcionB='partidosB';
-    this.opcMatchR1= 'round1';
+    this.opcMatchRound= 'round1';
     // if (this.opcion ==='dates') {
       this.ionViewDidLoad();
       this.getAllMatchesLigaPro();
       this.getStandingsSerieA();
       this.getAllMatchesLigaProB();
-
-  }
-
-  ionViewDidEnter(){
-    this.getAllMatchesLigaPro();
-  }
-
-  ionViewDidLoad(){
-    console.log('getViewLoadMatches');
+    }
+    
+    ionViewDidEnter(){
+      this.getAllMatchesLigaPro();
+    }
+    
+    ionViewDidLoad(){
+      console.log('getViewLoadMatches');
+      
   }
 
   changeSegmentLeaguePro(event: any){
@@ -125,11 +123,17 @@ export class PageLigaProPage implements OnInit {
   }
 
   changeMatchRound(event: any){
-    const opcMatchR1 = event.detail.value;
-    this.opcMatchR1 = opcMatchR1;
-    console.log(this.opcMatchR1);
+    const opcMatchRound = event.detail.value;
+    this.opcMatchRound = opcMatchRound;
+    if(opcMatchRound === 'round2'){
+      this.matchesFilterSecondRound = this.matches.filter( match => match.stage_name === '2nd Round' && match.match_round === this.roundValue );
+    }
 
   }
+
+  /**
+   * @description This function is to filter the matches by the round One
+   */
   nextMatchRoundOne(){
     let convertRound = parseInt(this.round);
     convertRound = convertRound + 1;
@@ -150,7 +154,10 @@ export class PageLigaProPage implements OnInit {
     this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
   }
 
-  //? Add the function to the second round
+  /**
+   * @description This function is to filter the matches by the round Two
+   */
+
   nextMatchRoundTwo(){
     let convertRound = parseInt(this.roundValue);
     convertRound = convertRound + 1;
@@ -162,16 +169,18 @@ export class PageLigaProPage implements OnInit {
   }
 
   antMatchRoundTwo(){
-    let convertRound = parseInt(this.round);
+    let convertRound = parseInt(this.roundValue);
     convertRound = convertRound - 1;
-    this.round = convertRound.toString();
-    if (this.round === '0') {
-      this.round = '15';
+    this.roundValue = convertRound.toString();
+    if (this.roundValue === '0') {
+      this.roundValue = '15';
     }
     this.matchesFilterSecondRound = this.matches.filter( match => match.stage_name === '2nd Round' && match.match_round === this.roundValue );
   }
 
-
+  /**
+   * @description This function is to get all the matches of the Liga Pro B
+   */
 
   getAllMatchesLigaProB(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
@@ -194,12 +203,10 @@ export class PageLigaProPage implements OnInit {
     });
   }
 
-
+  /**
+   * @description This function is to get all the matches of the Liga Pro
+   */
   getAllMatchesLigaPro(){
-
-    // this.formatDateToMatch = this.datePipe.transform(this.currentDateMatch,'yyyy-MM-dd');
-    // console.log(this.formatDateToMatch);
-
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       
       params:{
@@ -212,25 +219,19 @@ export class PageLigaProPage implements OnInit {
     }).subscribe(res =>{
 
       if (res) {
-        
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matches = res;
-        // console.log(this.matches);
-
-        // this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
-
+        this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
         console.log(this.matchesFilterOneRound);
-
-
       }else{
         console.log('Dont get DATA');
       }
     });
   }
 
-  
-
-
+  /**
+   * @description This function is to get the standings of the Serie A
+   */
   getStandingsSerieA(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
@@ -279,10 +280,8 @@ export class PageLigaProPage implements OnInit {
     let stadinNameOne = this.acumulada1[index].team_name;
 
     //& ONE ROUND
-    
-     this.golesTotalesOne = this.teamGFOneRounds[index].overall_league_GF - this.teamGAOneRounds[index].overall_league_GA;
-
-      this.ptOne = this.ptdOneRound[index].overall_league_payed;
+    this.golesTotalesOne = this.teamGFOneRounds[index].overall_league_GF - this.teamGAOneRounds[index].overall_league_GA;
+    this.ptOne = this.ptdOneRound[index].overall_league_payed;
 
     for (let itemTeam = 0; itemTeam <= this.acumulada2.length -1; itemTeam++) {
       
