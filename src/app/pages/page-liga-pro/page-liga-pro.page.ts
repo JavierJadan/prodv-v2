@@ -13,11 +13,13 @@ export class PageLigaProPage implements OnInit {
 
   matches= [];
   matchesB= [];
+  playesTopSoccer = [];
   opcion='';
   opcionSerie='';
   opcionB='';
   stadingOneRound=[];
   stadingSecondRound=[];
+  filterTopSoccerOneRound=[];
   newAcumulada = [];
   ptdOneRound = [];
   ptdTwoRound = [];
@@ -87,6 +89,7 @@ export class PageLigaProPage implements OnInit {
       this.getAllMatchesLigaPro();
       this.getStandingsSerieA();
       this.getAllMatchesLigaProB();
+      this.getTopSoccerLigaProSerieA();
     }
     
     ionViewDidEnter(){
@@ -102,6 +105,9 @@ export class PageLigaProPage implements OnInit {
     const opc = event.detail.value;
     console.log(opc);
     this.opcion=opc;
+    if (this.opcion ==='players') {
+      this.getTopSoccerLigaProSerieA();
+    }
   }
 
   changeSegmentLeagueProB(event: any){
@@ -305,6 +311,26 @@ export class PageLigaProPage implements OnInit {
     console.log(opc);
     this.opcionSerie=opc;
 
+  }
+
+  getTopSoccerLigaProSerieA(){
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_topscorers',
+        league_id: 140, 
+      }
+    }).subscribe(res =>{
+
+      if (res) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this.playesTopSoccer = res;
+        this.filterTopSoccerOneRound = this.playesTopSoccer.filter( player => player.stage_name === '1st Round').sort((a,b) => (a.player_place - b.player_place));
+
+      }else{
+        console.log('Dont get DATA');
+      }
+    });
   }
 
 

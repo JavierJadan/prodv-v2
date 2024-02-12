@@ -288,4 +288,54 @@ ion-segment-button {
   // padding: 3px;
 }
 
+.custom-grid {
+  background-color: #f2f2f2; /* Color de fondo de la tabla */
+  border: 1px solid #ddd; /* Bordes de la tabla */
+}
 
+.dark-mode .custom-grid {
+  background-color: #333; /* Color de fondo de la tabla en modo oscuro */
+}
+
+.header-row {
+  align-items: center;
+  border-bottom: 1px solid var(--ion-border-color); /* Bordes de las filas */
+}
+
+.header-col {
+  text-align: center; /* Centrar el texto en las columnas del encabezado */
+  font-weight: bold; /* Negrita para el texto del encabezado */
+}
+
+.position-header {
+  background-color: #e0e0e0; /* Color de fondo de la columna de posiciones */
+}
+
+.player-row {
+  align-items: center;
+  border-bottom: 1px solid var(--ion-border-color); /* Bordes de las filas */
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+}
+
+.avatar-custom img {
+  width: 38px; /* Disminuir el tamaño del avatar */
+}
+
+.player-name {
+  font-weight: bold; /* Resaltar el nombre del jugador */
+}
+
+.team-name {
+  font-size: 14px; /* Disminuir el tamaño del nombre del equipo */
+}
+
+.goals,
+.penalty-goals {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
