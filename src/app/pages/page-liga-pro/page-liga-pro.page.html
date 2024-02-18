@@ -16,14 +16,6 @@
     </ion-segment>
   </ion-toolbar>
 </div>
-<!-- <ion-segment value="buttons" (ionChange)="changeOpctionSerieLigaPro($event)" value='{{opcionSerie}}'>
-  <ion-segment-button value="seriea">
-    <ion-label>SERIE A</ion-label>
-  </ion-segment-button>
-  <ion-segment-button value="serieb">
-    <ion-label>SERIE B</ion-label>
-  </ion-segment-button>
-</ion-segment> -->
 
 <ion-content class="content_pri" >
 
@@ -420,6 +412,7 @@
 </div>
 
 
+<!-- SERIE B -->
 
 
 <div *ngIf="opcionSerie==='serieb'" >
@@ -445,21 +438,20 @@
     
   </div>
 
-  <!-- <ion-segment value="buttons" (ionChange)="changeSegmentLeagueProB($event)" value='{{opcionB}}'>
-    <ion-segment-button value="partidosB">
-      <ion-label>Partidos</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="clasificacionB">
-      <ion-label>Clasificación</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="playes">
-      <ion-label>Goleadores</ion-label>
-    </ion-segment-button>
-  </ion-segment> -->
 
   <!--% CARD PARTIDOS SERIE B  -->
 
   <div *ngIf="opcionB =='partidosB'">
+
+    <ion-list>
+      <ion-item>
+        <ion-label>Proximos partidos</ion-label>
+        <ion-select interface="action-sheet" placeholder="Seleccionar etapa"  (ionChange)="changeMatchRound($event)" value='{{opcMatchRound}}'>
+          <ion-select-option value="round1">Primera Etapa</ion-select-option>
+          <ion-select-option value="round2">Segunda Etapa</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
 
     <div *ngFor="let match of matchesB, let i = index"  class="div-partidos" [routerLink]="['/details/' + match.match_id] ">
 

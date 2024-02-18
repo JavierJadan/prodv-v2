@@ -194,8 +194,8 @@ export class PageLigaProPage implements OnInit {
         APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
         action: 'get_events',
         league_id: 139,
-        from:'2024-01-05',
-        to:'2024-12-18' 
+        from:'2023-01-05',
+        to:'2023-12-18' 
       }
     }).subscribe(res =>{
 

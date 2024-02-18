@@ -108,3 +108,9 @@ export interface fase{
     num: number;
     text: string;
 }
+
+export interface Card {
+    imagen: string;
+    league_id: number;
+  }
+  
