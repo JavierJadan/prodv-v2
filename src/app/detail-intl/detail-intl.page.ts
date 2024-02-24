@@ -12,8 +12,9 @@ export class DetailIntlPage implements OnInit {
   detailId : string;
   matchesPL = [];
   matchesPLFilter = [];
-
   nextRound = '1';
+
+  opcMenu;
 
 
   constructor(
@@ -24,6 +25,7 @@ export class DetailIntlPage implements OnInit {
   ngOnInit() {
     this.detailId = this.activateddRouter.snapshot.paramMap.get('id');
     console.log(this.detailId);
+    this.opcMenu = 'matches';
 
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
@@ -42,7 +44,7 @@ export class DetailIntlPage implements OnInit {
 
         // console.log(this.matchesPL.length);
         this.matchesPLFilter = this.matchesPL.filter( match => match.match_round === this.nextRound );
-
+        console.log(this.matchesPLFilter);
         // this.nextMatches();
         console.log('Total partidos =>' + this.matchesPL.length);
 
@@ -53,16 +55,41 @@ export class DetailIntlPage implements OnInit {
     });
   }
 
+  changeSegmenEvents(event: any){
+    const opc = event.detail.value;
+    console.log(opc);
+    this.opcMenu = opc;
+  }
+
   nextMatches(){
+
     if(this.detailId === '152'){
+      let convertRound = parseInt(this.nextRound);
+      convertRound = convertRound + 1;
+      this.nextRound = convertRound.toString();
+      if (this.nextRound === '39') {
+        this.nextRound = '1';
+      }
+      this.matchesPLFilter = this.matchesPL.filter( match => match.match_round === this.nextRound );
+    }else if(this.detailId === '175'){
+      let convertRound = parseInt(this.nextRound);
+      convertRound = convertRound + 1;
+      this.nextRound = convertRound.toString();
+      if (this.nextRound === '35') {
+        this.nextRound = '1';
+      }
+      this.matchesPLFilter = this.matchesPL.filter( match => match.match_round === this.nextRound );
+    } else if (this.detailId === '302') {
       let convertRound = parseInt(this.nextRound);
       convertRound = convertRound + 1;
       this.nextRound = convertRound.toString();
       if (this.nextRound === '38') {
         this.nextRound = '1';
       }
-      this.matchesPLFilter = this.matchesPL.filter( match => match.match_round === this.nextRound );
+      this.matchesPLFilter = this.matchesPL.filter( match =>  match.match_round === this.nextRound );
+      
     }
+
   }
 
 

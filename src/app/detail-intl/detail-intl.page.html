@@ -11,6 +11,27 @@
 
 <ion-content>
 
+  <div class="div_segmet_de">
+    <ion-toolbar class="tolbar" mode="ios">
+      
+      <ion-segment class="segment_init"  slot="start" mode="md" (ionChange)="changeSegmenEvents($event)" value="{{opcMenu}}" >
+        <ion-segment-button  class="segment_seg"  value="matches">
+          <ion-label class="text-selected-item_pri">Partidos</ion-label>
+        </ion-segment-button>
+        
+        <ion-segment-button class="segment_seg"  value="classification">
+          <ion-label class="text-selected-item_pri" >Clasificación</ion-label>
+        </ion-segment-button>
+
+        <ion-segment-button class="segment_seg"  value="playes">
+          <ion-label class="text-selected-item_pri" >Goleadores</ion-label>
+        </ion-segment-button>
+        
+      </ion-segment>
+    </ion-toolbar>
+    
+  </div>
+
   <div class="div_cuarto">
     <ion-grid class="grid_cuarto">
       <ion-row class="row_cuarto">
@@ -30,9 +51,11 @@
     </ion-grid>
   </div>
 
+  <div *ngIf="opcMenu === 'matches' " >
+
+  
   <div  class="div-partidos ">
   <div *ngFor="let match of matchesPLFilter, let i = index"  class="div-partidos" [routerLink]="['/details/' + match.match_id] ">
-
     <ion-row class="row_fecha">  
 
       <ion-col class="col_tex_country" size="4">
@@ -108,9 +131,6 @@
 
 
   </div>
-
-<!-- Remove the unnecessary closing tag </ion-content> -->
-<!-- </ion-content> -->
-
+</div>
 </div>
 </ion-content>
