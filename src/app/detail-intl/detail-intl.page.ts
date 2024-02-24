@@ -11,6 +11,10 @@ export class DetailIntlPage implements OnInit {
 
   detailId : string;
   matchesPL = [];
+  matchesPLFilter = [];
+
+  nextRound = '1';
+
 
   constructor(
     private activateddRouter: ActivatedRoute, 
@@ -36,12 +40,32 @@ export class DetailIntlPage implements OnInit {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matchesPL = res;
 
-        console.log(this.matchesPL);
+        // console.log(this.matchesPL.length);
+        this.matchesPLFilter = this.matchesPL.filter( match => match.match_round === this.nextRound );
+
+        // this.nextMatches();
+        console.log('Total partidos =>' + this.matchesPL.length);
+
 
       }else{
         console.log('Dont get DATA');
       }
     });
   }
+
+  nextMatches(){
+    if(this.detailId === '152'){
+      let convertRound = parseInt(this.nextRound);
+      convertRound = convertRound + 1;
+      this.nextRound = convertRound.toString();
+      if (this.nextRound === '38') {
+        this.nextRound = '1';
+      }
+      this.matchesPLFilter = this.matchesPL.filter( match => match.match_round === this.nextRound );
+    }
+  }
+
+
+
 
 }

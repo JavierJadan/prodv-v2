@@ -23,27 +23,32 @@ export class DetailsPage implements OnInit {
     this.opcion="estadisticas";
     this.detailsId = this.activateddRouter.snapshot.paramMap.get('id');
     console.log(this.detailsId);
+    this.getDataMatches();
 
+
+
+  }
+
+  getDataMatches(){
     this.http.get<any>('https://apiv3.apifootball.com' ,{
-    params:{
-      APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
-      action: 'get_events',
-      match_id: this.detailsId,      
-
-    }
-  }).subscribe(res =>{
-
-    if (res) {
-      console.log(res);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      this.details = res;
-      console.log(this.details);
-
-    }else{
-      console.log('Dont get DATA');
-    }
-  });
-
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_events',
+        match_id: this.detailsId,      
+  
+      }
+    }).subscribe(res =>{
+  
+      if (res) {
+        console.log(res);
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this.details = res;
+        console.log(this.details);
+  
+      }else{
+        console.log('Dont get DATA');
+      }
+    });
   }
 
   changeSegment(event: any) {
