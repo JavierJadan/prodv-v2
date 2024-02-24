@@ -21,7 +21,7 @@
   <ion-grid class="ion-no-padding">
     <ion-row class="ion-no-margin">
       <ion-col size="6" *ngFor="let card of leagueCards" class="ion-no-padding">
-        <ion-card class="custom-card">
+        <ion-card (click)="getLeagues(card.league_id)" [routerLink]="['/detail-intl/' + card.league_id]" class="custom-card">
           <ion-card-content class="custom-content">
             <div class="image-container">
               <img [src]="card.imagen" alt="Imagen de la tarjeta" class="custom-image">

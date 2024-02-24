@@ -25,7 +25,8 @@ const routes: Routes = [
   {
     path: 'page-edit-campeonato',
     loadChildren: () => import('./pages/page-edit-campeonato/page-edit-campeonato.module').then( m => m.PageEditCampeonatoPageModule)
-  },  {
+  },
+  {
     path: 'page-edit-equipo',
     loadChildren: () => import('./pages/page-edit-equipo/page-edit-equipo.module').then( m => m.PageEditEquipoPageModule)
   },
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: 'page-recuperar',
     loadChildren: () => import('./pages/page-recuperar/page-recuperar.module').then( m => m.PageRecuperarPageModule)
+  },
+  {
+    path: 'detail-intl/:id',
+    loadChildren: () => import('./detail-intl/detail-intl.module').then( m => m.DetailIntlPageModule)
   }
 
 

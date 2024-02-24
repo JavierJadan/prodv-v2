@@ -23,11 +23,11 @@ export class PageInternacionalPage implements OnInit {
 
   matches=[];
   leagueCards: Card[] = [
-    {imagen:'assets/imgs/int-leagues/premier_logo_app.png', league_id:12212},
-    {imagen:'assets/imgs/int-leagues/bundesliga.png', league_id:12212},
-    {imagen:'assets/imgs/int-leagues/la_liga.png', league_id:12212},
-    {imagen:'assets/imgs/int-leagues/primer_division.png', league_id:12212},
-    {imagen:'assets/imgs/int-leagues/mls.png', league_id:12212},
+    {imagen:'assets/imgs/int-leagues/premier_logo_app.png', league_id:152},
+    {imagen:'assets/imgs/int-leagues/bundesliga.png', league_id:175},
+    {imagen:'assets/imgs/int-leagues/la_liga.png', league_id:302},
+    {imagen:'assets/imgs/int-leagues/primer_division.png', league_id:515},
+    {imagen:'assets/imgs/int-leagues/mls.png', league_id:332},
   ];
 
   constructor(private http: HttpClient ) {
@@ -36,16 +36,7 @@ export class PageInternacionalPage implements OnInit {
 
   ngOnInit() {
 
-    // this.http.get<any>('https://v3.football.api-sports.io/fixtures?live=all',{
-    //   headers:{
-    //     'x-rapidapi-host' : 'v3.football.api-sports.io',
-    //     'x-rapidapi-key'  : '057eb7678fa2d34dca7c319ce9a57a7d'
-    //   }
-    // }).subscribe(res =>{
-    //   console.log(res);
-    //   this.matches = res.response;
-    //   console.log(res.response);
-    // });
+    
   
   }
 
@@ -53,71 +44,28 @@ export class PageInternacionalPage implements OnInit {
    
   }
 
-  // async initialize(){
-  //   const { status } = await AdMob.trackingAuthorizationStatus();
-  //   console.log(status);
-  //   if (status === 'notDetermined') {
-  //     console.log('Display information before ads load first time');
-  //   }
+  getLeagues( league_id: number){
+    console.log(league_id);
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_events',
+        league_id: league_id,
+        from:'2023-08-01',
+        to:'2024-06-26' 
+      }
+    }).subscribe(res =>{
 
-  //   AdMob.initialize({
-  //     requestTrackingAuthorization: true,
-  //     testingDevices: ['YOURTESTDEVICECODE'],
-  //     initializeForTesting: true,
-  //   });
-  // }
+      if (res) {
+        this.matches = res;
+        console.log(this.matches);
+      }else{
+        console.log('Dont get DATA');
+      }
+    });
+  }
 
-  // async showBanner() {
-  //   const adId = isPlatform('ios') ? 'ios-ad-id' : 'android-ad-unit';
+  
 
-  //   const options: BannerAdOptions = {
-  //     adId,
-  //     adSize: BannerAdSize.ADAPTIVE_BANNER,
-  //     position: BannerAdPosition.BOTTOM_CENTER,
-  //     margin: 0,
-  //     isTesting: true,
-  //     // The default behavior of the Google Mobile Ads SDK is to serve personalized ads.
-  //     // Set this to true to request Non-Personalized Ads
-  //     // npa: true
-  //   };
-  //   await AdMob.showBanner(options);
-  // }
-
-  // async hideBanner() {
-  //   // Hides it but still available in background
-  //   await AdMob.hideBanner();
-
-  //   // Completely removes the banner
-  //   await AdMob.removeBanner();
-  // }
-
-
-  // async showInterstitial() {
-  //   const options: AdOptions = {
-  //     adId: 'YOUR AD ID',
-  //     isTesting: true,
-  //     // npa: true
-  //   };
-  //   await AdMob.prepareInterstitial(options);
-  //   await AdMob.showInterstitial();
-  // }
-  // async showRewardVideo() {
-  //   AdMob.addListener(
-  //     RewardAdPluginEvents.Rewarded,
-  //     (reward: AdMobRewardItem) => {
-  //       // Give the reward!
-  //       console.log('REWARD: ', reward);
-  //     }
-  //   );
-  //   const options: RewardAdOptions = {
-  //     adId: 'YOUR ADID',
-  //     isTesting: true,
-  //     // npa: true
-  //     // ssv: { ... }
-  //   };
-
-  //   await AdMob.prepareRewardVideoAd(options);
-  //   await AdMob.showRewardVideoAd();
-  // }
 
 }
