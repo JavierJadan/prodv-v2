@@ -74,6 +74,9 @@ export class PageLigaProPage implements OnInit {
   roundValue = '1';
 
   opcMatchRound = '';
+
+  //^ Variables for the filter the matches
+  time ='';
   
   constructor(private http: HttpClient, private loadingCtrl: LoadingController) {
    }
@@ -220,14 +223,19 @@ export class PageLigaProPage implements OnInit {
         action: 'get_events',
         league_id: 140,
         from:'2024-01-05',
-        to:'2024-12-20' 
+        to:'2024-12-20',
+        timezone: 'America/Guayaquil'
       }
     }).subscribe(res =>{
 
       if (res) {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matches = res;
-        this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
+        this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round);
+        this.matchesFilterOneRound = this.matches.filter( (match) =>{
+          return match.match_status === '' ? match.match_status = match.match_time : match.match_status = match.match_status;
+        });
+        
         console.log(this.matchesFilterOneRound);
       }else{
         console.log('Dont get DATA');
@@ -244,6 +252,7 @@ export class PageLigaProPage implements OnInit {
         APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
         action: 'get_standings',
         league_id: 140,
+        timezone: 'America/Guayaquil'
       }
     }).subscribe(res =>{
 
