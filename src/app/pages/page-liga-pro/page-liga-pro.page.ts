@@ -231,10 +231,10 @@ export class PageLigaProPage implements OnInit {
       if (res) {
         // eslint-disable-next-line @typescript-eslint/no-unused-expressions
         this.matches = res;
-        this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round);
-        this.matchesFilterOneRound = this.matches.filter( (match) =>{
-          return match.match_status === '' ? match.match_status = match.match_time : match.match_status = match.match_status;
-        });
+        this.matchesFilterOneRound = this.matches.filter( match => match.stage_name === '1st Round' && match.match_round === this.round );
+        // this.matchesFilterOneRound = this.matches.filter( (match) =>{
+        //   return ;
+        // });
         
         console.log(this.matchesFilterOneRound);
       }else{
