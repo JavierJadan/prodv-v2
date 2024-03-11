@@ -173,5 +173,45 @@
       </ion-grid>
   </div>
 
+  <div *ngIf="opcMenu === 'playes' " >
+
+    <ion-grid class="custom-grid">
+      <!-- Encabezado de la tabla -->
+      <ion-row class="header-row">
+        <ion-col size="1" class="header-col position-header">P</ion-col>
+        <ion-col size="7" class="header-col">Jugador</ion-col>
+        <ion-col size="2" class="header-col">G</ion-col>
+        <ion-col size="2" class="header-col">G/P</ion-col>
+      </ion-row>
+      <!-- Datos de la tabla -->
+      <ion-row *ngFor="let player of playesTopSoccer" class="player-row">
+        <ion-col size="1" class="player-place"> {{ player.player_place }} </ion-col>
+        <ion-col size="7" class="player-info">
+          <ion-grid>
+            <ion-row>
+              <ion-col size="2">
+                <ion-avatar class="avatar-custom">
+                  <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+                </ion-avatar>
+              </ion-col>
+              <ion-col size="10">
+                <ion-grid>
+                  <ion-row><ion-col size="12" class="player-name">{{ player.player_name }}</ion-col></ion-row>
+                  <ion-row><ion-col size="12" class="team-name">{{ player.team_name }}</ion-col></ion-row>
+                </ion-grid>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="2" class="goals"> {{ player.goals }} </ion-col>
+        <ion-col size="2" class="penalty-goals"> {{ player.penalty_goals }} </ion-col>
+      </ion-row>
+    </ion-grid>
+    
+    
+    
+
+  </div>
+
 
 </ion-content>

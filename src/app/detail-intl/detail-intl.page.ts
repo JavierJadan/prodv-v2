@@ -14,6 +14,7 @@ export class DetailIntlPage implements OnInit {
   matchesPLFilter = [];
   nextRound = '1';
   opcMenu;
+  playesTopSoccer = [];
 
   stadingLeagueInt=[];
 
@@ -28,6 +29,7 @@ export class DetailIntlPage implements OnInit {
     console.log(this.detailId);
     this.opcMenu = 'matches';
     this.getStandingsLeague();
+    this.getTopSoccerLigaProSerieA();
 
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
@@ -118,6 +120,30 @@ export class DetailIntlPage implements OnInit {
 
 
 
+    });
+  }
+
+  /**
+   * @description This function is to get players of the league
+   */
+
+  getTopSoccerLigaProSerieA(){
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_topscorers',
+        league_id: this.detailId, 
+      }
+    }).subscribe(res =>{
+
+      if (res) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this.playesTopSoccer = res;
+        
+
+      }else{
+        console.log('Dont get DATA');
+      }
     });
   }
 
