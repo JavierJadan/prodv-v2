@@ -13,8 +13,10 @@ export class DetailIntlPage implements OnInit {
   matchesPL = [];
   matchesPLFilter = [];
   nextRound = '1';
-
   opcMenu;
+  playesTopSoccer = [];
+
+  stadingLeagueInt=[];
 
 
   constructor(
@@ -26,6 +28,8 @@ export class DetailIntlPage implements OnInit {
     this.detailId = this.activateddRouter.snapshot.paramMap.get('id');
     console.log(this.detailId);
     this.opcMenu = 'matches';
+    this.getStandingsLeague();
+    this.getTopSoccerLigaProSerieA();
 
     this.http.get<any>('https://apiv3.apifootball.com' ,{
       params:{
@@ -62,7 +66,6 @@ export class DetailIntlPage implements OnInit {
   }
 
   nextMatches(){
-
     if(this.detailId === '152'){
       let convertRound = parseInt(this.nextRound);
       convertRound = convertRound + 1;
@@ -92,6 +95,57 @@ export class DetailIntlPage implements OnInit {
 
   }
 
+  /**
+   * * @description This function is stadings of the league
+   */
+
+  getStandingsLeague(){
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_standings',
+        league_id: this.detailId,
+        // timezone: 'America/Guayaquil'
+      }
+    }).subscribe(res =>{
+
+      if (res) {
+
+        this.stadingLeagueInt = res;
+        console.log(this.stadingLeagueInt);
+
+      }else{
+        console.log('Dont get DATA');
+      }
+
+
+
+    });
+  }
+
+  /**
+   * @description This function is to get players of the league
+   */
+
+  getTopSoccerLigaProSerieA(){
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_topscorers',
+        league_id: this.detailId, 
+      }
+    }).subscribe(res =>{
+
+      if (res) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        this.playesTopSoccer = res;
+        
+
+      }else{
+        console.log('Dont get DATA');
+      }
+    });
+  }
 
 
 

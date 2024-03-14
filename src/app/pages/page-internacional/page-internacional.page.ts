@@ -45,25 +45,26 @@ export class PageInternacionalPage implements OnInit {
   }
 
   getLeagues( league_id: number){
-    // console.log(league_id);
-    // this.http.get<any>('https://apiv3.apifootball.com' ,{
-    //   params:{
-    //     APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
-    //     action: 'get_events',
-    //     league_id: league_id,
-    //     from:'2023-08-01',
-    //     to:'2024-06-26' 
-    //   }
-    // }).subscribe(res =>{
+    console.log(league_id);
+    this.http.get<any>('https://apiv3.apifootball.com' ,{
+      params:{
+        APIkey: '2335c07ce6ca12a93dde8b639488bbeba8a2281f6eb351e53153d261d3d23e43',
+        action: 'get_events',
+        league_id: league_id,
+        from:'2023-08-01',
+        to:'2024-06-26' 
+      }
+    }).subscribe(res =>{
 
-    //   if (res) {
-    //     this.matches = res;
-    //     console.log(this.matches);
-    //   }else{
-    //     console.log('Dont get DATA');
-    //   }
-    // });
+      if (res) {
+        this.matches = res;
+        console.log(this.matches);
+      }else{
+        console.log('Dont get DATA');
+      }
+    });
   }
+  
 
   
 
