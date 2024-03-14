@@ -4,22 +4,8 @@
     <ion-title style="text-align: center;">PRODV</ion-title>  
     
   </ion-toolbar>
-</ion-header>
 
-<!-- <ion-header [translucent]="true">
-  <ion-toolbar>
-  </ion-toolbar> 
-</ion-header> -->
-<ion-content [fullscreen]="true">
-  <!-- <ion-header collapse="condense"> -->
-    <!-- <ion-toolbar>
-      <ion-title size="large">Header</ion-title>
-      <ion-title>Campeonatos Locales</ion-title>
-    </ion-toolbar> -->
-  <!-- </ion-header> -->
-
-<!-- <header> -->
-<div class="campeonatos">
+  <div class="campeonatos">
   <ion-toolbar class="toolbar_campeonato" mode="ios">
     <ion-segment scrollable slot="start" class="segment_campeonatos" mode="md" (ionChange)="segment($event)" >
       <ion-segment-button  mode="ios"  *ngFor="let campeonato of campeonatos"  class="segment_botones_campeonatos" (click)="getCampeonato(campeonato)" value={{campeonato.nombre}}>
@@ -28,38 +14,31 @@
     </ion-segment>
   </ion-toolbar>
 </div>
+<div class="info_campeonato">
+  <ion-label class="titulocampeonato">{{infocampeonato.nombre}}</ion-label>
+</div> 
+<div class="div_segmet_de">
 
-
-<ion-content  class="page-content">
-  <div class="info_campeonato">
-    <ion-label class="titulocampeonato">{{infocampeonato.nombre}}</ion-label>
-  </div> 
-  <div class="div_segmet_de">
-
-    <ion-toolbar class="tolbar" mode="ios">
+  <ion-toolbar class="tolbar" mode="ios">
+    
+    <ion-segment class="segment_init"  slot="start" mode="md" (ionChange)="changeSegment($event)" value="Partidos">
+      <ion-segment-button  class="segment_seg"  value="Partidos">
+        <ion-label class="text-selected-item_pri">Partidos</ion-label>
+      </ion-segment-button>
       
-      <ion-segment class="segment_init"  slot="start" mode="md" (ionChange)="changeSegment($event)" value="Partidos">
-        <ion-segment-button  class="segment_seg"  value="Partidos">
-          <ion-label class="text-selected-item_pri">Partidos</ion-label>
-        </ion-segment-button>
-        
-        <ion-segment-button *ngIf="!relampago" class="segment_seg"  value="Clasificacion">
-          <ion-label class="text-selected-item_pri" >Clasificación</ion-label>
-        </ion-segment-button>
-        
-      </ion-segment>
-    </ion-toolbar>
-    
-  </div>
+      <ion-segment-button *ngIf="!relampago" class="segment_seg"  value="Clasificacion">
+        <ion-label class="text-selected-item_pri" >Clasificación</ion-label>
+      </ion-segment-button>
+      
+    </ion-segment>
+  </ion-toolbar>
   
+</div>
 
-    <div *ngIf="opcion==='Partidos'" >
-    <div class="encabezado">
-      <ion-label class="titulo"> Proximos partidos </ion-label>
-    </div>
-    
-  
-  <!-- Prueba de nuevo estilo -->
+<div *ngIf="opcion==='Partidos'" >
+  <div class="encabezado">
+    <ion-label class="titulo"> Proximos partidos </ion-label>
+  </div>
   <div *ngIf="!relampago">
     <div *ngIf="antsig" class="div_cuarto">
       <ion-grid class="grid_cuarto">
@@ -98,6 +77,62 @@
       </ion-grid>
     </div>
   </div>
+
+</div>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+
+
+<ion-content  class="page-content">
+
+    <div *ngIf="opcion==='Partidos'" >
+    <!-- <div class="encabezado">
+      <ion-label class="titulo"> Proximos partidos </ion-label>
+    </div> -->
+    
+  
+  <!-- Prueba de nuevo estilo -->
+  <!-- <div *ngIf="!relampago">
+    <div *ngIf="antsig" class="div_cuarto">
+      <ion-grid class="grid_cuarto">
+        
+        <ion-row class="row_cuarto">
+          <ion-col (click)="anterior()" class="col_ant" size="3">
+            <ion-label class="text_ant">ANT</ion-label>
+          </ion-col>
+          <ion-col class="col_grupo" size="6">
+            <ion-label class="ion-label-item-cuarto">{{this.titulo}}</ion-label>
+          </ion-col>
+          <ion-col (click)="siguiente()" class="col_sig" size="3">
+            <ion-label class="text_sig">SIG</ion-label>
+          </ion-col>
+    
+        </ion-row>
+      </ion-grid>
+    
+    </div>
+  </div>
+
+  <div *ngIf="relampago">
+    <div *ngIf="antsig" class="div_cuarto">
+      <ion-grid class="grid_cuarto">
+        <ion-row class="row_cuarto">
+          <ion-col (click)="anteriorrelampago()" class="col_ant" size="3">
+            <ion-label class="text_ant">ANT</ion-label>
+          </ion-col>
+          <ion-col class="col_grupo" size="6">
+            <ion-label class="ion-label-item-cuarto">{{this.titulo}}</ion-label>
+          </ion-col>
+          <ion-col (click)="siguienterelampago()" class="col_sig" size="3">
+            <ion-label class="text_sig">SIG</ion-label>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div> -->
 
   <!----- UNICO ------>
   <!-- En juego -->
