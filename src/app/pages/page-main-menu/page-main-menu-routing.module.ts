@@ -25,14 +25,14 @@ const routes: Routes = [
       },
       {
         path:'',
-        redirectTo: 'page-main-menu/page-profile',
+        redirectTo: 'page-main-menu/page-local',
         pathMatch: 'full'
       }
     ]
   },
   {
     path:'',
-    redirectTo: 'page-main-menu/page-profile',
+    redirectTo: 'page-main-menu/page-local',
     pathMatch: 'full'
   }
 ];
