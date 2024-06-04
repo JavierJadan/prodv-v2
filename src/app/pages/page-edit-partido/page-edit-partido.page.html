@@ -15,9 +15,7 @@
       <!-- <ion-text >  {{formatedString}} </ion-text> -->
   </ion-item>
 
-  <ion-modal trigger="open-modal" mode="md" >
-    <ng-template>
-      <ion-content>
+
         <ion-datetime
         #datetime 
         [value]="dateValue"
@@ -31,10 +29,7 @@
             <ion-button (click)="select()" color="primary">Seleccionar</ion-button>
           </ion-buttons>
         </ion-datetime>
-        
-      </ion-content>
-    </ng-template>
-  </ion-modal>
+
 
   <ion-item lines="none" class="IonInput">
     <ion-label>Estadio:</ion-label>
