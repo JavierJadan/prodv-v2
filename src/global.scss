@@ -43,3 +43,7 @@ ion-modal{
         }
     }
 }
+
+body { --ion-background-color: #f6f8f7; --ion-text-color: #13201d; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+* { box-sizing: border-box; }
+ion-content { --background: #f6f8f7; }

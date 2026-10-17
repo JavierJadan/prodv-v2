@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "generatedAt": "2026-08-12T15:00:00-05:00",
+    "timezone": "America/Guayaquil",
+    "season": 2026,
+    "source": "mock"
+  },
+  "leagues": [
+    {
+      "id": "liga-pro-a-2026",
+      "name": "LigaPro Serie A",
+      "shortName": "Serie A",
+      "country": "Ecuador",
+      "logoUrl": "assets/imgs/logo-liga-pro.png",
+      "season": 2026,
+      "status": "active",
+      "format": "league",
+      "teamSize": 11,
+      "currentStage": "first_round",
+      "currentRound": 3,
+      "stages": [
+        { "id": "first_round", "name": "Primera etapa", "type": "league", "rounds": 15 },
+        { "id": "second_round", "name": "Segunda etapa", "type": "league", "rounds": 15 },
+        { "id": "final", "name": "Final", "type": "knockout", "rounds": 2 }
+      ]
+    },
+    {
+      "id": "copa-gualaquiza-2026",
+      "name": "Copa Gualaquiza",
+      "shortName": "Copa Gualaquiza",
+      "country": "Ecuador",
+      "city": "Gualaquiza",
+      "logoUrl": "assets/imgs/cancha.png",
+      "season": 2026,
+      "status": "active",
+      "format": "groups_and_knockout",
+      "teamSize": 7,
+      "currentStage": "group_stage",
+      "currentRound": 2,
+      "stages": [
+        { "id": "group_stage", "name": "Fase de grupos", "type": "groups", "rounds": 3 },
+        { "id": "quarter_finals", "name": "Cuartos de final", "type": "knockout", "rounds": 1 },
+        { "id": "semi_finals", "name": "Semifinales", "type": "knockout", "rounds": 1 },
+        { "id": "final", "name": "Final", "type": "knockout", "rounds": 1 }
+      ]
+    }
+  ],
+  "teams": [
+    {
+      "id": "barcelona-sc",
+      "name": "Barcelona SC",
+      "shortName": "BSC",
+      "crestUrl": "https://placehold.co/128x128/FFC400/111111?text=BSC",
+      "city": "Guayaquil"
+    },
+    {
+      "id": "liga-quito",
+      "name": "Liga de Quito",
+      "shortName": "LDU",
+      "crestUrl": "https://placehold.co/128x128/FFFFFF/D71920?text=LDU",
+      "city": "Quito"
+    },
+    {
+      "id": "independiente-valle",
+      "name": "Independiente del Valle",
+      "shortName": "IDV",
+      "crestUrl": "https://placehold.co/128x128/111111/5BC0EB?text=IDV",
+      "city": "Sangolqui"
+    },
+    {
+      "id": "emelec",
+      "name": "Emelec",
+      "shortName": "EME",
+      "crestUrl": "https://placehold.co/128x128/0057B8/FFFFFF?text=EME",
+      "city": "Guayaquil"
+    },
+    {
+      "id": "gualaquiza-fc",
+      "name": "Gualaquiza FC",
+      "shortName": "GFC",
+      "crestUrl": "https://placehold.co/128x128/075E54/FFFFFF?text=GFC",
+      "city": "Gualaquiza"
+    },
+    {
+      "id": "amazonas-sc",
+      "name": "Amazonas SC",
+      "shortName": "ASC",
+      "crestUrl": "https://placehold.co/128x128/E85D04/FFFFFF?text=ASC",
+      "city": "Gualaquiza"
+    }
+  ],
+  "matches": [
+    {
+      "id": "match-001",
+      "leagueId": "liga-pro-a-2026",
+      "stage": "first_round",
+      "round": 3,
+      "group": null,
+      "startsAt": "2026-08-15T18:00:00-05:00",
+      "status": "scheduled",
+      "venue": { "name": "Estadio Banco Pichincha", "city": "Guayaquil" },
+      "home": { "teamId": "barcelona-sc", "score": null, "penalties": null },
+      "away": { "teamId": "liga-quito", "score": null, "penalties": null },
+      "minute": null,
+      "winnerTeamId": null
+    },
+    {
+      "id": "match-002",
+      "leagueId": "liga-pro-a-2026",
+      "stage": "first_round",
+      "round": 2,
+      "group": null,
+      "startsAt": "2026-08-09T16:30:00-05:00",
+      "status": "finished",
+      "venue": { "name": "Estadio Banco Guayaquil", "city": "Sangolqui" },
+      "home": { "teamId": "independiente-valle", "score": 2, "penalties": null },
+      "away": { "teamId": "emelec", "score": 1, "penalties": null },
+      "minute": 90,
+      "winnerTeamId": "independiente-valle"
+    },
+    {
+      "id": "match-003",
+      "leagueId": "copa-gualaquiza-2026",
+      "stage": "group_stage",
+      "round": 2,
+      "group": "A",
+      "startsAt": "2026-08-12T20:00:00-05:00",
+      "status": "live",
+      "venue": { "name": "Estadio Municipal", "city": "Gualaquiza" },
+      "home": { "teamId": "gualaquiza-fc", "score": 1, "penalties": null },
+      "away": { "teamId": "amazonas-sc", "score": 0, "penalties": null },
+      "minute": 67,
+      "winnerTeamId": null
+    },
+    {
+      "id": "match-004",
+      "leagueId": "copa-gualaquiza-2026",
+      "stage": "group_stage",
+      "round": 1,
+      "group": "A",
+      "startsAt": "2026-08-05T20:00:00-05:00",
+      "status": "finished",
+      "venue": { "name": "Estadio Municipal", "city": "Gualaquiza" },
+      "home": { "teamId": "amazonas-sc", "score": 2, "penalties": null },
+      "away": { "teamId": "gualaquiza-fc", "score": 3, "penalties": null },
+      "minute": 70,
+      "winnerTeamId": "gualaquiza-fc"
+    }
+  ],
+  "standings": [
+    {
+      "leagueId": "liga-pro-a-2026",
+      "stage": "first_round",
+      "group": null,
+      "rows": [
+        { "position": 1, "teamId": "independiente-valle", "played": 3, "won": 3, "drawn": 0, "lost": 0, "goalsFor": 7, "goalsAgainst": 2, "goalDifference": 5, "points": 9, "form": ["W", "W", "W"] },
+        { "position": 2, "teamId": "barcelona-sc", "played": 3, "won": 2, "drawn": 1, "lost": 0, "goalsFor": 5, "goalsAgainst": 2, "goalDifference": 3, "points": 7, "form": ["W", "D", "W"] },
+        { "position": 3, "teamId": "liga-quito", "played": 3, "won": 1, "drawn": 1, "lost": 1, "goalsFor": 4, "goalsAgainst": 3, "goalDifference": 1, "points": 4, "form": ["L", "W", "D"] },
+        { "position": 4, "teamId": "emelec", "played": 3, "won": 0, "drawn": 0, "lost": 3, "goalsFor": 2, "goalsAgainst": 7, "goalDifference": -5, "points": 0, "form": ["L", "L", "L"] }
+      ]
+    },
+    {
+      "leagueId": "copa-gualaquiza-2026",
+      "stage": "group_stage",
+      "group": "A",
+      "rows": [
+        { "position": 1, "teamId": "gualaquiza-fc", "played": 2, "won": 2, "drawn": 0, "lost": 0, "goalsFor": 4, "goalsAgainst": 1, "goalDifference": 3, "points": 6, "form": ["W", "W"] },
+        { "position": 2, "teamId": "amazonas-sc", "played": 2, "won": 1, "drawn": 0, "lost": 1, "goalsFor": 3, "goalsAgainst": 2, "goalDifference": 1, "points": 3, "form": ["W", "L"] }
+      ]
+    }
+  ],
+  "topScorers": [
+    { "leagueId": "liga-pro-a-2026", "position": 1, "playerId": "player-001", "playerName": "Miguel Parrales", "teamId": "barcelona-sc", "goals": 4, "assists": 1, "appearances": 3 },
+    { "leagueId": "liga-pro-a-2026", "position": 2, "playerId": "player-002", "playerName": "Alex Arce", "teamId": "liga-quito", "goals": 3, "assists": 0, "appearances": 3 },
+    { "leagueId": "liga-pro-a-2026", "position": 3, "playerId": "player-003", "playerName": "Renato Ibarra", "teamId": "independiente-valle", "goals": 2, "assists": 2, "appearances": 3 }
+  ],
+  "matchDetails": {
+    "match-002": {
+      "possession": { "home": 56, "away": 44 },
+      "shots": { "home": 14, "away": 9 },
+      "shotsOnTarget": { "home": 6, "away": 3 },
+      "corners": { "home": 5, "away": 4 },
+      "fouls": { "home": 11, "away": 14 },
+      "yellowCards": { "home": 2, "away": 3 },
+      "redCards": { "home": 0, "away": 0 },
+      "events": [
+        { "id": "event-001", "minute": 18, "type": "goal", "teamId": "independiente-valle", "playerName": "Renato Ibarra", "detail": "right_foot" },
+        { "id": "event-002", "minute": 52, "type": "goal", "teamId": "emelec", "playerName": "Facundo Castelli", "detail": "header" },
+        { "id": "event-003", "minute": 79, "type": "goal", "teamId": "independiente-valle", "playerName": "Michael Hoyos", "detail": "penalty" }
+      ],
+      "lineups": {
+        "home": { "formation": "4-3-3", "players": [
+          {"id":"idv-1","name":"M. Ramírez","number":1,"role":"GK","x":50,"y":91},{"id":"idv-2","name":"A. Landázuri","number":2,"role":"DF","x":14,"y":72},{"id":"idv-3","name":"R. Schunke","number":5,"role":"DF","x":38,"y":75},{"id":"idv-4","name":"B. Caicedo","number":4,"role":"DF","x":62,"y":75},{"id":"idv-5","name":"M. Fernández","number":6,"role":"DF","x":86,"y":72},{"id":"idv-6","name":"C. Pellerano","number":16,"role":"MF","x":24,"y":49},{"id":"idv-7","name":"J. Alcívar","number":8,"role":"MF","x":50,"y":54},{"id":"idv-8","name":"K. Páez","number":10,"role":"MF","x":76,"y":49},{"id":"idv-9","name":"R. Ibarra","number":30,"role":"FW","x":20,"y":25},{"id":"idv-10","name":"M. Hoyos","number":11,"role":"FW","x":50,"y":18},{"id":"idv-11","name":"L. Díaz","number":19,"role":"FW","x":80,"y":25}
+        ]},
+        "away": { "formation": "4-2-3-1", "players": [
+          {"id":"eme-1","name":"P. Ortiz","number":12,"role":"GK","x":50,"y":91},{"id":"eme-2","name":"R. Caicedo","number":14,"role":"DF","x":14,"y":72},{"id":"eme-3","name":"A. Leguizamón","number":2,"role":"DF","x":38,"y":75},{"id":"eme-4","name":"L. León","number":27,"role":"DF","x":62,"y":75},{"id":"eme-5","name":"J. Rodríguez","number":20,"role":"DF","x":86,"y":72},{"id":"eme-6","name":"S. Sosa","number":5,"role":"MF","x":35,"y":57},{"id":"eme-7","name":"J. Cevallos","number":21,"role":"MF","x":65,"y":57},{"id":"eme-8","name":"T. Minda","number":10,"role":"MF","x":18,"y":36},{"id":"eme-9","name":"J. Ruiz","number":8,"role":"MF","x":50,"y":38},{"id":"eme-10","name":"D. García","number":11,"role":"MF","x":82,"y":36},{"id":"eme-11","name":"F. Castelli","number":9,"role":"FW","x":50,"y":16}
+        ]}
+      }
+    },
+    "match-003": {
+      "possession": { "home": 59, "away": 41 }, "shots": { "home": 9, "away": 5 }, "shotsOnTarget": { "home": 4, "away": 2 }, "corners": { "home": 3, "away": 2 }, "fouls": { "home": 7, "away": 8 },
+      "events": [{"id":"event-local-1","minute":34,"type":"goal","teamId":"gualaquiza-fc","playerName":"J. Jara","detail":"right_foot"}],
+      "lineups": {
+        "home": {"formation":"2-3-1","players":[{"id":"gfc-1","name":"D. Vega","number":1,"role":"GK","x":50,"y":90},{"id":"gfc-2","name":"L. Jara","number":4,"role":"DF","x":30,"y":68},{"id":"gfc-3","name":"A. Quizhpe","number":5,"role":"DF","x":70,"y":68},{"id":"gfc-4","name":"M. Morocho","number":8,"role":"MF","x":18,"y":43},{"id":"gfc-5","name":"P. Cárdenas","number":10,"role":"MF","x":50,"y":48},{"id":"gfc-6","name":"E. Jiménez","number":7,"role":"MF","x":82,"y":43},{"id":"gfc-7","name":"J. Jara","number":9,"role":"FW","x":50,"y":18}]},
+        "away": {"formation":"3-2-1","players":[{"id":"asc-1","name":"R. López","number":1,"role":"GK","x":50,"y":90},{"id":"asc-2","name":"C. León","number":2,"role":"DF","x":20,"y":68},{"id":"asc-3","name":"D. Ortiz","number":3,"role":"DF","x":50,"y":72},{"id":"asc-4","name":"V. Sari","number":4,"role":"DF","x":80,"y":68},{"id":"asc-5","name":"N. Awki","number":6,"role":"MF","x":32,"y":43},{"id":"asc-6","name":"B. Torres","number":10,"role":"MF","x":68,"y":43},{"id":"asc-7","name":"S. Naikiai","number":9,"role":"FW","x":50,"y":18}]}
+      }
+    }
+  }
+}
