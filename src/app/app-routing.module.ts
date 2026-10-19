@@ -7,15 +7,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-main-menu/page-main-menu.module').then( m => m.PageMainMenuPageModule)
   },
   {
-    path: 'details/:id',
+    path: 'details/:leagueId/:id',
     loadChildren: () => import('./pages/details/details.module').then( m => m.DetailsPageModule)
   },
   {
-    path: 'detail-intl/:id',
-    loadChildren: () => import('./detail-intl/detail-intl.module').then( m => m.DetailIntlPageModule)
-  }
-
-
+    path: 'auth/:mode',
+    loadChildren: () => import('./pages/page-auth/page-auth.module').then(m => m.PageAuthPageModule)
+  },
 ];
 
 @NgModule({

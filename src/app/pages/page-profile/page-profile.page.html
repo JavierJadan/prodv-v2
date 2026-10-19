@@ -1,1 +1,60 @@
-<ion-header class="ion-no-border"><ion-toolbar><ion-title>Más</ion-title></ion-toolbar></ion-header><ion-content><main class="screen"><section class="brand"><img src="assets/imgs/logo-liga-pro.png" alt="PRODV"><div><h1>PRODV</h1><p>Tu fútbol, siempre cerca.</p></div></section><h2>Preferencias</h2><ion-list lines="full"><ion-item button (click)="toggleTheme()"><ion-icon name="moon-outline" slot="start"></ion-icon><ion-label>Modo oscuro</ion-label><ion-toggle slot="end" [checked]="dark"></ion-toggle></ion-item><ion-item><ion-icon name="notifications-outline" slot="start"></ion-icon><ion-label><h3>Notificaciones</h3><p>Próximamente</p></ion-label></ion-item></ion-list><h2>Información</h2><ion-list lines="full"><ion-item><ion-icon name="shield-checkmark-outline" slot="start"></ion-icon><ion-label>Privacidad</ion-label></ion-item><ion-item><ion-icon name="help-circle-outline" slot="start"></ion-icon><ion-label>Ayuda y contacto</ion-label></ion-item><ion-item><ion-icon name="information-circle-outline" slot="start"></ion-icon><ion-label><h3>Versión</h3><p>2.0 · Datos de demostración</p></ion-label></ion-item></ion-list><p class="note">Esta versión es únicamente de consulta. La administración y actualización de resultados se realiza fuera de la aplicación.</p></main></ion-content>
+<ion-header class="ion-no-border"><ion-toolbar><ion-title>Perfil</ion-title></ion-toolbar></ion-header>
+<ion-content>
+  <main class="screen">
+    <section class="brand">
+      <img src="assets/imgs/logo-prodv.png" alt="PRODV">
+      <div><h1>PRODV</h1><p>Tu fútbol, siempre cerca.</p></div>
+    </section>
+
+    <h2>Mi cuenta</h2>
+    <section class="account-card" *ngIf="authReady && !user">
+      <div class="account-icon"><ion-icon name="person-outline"></ion-icon></div>
+      <div class="account-copy">
+        <h3>Personaliza tu experiencia</h3>
+        <p>Inicia sesión para guardar preferencias y recibir novedades. Puedes seguir consultando resultados sin una cuenta.</p>
+      </div>
+      <div class="auth-actions">
+        <ion-button class="auth-primary" expand="block" routerLink="/auth/login"><ion-icon name="log-in-outline" slot="start"></ion-icon>Iniciar sesión</ion-button>
+        <ion-button class="auth-secondary" expand="block" fill="outline" routerLink="/auth/register"><ion-icon name="person-add-outline" slot="start"></ion-icon>Crear cuenta</ion-button>
+      </div>
+    </section>
+
+    <section class="account-card signed" *ngIf="authReady && user">
+      <div class="signed-main">
+        <div class="avatar">{{(user.displayName || user.email || 'U').charAt(0).toUpperCase()}}</div>
+        <div class="account-copy">
+          <h3>{{user.displayName || ''}}</h3>
+          <p>{{user.email}}</p>
+          <span class="verification" [class.ok]="user.emailVerified">
+            <ion-icon [name]="user.emailVerified ? 'checkmark-circle' : 'alert-circle-outline'"></ion-icon>
+            {{user.emailVerified ? 'Correo verificado' : 'Correo pendiente de verificar'}}
+          </span>
+        </div>
+      </div>
+      <p class="account-message" [class.error]="accountError" *ngIf="accountMessage">{{accountMessage}}</p>
+      <div class="signed-actions">
+        <ion-button class="verify-action" expand="block" fill="outline" *ngIf="!user.emailVerified" [disabled]="accountBusy" (click)="resendVerification()"><ion-icon name="mail-unread-outline" slot="start"></ion-icon>Reenviar verificación</ion-button>
+      </div>
+    </section>
+
+    <section class="account-loading" *ngIf="!authReady"><ion-spinner name="crescent"></ion-spinner><span>Cargando cuenta…</span></section>
+
+    <h2>Preferencias</h2>
+    <ion-list lines="full">
+      <ion-item><ion-icon name="moon-outline" slot="start"></ion-icon><ion-label>Modo oscuro</ion-label><ion-toggle slot="end" [checked]="dark" (ionChange)="toggleTheme($event)"></ion-toggle></ion-item>
+      <ion-item><ion-icon name="notifications-outline" slot="start"></ion-icon><ion-label><h3>Notificaciones</h3><p>Próximamente</p></ion-label></ion-item>
+    </ion-list>
+
+    <h2>Información</h2>
+    <ion-list lines="full">
+      <ion-item><ion-icon name="shield-checkmark-outline" slot="start"></ion-icon><ion-label><h3>Privacidad</h3><p>Firebase protege tu acceso; PRODV no almacena tu contraseña.</p></ion-label></ion-item>
+      <ion-item><ion-icon name="information-circle-outline" slot="start"></ion-icon><ion-label><h3>Versión</h3><p>2.0 · API v2</p></ion-label></ion-item>
+    </ion-list>
+
+    <section class="session-footer" *ngIf="authReady && user">
+      <ion-button class="logout-action" expand="block" fill="clear" [disabled]="accountBusy" (click)="logout()"><ion-icon name="log-out-outline" slot="start"></ion-icon>Cerrar sesión</ion-button>
+      <small>La sesión se cerrará únicamente en este dispositivo.</small>
+    </section>
+  </main>
+</ion-content>
+

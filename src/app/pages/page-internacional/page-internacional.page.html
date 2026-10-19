@@ -1,1 +1,27 @@
-<ion-header class="ion-no-border"><ion-toolbar><ion-title>Partidos</ion-title></ion-toolbar></ion-header><ion-content><main class="screen"><div class="filters"><button [class.active]="filter==='all'" (click)="filter='all';apply()">Todos</button><button [class.active]="filter==='live'" (click)="filter='live';apply()">En vivo</button><button [class.active]="filter==='scheduled'" (click)="filter='scheduled';apply()">Próximos</button><button [class.active]="filter==='finished'" (click)="filter='finished';apply()">Resultados</button></div><article *ngFor="let match of matches" class="match" [routerLink]="['/details',match.id]"><small>{{match.startsAt|date:'EEE d MMM, HH:mm'}} · {{match.venue.city}}</small><div><span>{{team(match.home.teamId)?.name}}</span><b>{{match.home.score===null?'–':match.home.score}}</b></div><div><span>{{team(match.away.teamId)?.name}}</span><b>{{match.away.score===null?'–':match.away.score}}</b></div><em [class.live]="match.status==='live'">{{match.status==='live' ? match.minute+\"'\" : match.status==='finished'?'Finalizado':'Programado'}}</em></article><p class="empty" *ngIf="!matches.length">No hay partidos en este filtro.</p></main></ion-content>
+<ion-header class="ion-no-border"><ion-toolbar><ion-title>Partidos</ion-title></ion-toolbar></ion-header>
+<ion-content><main class="screen">
+  <section class="filter-panel">
+    <label>Campeonato</label>
+    <ion-item lines="none" class="league-select">
+      <ion-icon name="trophy-outline" slot="start"></ion-icon>
+      <ion-select [value]="selectedLeagueId" (ionChange)="changeLeague($event)" interface="popover" placeholder="Selecciona un campeonato">
+        <ion-select-option value="all">Todos los campeonatos</ion-select-option>
+        <ion-select-option *ngFor="let league of leagues" [value]="league.id">{{league.name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <label>Estado del partido</label>
+    <ion-segment [value]="filter" (ionChange)="changeFilter($event)" mode="ios" scrollable>
+      <ion-segment-button value="all"><ion-label>Todos</ion-label></ion-segment-button>
+      <ion-segment-button value="live"><ion-label>En vivo</ion-label></ion-segment-button>
+      <ion-segment-button value="scheduled"><ion-label>Próximos</ion-label></ion-segment-button>
+      <ion-segment-button value="finished"><ion-label>Resultados</ion-label></ion-segment-button>
+    </ion-segment>
+  </section>
+  <div class="list-heading"><div><b>{{matches.length}}</b><span>{{matches.length===1?'partido':'partidos'}}</span></div><small *ngIf="data">Actualizado desde la API</small></div>
+  <article *ngFor="let match of matches" class="match" [routerLink]="['/details',match.leagueId,match.id]">
+    <div class="match-head"><div><b>{{league(match.leagueId)?.shortName}}</b><small>{{match.startsAt|date:'EEE d MMM, HH:mm'}} · {{match.venue.city}}</small></div><em [class.live]="match.status==='live'">{{match.status==='live'?match.minute+"'":match.status==='finished'?'Finalizado':'Programado'}}</em></div>
+    <div class="team-line"><img [src]="team(match.home.teamId)?.crestUrl" alt=""><span>{{team(match.home.teamId)?.name}}</span><b>{{match.home.score===null?'–':match.home.score}}</b></div>
+    <div class="team-line"><img [src]="team(match.away.teamId)?.crestUrl" alt=""><span>{{team(match.away.teamId)?.name}}</span><b>{{match.away.score===null?'–':match.away.score}}</b></div>
+  </article>
+  <div class="empty" *ngIf="!loading&&!matches.length"><ion-icon name="calendar-clear-outline"></ion-icon><h2>No hay partidos</h2><p>Prueba otro estado o selecciona un campeonato diferente.</p></div>
+</main></ion-content>

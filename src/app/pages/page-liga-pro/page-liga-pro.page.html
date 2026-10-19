@@ -1,78 +1,73 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-title>Campeonatos</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-header class="ion-no-border"><ion-toolbar><ion-title>Torneos</ion-title></ion-toolbar></ion-header>
 <ion-content>
-  <main class="screen" *ngIf="data">
+  <main class="screen" *ngIf="leagues.length && !error; else state">
     <div class="league-list">
-      <button *ngFor="let league of data.leagues" (click)="select(league)" [class.active]="selected?.id===league.id">
-        <img [src]="league.logoUrl" alt=""><span>{{ league.shortName }}</span></button>
-    </div>
-    <section class="league-hero"><img [src]="selected?.logoUrl" alt="">
-      <div><small>{{ selected?.country }} · {{ selected?.season }}</small>
-        <h1>{{ selected?.name }}</h1> <span>{{selected?.teamSize}} jugadores por equipo</span> </div>
-    </section>
-    <div class="stage-strip">
-      <button *ngFor="let stage of selected?.stages" (click)="selectStage(stage)"
-              [class.active]="selectedStage?.id===stage.id">{{ stage.name }}
+      <button *ngFor="let league of leagues" (click)="select(league)" [class.active]="selected?.id === league.id">
+        <img [src]="league.logoUrl" alt="">
+        <div class="league-tab-copy">
+          <b>{{league.name}}</b>
+          <div class="league-tab-meta"><small>{{league.country}} · {{league.season}}</small><em>{{leagueStatusLabel(league.status)}}</em></div>
+        </div>
       </button>
     </div>
-    <ion-segment [(ngModel)]="segment" mode="ios" scrollable>
-      <ion-segment-button value="matches">
-        <ion-label>Partidos</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="table">
-        <ion-label>Tabla</ion-label>
-      </ion-segment-button>
-      <ion-segment-button value="scorers">
-        <ion-label>Goleadores</ion-label>
-      </ion-segment-button>
+
+    <section class="league-facts" aria-label="Información del torneo">
+      <span><ion-icon name="people-outline"></ion-icon><small>En cancha</small><b>{{selected?.teamSize}} jugadores</b></span>
+      <span><ion-icon name="git-branch-outline"></ion-icon><small>Formato</small><b>{{selected?.format}}</b></span>
+    </section>
+
+    <div class="league-stage-navigation" *ngIf="data && isLeagueCompetition">
+      <button *ngFor="let stage of selected?.stages" (click)="selectStage(stage)" [class.active]="selectedStage?.id === stage.id" [disabled]="!hasStageMatches(stage)">
+        <span>{{stage.name}}</span><small *ngIf="!hasStageMatches(stage)">Próximamente</small>
+      </button>
+    </div>
+
+    <section class="competition-navigation" *ngIf="data">
+      <button class="navigation-arrow" (click)="moveNavigation(-1)" [disabled]="!canGoPrevious" aria-label="Opción anterior"><ion-icon name="chevron-back"></ion-icon></button>
+      <div class="navigation-select">
+        <small>{{isLeagueCompetition ? selectedStage?.name : 'Fase y jornada'}}</small>
+        <ion-select [value]="navigationValue" (ionChange)="changeNavigation($event)" interface="popover" toggleIcon="chevron-down-outline">
+          <ion-select-option *ngFor="let option of navigationOptions" [value]="option.value" [disabled]="option.disabled">{{option.label}}</ion-select-option>
+        </ion-select>
+      </div>
+      <button class="navigation-arrow" (click)="moveNavigation(1)" [disabled]="!canGoNext" aria-label="Opción siguiente"><ion-icon name="chevron-forward"></ion-icon></button>
+    </section>
+
+    <ion-segment class="content-tabs" [(ngModel)]="segment" mode="ios">
+      <ion-segment-button value="matches"><ion-label>Partidos</ion-label></ion-segment-button>
+      <ion-segment-button value="table" *ngIf="!isKnockout"><ion-label>Tabla</ion-label></ion-segment-button>
+      <ion-segment-button value="scorers"><ion-label>Goleadores</ion-label></ion-segment-button>
     </ion-segment>
-    <section *ngIf="segment==='matches'">
-      <div class="round-nav">
-        <button (click)="changeRound(-1)" [disabled]="round===1">
-          <ion-icon name="chevron-back"></ion-icon>
-        </button>
-        <div><small>{{ selectedStage?.name }}</small><b>Fecha {{ round }}</b></div>
-        <button (click)="changeRound(1)" [disabled]="round===selectedStage?.rounds">
-          <ion-icon name="chevron-forward"></ion-icon>
-        </button>
-      </div>
-      <article class="match-card" *ngFor="let match of matches" [routerLink]="['/details',match.id]">
-        <div class="match-info"><small>{{ match.startsAt|date:'EEE d MMM · HH:mm' }}</small><span
-          [class.live]="match.status==='live'">{{ match.status === 'live' ? match.minute + "'" : match.status === 'finished' ? 'Finalizado' : 'Programado' }}</span>
-        </div>
-        <div class="match-team"><img [src]="team(match.home.teamId)?.crestUrl"
-                                     alt=""><b>{{ team(match.home.teamId)?.name }}</b><strong>{{ match.home.score === null ? '–' : match.home.score }}</strong>
-        </div>
-        <div class="match-team"><img [src]="team(match.away.teamId)?.crestUrl"
-                                     alt=""><b>{{ team(match.away.teamId)?.name }}</b><strong>{{ match.away.score === null ? '–' : match.away.score }}</strong>
-        </div>
-        <footer>{{ match.venue.name }}, {{ match.venue.city }}
-          <ion-icon name="chevron-forward"></ion-icon>
-        </footer>
+
+    <div class="group-strip content-groups" *ngIf="groups.length && !isKnockout">
+      <button (click)="selectGroup('')" [class.active]="!selectedGroup">Todos</button>
+      <button *ngFor="let group of groups" (click)="selectGroup(group)" [class.active]="selectedGroup === group">Grupo {{group}}</button>
+    </div>
+
+    <section *ngIf="segment === 'matches'">
+      <article class="match-card" [class.knockout-card]="isKnockout" *ngFor="let match of matches" [routerLink]="['/details', match.leagueId, match.id]">
+        <div class="match-info"><div><small>{{match.startsAt | date:'EEE d MMM · HH:mm'}}</small><b *ngIf="match.group">Grupo {{match.group}}</b></div><span [class.live]="match.status === 'live'">{{match.status === 'live' ? match.minute + "'" : match.status === 'finished' ? 'Finalizado' : 'Programado'}}</span></div>
+        <div class="match-team" [class.winner]="match.winnerTeamId === match.home.teamId"><img [src]="team(match.home.teamId)?.crestUrl" alt=""><b>{{team(match.home.teamId)?.name}}</b><strong>{{match.home.score === null ? '–' : match.home.score}}</strong><small *ngIf="match.home.penalties !== null">({{match.home.penalties}})</small></div>
+        <div class="match-team" [class.winner]="match.winnerTeamId === match.away.teamId"><img [src]="team(match.away.teamId)?.crestUrl" alt=""><b>{{team(match.away.teamId)?.name}}</b><strong>{{match.away.score === null ? '–' : match.away.score}}</strong><small *ngIf="match.away.penalties !== null">({{match.away.penalties}})</small></div>
+        <footer><span>{{match.venue.name}}, {{match.venue.city}}</span><span *ngIf="isKnockout && match.winnerTeamId">Clasificado <ion-icon name="checkmark-circle"></ion-icon></span><ion-icon *ngIf="!isKnockout" name="chevron-forward"></ion-icon></footer>
       </article>
-      <div class="empty" *ngIf="!matches.length">
-        <ion-icon name="calendar-outline"></ion-icon>
-        <p>No hay partidos programados en esta fecha.</p></div>
+      <div class="empty" *ngIf="!matches.length"><ion-icon name="calendar-outline"></ion-icon><p>No hay partidos para esta selección.</p></div>
     </section>
-    <section class="panel" *ngIf="segment==='table'&&table">
-      <div class="table-head"><span># Equipo</span><span>PJ</span><span>DG</span><b>PTS</b></div>
-      <div class="table-row" *ngFor="let row of table.rows"><span class="position">{{ row.position }}</span><span
-        class="club"><img [src]="team(row.teamId)?.crestUrl"
-                          alt="">{{ team(row.teamId)?.shortName }}</span><span>{{ row.played }}</span><span>{{ row.goalDifference > 0 ? '+' : '' }}{{ row.goalDifference }}</span><b>{{ row.points }}</b>
+
+    <section *ngIf="segment === 'table'">
+      <div class="panel standing-panel" *ngFor="let standing of visibleTables">
+        <div class="table-caption" *ngIf="standing.group">Grupo {{standing.group}}</div>
+        <div class="table-head"><span># Equipo</span><span>PJ</span><span>DG</span><b>PTS</b></div>
+        <div class="table-row" *ngFor="let row of standing.rows"><span>{{row.position}}</span><span class="club"><img [src]="team(row.teamId)?.crestUrl" alt="">{{team(row.teamId)?.shortName}}</span><span>{{row.played}}</span><span>{{row.goalDifference > 0 ? '+' : ''}}{{row.goalDifference}}</span><b>{{row.points}}</b></div>
       </div>
+      <div class="panel empty" *ngIf="!visibleTables.length">Todavía no existe una tabla para esta selección.</div>
     </section>
-    <section class="panel" *ngIf="segment==='table'&&!table">
-      <div class="empty">Esta fase no utiliza tabla de clasificación.</div>
-    </section>
-    <section class="panel" *ngIf="segment==='scorers'">
-      <div class="scorer" *ngFor="let player of scorers"><b>{{ player.position }}</b>
-        <div><strong>{{ player.playerName }}</strong><small>{{ team(player.teamId)?.name }} · {{ player.appearances }}
-          PJ</small></div>
-        <span>{{ player.goals }} <small>goles</small></span></div>
-      <div class="empty" *ngIf="!scorers.length">Aún no hay goleadores para esta competición.</div>
+
+    <section class="panel" *ngIf="segment === 'scorers'">
+      <div class="scorer" *ngFor="let player of visibleScorers"><b>{{player.position}}</b><div><strong>{{player.playerName}}</strong><small>{{team(player.teamId)?.name}} · {{player.appearances}} PJ</small></div><span>{{player.goals}} <small>goles</small></span></div>
+      <div class="empty" *ngIf="!visibleScorers.length">Aún no hay goleadores para esta selección.</div>
     </section>
   </main>
+
+  <ng-template #state><div class="screen-state"><ion-spinner *ngIf="loading"></ion-spinner><ion-icon *ngIf="error" name="cloud-offline-outline"></ion-icon><p>{{error ? 'No se pudo cargar el torneo.' : 'Cargando torneo…'}}</p></div></ng-template>
 </ion-content>

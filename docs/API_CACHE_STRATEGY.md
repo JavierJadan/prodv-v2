@@ -3,14 +3,14 @@
 ## Cliente Ionic
 
 - Una sola consulta alimenta todas las pantallas mediante `shareReplay`.
-- La respuesta se conserva cinco minutos en `localStorage`.
-- Si la copia venció, se muestra inmediatamente mientras se actualiza en segundo plano.
+- El catálogo se conserva seis horas y los paquetes de campeonato cinco minutos.
+- Partidos y detalles tienen ventanas más cortas de 60 y 30 segundos.
 - Si no existe conexión, se utiliza la última copia disponible, aunque esté vencida.
 - `apiCacheVersion` invalida respuestas antiguas cuando cambia el contrato JSON.
 - `SportsDataService.refresh()` fuerza una actualización manual.
 
-El tiempo se configura en `environment.apiCacheTtlMs`. Para partidos en vivo conviene separar el
-endpoint y aplicar un TTL de 15–30 segundos. Campeonatos, equipos y fases pueden usar 6–24 horas.
+Los tiempos se configuran en los archivos `environment`. Para partidos en vivo conviene aplicar un
+TTL de 15–30 segundos. Campeonatos, equipos y fases pueden usar 6–24 horas.
 
 ## API y CDN
 

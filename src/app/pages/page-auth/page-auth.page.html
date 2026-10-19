@@ -1,0 +1,69 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start"><ion-back-button defaultHref="/page-main-menu/page-profile"></ion-back-button></ion-buttons>
+    <ion-title>Cuenta PRODV</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="auth-screen">
+    <section class="auth-shell">
+      <header class="welcome">
+        <img src="assets/imgs/logo-prodv.png" alt="PRODV">
+        <p>Tu fútbol, siempre cerca</p>
+        <h1>{{mode === 'recovery' ? 'Recupera tu cuenta' : 'Bienvenido a PRODV'}}</h1>
+
+        <ion-segment *ngIf="mode !== 'recovery'" [value]="mode" (ionChange)="changeMode($event)" mode="ios">
+          <ion-segment-button value="login">
+            <ion-icon name="person-outline"></ion-icon>
+            <ion-label>Entrar</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="register">
+            <ion-icon name="person-add-outline"></ion-icon>
+            <ion-label>Crear cuenta</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </header>
+
+      <section class="form-panel">
+        <div class="form-heading">
+          <h2>{{title}}</h2>
+          <p *ngIf="mode === 'login'">Accede a tus preferencias y campeonatos favoritos.</p>
+          <p *ngIf="mode === 'register'">Crea tu cuenta para personalizar tu experiencia.</p>
+          <p *ngIf="mode === 'recovery'">Escribe tu correo y te enviaremos un enlace seguro.</p>
+        </div>
+
+        <form (ngSubmit)="submit()">
+          <label *ngIf="mode === 'register'">Nombre
+            <div class="field"><ion-icon name="person-outline"></ion-icon><ion-input name="name" [(ngModel)]="name" autocomplete="name" placeholder="Tu nombre"></ion-input></div>
+          </label>
+          <label>Correo electrónico
+            <div class="field"><ion-icon name="at-outline"></ion-icon><ion-input name="email" [(ngModel)]="email" type="email" inputmode="email" autocomplete="email" placeholder="nombre@correo.com" required></ion-input></div>
+          </label>
+          <label *ngIf="mode !== 'recovery'">Contraseña
+            <div class="field password-field">
+              <ion-icon name="lock-closed-outline"></ion-icon>
+              <ion-input name="password" [(ngModel)]="password" [type]="showPassword ? 'text' : 'password'" [autocomplete]="mode === 'register' ? 'new-password' : 'current-password'" placeholder="Mínimo 6 caracteres" required></ion-input>
+              <ion-button type="button" fill="clear" aria-label="Mostrar u ocultar contraseña" (click)="showPassword=!showPassword"><ion-icon [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"></ion-icon></ion-button>
+            </div>
+          </label>
+          <label *ngIf="mode === 'register'">Confirmar contraseña
+            <div class="field"><ion-icon name="shield-checkmark-outline"></ion-icon><ion-input name="confirmPassword" [(ngModel)]="confirmPassword" [type]="showPassword ? 'text' : 'password'" autocomplete="new-password" required></ion-input></div>
+          </label>
+
+          <a class="recovery" routerLink="/auth/recovery" *ngIf="mode === 'login'">¿Olvidaste la contraseña?</a>
+          <p class="feedback error" *ngIf="error"><ion-icon name="alert-circle-outline"></ion-icon>{{error}}</p>
+          <p class="feedback success" *ngIf="success"><ion-icon name="checkmark-circle-outline"></ion-icon>{{success}}</p>
+          <ion-button class="submit" expand="block" type="submit" [disabled]="loading">
+            <ion-spinner name="crescent" *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">{{mode === 'register' ? 'Crear mi cuenta' : mode === 'recovery' ? 'Enviar enlace' : 'Iniciar sesión'}}</span>
+          </ion-button>
+        </form>
+
+        <div class="back-login" *ngIf="mode === 'recovery'">
+          <ion-button fill="clear" routerLink="/auth/login"><ion-icon name="arrow-back-outline" slot="start"></ion-icon>Volver a iniciar sesión</ion-button>
+        </div>
+      </section>
+    </section>
+  </main>
+</ion-content>

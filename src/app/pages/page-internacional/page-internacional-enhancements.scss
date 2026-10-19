@@ -1,0 +1,12 @@
+.match-head > div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.match-head > div b {
+  color: #08786a;
+  font-size: 10px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}

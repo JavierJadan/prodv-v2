@@ -40,4 +40,12 @@ export class ApiCacheService {
   remove(key: string): void {
     try { localStorage.removeItem(this.prefix + key); } catch { /* no-op */ }
   }
+
+  clear(): void {
+    try {
+      Object.keys(localStorage)
+        .filter(key => key.startsWith(this.prefix))
+        .forEach(key => localStorage.removeItem(key));
+    } catch { /* no-op */ }
+  }
 }

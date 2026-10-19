@@ -46,4 +46,56 @@ ion-modal{
 
 body { --ion-background-color: #f6f8f7; --ion-text-color: #13201d; font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
 * { box-sizing: border-box; }
+img[hidden] { display: none !important; }
 ion-content { --background: #f6f8f7; }
+
+body[color-theme="dark"] {
+  --ion-background-color: #0c1412;
+  --ion-background-color-rgb: 12, 20, 18;
+  --ion-text-color: #edf5f2;
+  --ion-text-color-rgb: 237, 245, 242;
+  --ion-item-background: #15211e;
+  --ion-card-background: #15211e;
+  --ion-toolbar-background: #071c18;
+  --ion-tab-bar-background: #101a18;
+  --ion-border-color: #293733;
+}
+
+body[color-theme="dark"] ion-content { --background: #0c1412; }
+body[color-theme="dark"] ion-tab-bar { --background: #101a18 !important; border-color: #293733 !important; }
+body[color-theme="dark"] ion-item,
+body[color-theme="dark"] ion-list { --background: #15211e !important; background: #15211e !important; color: #edf5f2; }
+
+body[color-theme="dark"] :is(
+  .api-card, .league-chip, .compact-match, .result-card, .live-card,
+  .leaderboard, .match-card, .panel, .match, .side-switch,
+  .scorer, .table-row
+) {
+  background: #15211e !important;
+  border-color: #293733 !important;
+  color: #edf5f2;
+}
+
+body[color-theme="dark"] :is(.table-head, .empty-card, .round-nav button, .filters button, .stage-strip button, .group-strip button, .league-list button) {
+  background: #1b2925 !important;
+  border-color: #30403b !important;
+  color: #c7d4d0 !important;
+}
+
+body[color-theme="dark"] :is(.stage-strip button.active, .group-strip button.active, .league-list button.active, .filters button.active) {
+  background: #08786a !important;
+  color: #fff !important;
+}
+
+body[color-theme="dark"] :is(.league-hero, .phase-banner) {
+  background: #142823 !important;
+  color: #edf5f2;
+}
+
+body[color-theme="dark"] :is(.section-heading h2, .league-hero h1, .clubs, .club, .match-team, .formation-title, h1, h2, h3, strong, b) {
+  color: #edf5f2;
+}
+
+body[color-theme="dark"] :is(small, .empty, .empty-state, .screen-state, .pitch-note, .warning) {
+  color: #9eafaa !important;
+}

@@ -1,37 +1,49 @@
-<ion-header class="ion-no-border"><ion-toolbar><ion-title>PRODV</ion-title><ion-buttons slot="end"><ion-button aria-label="Notificaciones"><ion-icon name="notifications-outline"></ion-icon></ion-button></ion-buttons></ion-toolbar></ion-header>
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title>PRODV</ion-title>
+    <ion-buttons slot="end"><ion-button routerLink="/page-main-menu/page-internacional" aria-label="Partidos"><ion-icon name="calendar-outline"></ion-icon></ion-button></ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <main class="screen" *ngIf="!loading && !error; else state">
-    <section class="hero" style="display:none;">
-      <span class="eyebrow">Fútbol en un solo lugar</span>
-      <h1>Hola, aficionado</h1>
-      <p>Resultados, calendarios y posiciones actualizadas.</p>
+    <section class="hero">
+      <div><span class="eyebrow">Resumen deportivo</span><h1>Todo el fútbol, aquí</h1><p>Partidos, resultados y etapas de tus campeonatos.</p></div>
+      <div class="hero-stats"><span><b>{{allLiveMatches.length}}</b> en vivo</span><span><b>{{leagues.length}}</b> campeonatos</span><span><b>{{nextMatches.length}}</b> próximos</span></div>
     </section>
-
     <section *ngIf="liveMatches.length">
-      <div class="section-heading"><div><span class="live-dot"></span><h2>En vivo</h2></div><span>{{liveMatches.length}} partido</span></div>
-      <article class="match-card featured" *ngFor="let match of liveMatches" [routerLink]="['/details', match.id]">
-        <div class="match-meta"><span>{{match.venue.name}}</span><strong>{{statusLabel(match)}}</strong></div>
-        <div class="score-row">
-          <div class="team"><img [src]="team(match.home.teamId)?.crestUrl" alt=""><b>{{team(match.home.teamId)?.shortName}}</b></div>
-          <div class="score">{{match.home.score}}<small>–</small>{{match.away.score}}</div>
-          <div class="team"><img [src]="team(match.away.teamId)?.crestUrl" alt=""><b>{{team(match.away.teamId)?.shortName}}</b></div>
-        </div>
+      <div class="section-heading"><div><span class="live-dot"></span><h2>En vivo ahora</h2></div><a *ngIf="hasMoreLive" routerLink="/page-main-menu/page-internacional" [queryParams]="{status:'live',league:'all'}">Ver todos</a></div>
+      <article class="live-card" *ngFor="let match of liveMatches" [routerLink]="['/details',match.leagueId,match.id]">
+        <small>{{league(match.leagueId)?.shortName}} · {{match.venue.name}}</small>
+        <div class="live-score"><span><img [src]="team(match.home.teamId)?.crestUrl" alt="">{{team(match.home.teamId)?.shortName}}</span><strong>{{match.home.score}} – {{match.away.score}}</strong><span><img [src]="team(match.away.teamId)?.crestUrl" alt="">{{team(match.away.teamId)?.shortName}}</span></div>
+        <em>{{statusLabel(match)}}</em>
       </article>
     </section>
-
     <section>
-      <div class="section-heading"><h2>Competiciones</h2><a routerLink="/page-main-menu/page-liga-pro">Ver todas</a></div>
-      <div class="league-strip"><article class="league-chip" *ngFor="let league of data?.leagues"><img [src]="league.logoUrl" alt=""><div><b>{{league.shortName}}</b><small>{{league.season}}</small></div></article></div>
+      <div class="section-heading"><h2>Campeonatos</h2><a routerLink="/page-main-menu/page-liga-pro">Explorar</a></div>
+      <div class="league-strip">
+        <article class="league-chip" *ngFor="let leagueItem of leagues" routerLink="/page-main-menu/page-liga-pro">
+          <img [src]="leagueItem.logoUrl" alt="">
+          <div><b>{{leagueItem.shortName}}</b><small>{{stageName(leagueItem)}} · {{leagueItem.season}}</small><em class="league-status">{{leagueStatusLabel(leagueItem.status)}}</em></div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </article>
+      </div>
     </section>
-
-    <section>
-      <div class="section-heading"><h2>Partidos</h2><a routerLink="/page-main-menu/page-internacional">Calendario</a></div>
-      <article class="compact-match" *ngFor="let match of nextMatches" [routerLink]="['/details', match.id]">
-        <div class="date"><b>{{match.startsAt | date:'dd'}}</b><small>{{match.startsAt | date:'MMM'}}</small></div>
-        <div class="clubs"><span>{{team(match.home.teamId)?.name}}</span><span>{{team(match.away.teamId)?.name}}</span></div>
-        <div class="result" [class.finished]="match.status === 'finished'"><b>{{match.home.score === null ? (match.startsAt | date:'HH:mm') : match.home.score}}</b><b>{{match.away.score === null ? '' : match.away.score}}</b></div>
-      </article>
+    <section class="home-grid">
+      <div>
+        <div class="section-heading"><h2>Próximos</h2><a routerLink="/page-main-menu/page-internacional" [queryParams]="{status:'scheduled',league:'all'}">Ver calendario</a></div>
+        <article class="compact-match" *ngFor="let match of nextMatches" [routerLink]="['/details',match.leagueId,match.id]">
+          <div class="date"><b>{{match.startsAt|date:'dd'}}</b><small>{{match.startsAt|date:'MMM'}}</small></div>
+          <div class="clubs"><small>{{league(match.leagueId)?.shortName}}</small><span>{{team(match.home.teamId)?.name}}</span><span>{{team(match.away.teamId)?.name}}</span></div>
+          <div class="kickoff"><b>{{match.startsAt|date:'HH:mm'}}</b><small>Fecha {{match.round}}</small></div>
+        </article>
+        <div class="empty-card" *ngIf="!nextMatches.length"><ion-icon name="calendar-clear-outline"></ion-icon><p>No hay próximos partidos publicados.</p></div>
+      </div>
+      <div>
+        <div class="section-heading"><h2>Últimos resultados</h2></div>
+        <article class="result-card" *ngFor="let match of recentMatches" [routerLink]="['/details',match.leagueId,match.id]"><small>{{league(match.leagueId)?.shortName}}</small><div><span>{{team(match.home.teamId)?.shortName}}</span><b>{{match.home.score}} – {{match.away.score}}</b><span>{{team(match.away.teamId)?.shortName}}</span></div></article>
+        <div class="empty-card" *ngIf="!recentMatches.length"><p>Aún no hay resultados.</p></div>
+      </div>
     </section>
   </main>
-  <ng-template #state><div class="empty-state"><ion-spinner *ngIf="loading"></ion-spinner><ion-icon *ngIf="error" name="cloud-offline-outline"></ion-icon><p>{{error ? 'No pudimos cargar la información.' : 'Cargando partidos…'}}</p></div></ng-template>
+  <ng-template #state><div class="empty-state"><ion-spinner *ngIf="loading"></ion-spinner><ion-icon *ngIf="error" name="cloud-offline-outline"></ion-icon><h2 *ngIf="error">No pudimos cargar los datos</h2><p>{{error?'Comprueba la conexión con la API e inténtalo nuevamente.':'Cargando campeonatos…'}}</p><ion-button *ngIf="error" routerLink="/page-main-menu/page-profile">Revisar conexión</ion-button></div></ng-template>
 </ion-content>
