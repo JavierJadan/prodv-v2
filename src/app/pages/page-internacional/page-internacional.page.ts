@@ -4,6 +4,7 @@ import { forkJoin, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { AppData, League, Match, Team } from '../../core/models/app-data.models';
 import { SportsDataService } from '../../core/services/sports-data.service';
+import { MatchNavigationService } from '../../core/services/match-navigation.service';
 
 @Component({ selector: 'app-page-internacional', templateUrl: './page-internacional.page.html', styleUrls: ['./page-internacional.page.scss', './page-internacional-enhancements.scss'] })
 export class PageInternacionalPage implements OnInit {
@@ -15,7 +16,7 @@ export class PageInternacionalPage implements OnInit {
   filter = 'all';
   loading = true;
 
-  constructor(private sports: SportsDataService, private route: ActivatedRoute) {}
+  constructor(private sports: SportsDataService, private route: ActivatedRoute, private matchNavigation: MatchNavigationService) {}
 
   ngOnInit(): void {
     this.sports.getLeagues({ status: 'active' }).subscribe(leagues => {
@@ -59,6 +60,8 @@ export class PageInternacionalPage implements OnInit {
 
   team(id: string): Team | undefined { return this.data ? this.sports.getTeam(this.data, id) : undefined; }
   league(id: string): League | undefined { return this.leagues.find(item => item.id === id); }
+  hasMatchDetail(match: Match): boolean { return this.sports.hasMatchDetail(this.data, match.id); }
+  openMatch(match: Match): void { void this.matchNavigation.open(this.data, match); }
 
   private setData(packs: AppData[]): void {
     if (!packs.length) { this.data = undefined; this.allMatches = []; this.apply(); this.loading = false; return; }
@@ -69,7 +72,7 @@ export class PageInternacionalPage implements OnInit {
       matches: this.unique(packs.reduce((all, item) => all.concat(item.matches), []), 'id'),
       standings: [],
       topScorers: [],
-      matchDetails: {}
+      matchDetails: Object.assign({}, ...packs.map(item => item.matchDetails))
     };
     this.allMatches = this.data.matches;
     this.apply();

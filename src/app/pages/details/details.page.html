@@ -1,1 +1,46 @@
-<ion-header class="ion-no-border"><ion-toolbar><ion-buttons slot="start"><ion-back-button defaultHref="/page-main-menu/page-liga-pro"></ion-back-button></ion-buttons><ion-title>Partido</ion-title></ion-toolbar></ion-header><ion-content><main class="screen" *ngIf="match;else missing"><section class="scoreboard"><small>{{match.startsAt|date:'fullDate'}} · {{match.venue.name}}</small><div class="teams"><div><img [src]="team(match.home.teamId)?.crestUrl" alt=""><b>{{team(match.home.teamId)?.name}}</b></div><strong>{{match.home.score===null?'–':match.home.score}} <span>–</span> {{match.away.score===null?'–':match.away.score}}</strong><div><img [src]="team(match.away.teamId)?.crestUrl" alt=""><b>{{team(match.away.teamId)?.name}}</b></div></div><em>{{match.status==='live'?match.minute+"'":match.status==='finished'?'Finalizado':'Programado'}}</em></section><ion-segment [(ngModel)]="segment" mode="ios" scrollable><ion-segment-button value="stats"><ion-label>Estadísticas</ion-label></ion-segment-button><ion-segment-button value="events"><ion-label>Eventos</ion-label></ion-segment-button><ion-segment-button value="lineups"><ion-label>Alineaciones</ion-label></ion-segment-button></ion-segment><section class="panel empty" *ngIf="!detail">Los detalles estarán disponibles cuando comience el partido.</section><section class="panel" *ngIf="detail&&segment==='stats'"><div class="stat"><b>{{detail.possession.home}}%</b><span>Posesión</span><b>{{detail.possession.away}}%</b></div><div class="stat"><b>{{detail.shots.home}}</b><span>Remates</span><b>{{detail.shots.away}}</b></div><div class="stat"><b>{{detail.shotsOnTarget.home}}</b><span>Al arco</span><b>{{detail.shotsOnTarget.away}}</b></div><div class="stat"><b>{{detail.corners.home}}</b><span>Córners</span><b>{{detail.corners.away}}</b></div><div class="stat"><b>{{detail.fouls.home}}</b><span>Faltas</span><b>{{detail.fouls.away}}</b></div></section><section class="panel" *ngIf="detail&&segment==='events'"><div class="event" *ngFor="let event of detail.events"><b>{{event.minute}}'</b><ion-icon name="football-outline"></ion-icon><div><strong>{{event.playerName}}</strong><small>{{team(event.teamId)?.name}}</small></div></div></section><section *ngIf="detail&&segment==='lineups'" class="lineup-section"><div class="side-switch"><button (click)="lineupSide='home'" [class.active]="lineupSide==='home'">{{team(match.home.teamId)?.shortName}}</button><button (click)="lineupSide='away'" [class.active]="lineupSide==='away'">{{team(match.away.teamId)?.shortName}}</button></div><div class="formation-title"><div><b>{{team(lineupSide==='home'?match.home.teamId:match.away.teamId)?.name}}</b><small>{{detail.lineups[lineupSide].players.length}} titulares</small></div><strong>{{detail.lineups[lineupSide].formation}}</strong></div><div class="pitch"><div class="pitch-center"></div><div class="penalty top"></div><div class="penalty bottom"></div><div class="player" *ngFor="let player of detail.lineups[lineupSide].players" [style.left.%]="player.x" [style.top.%]="player.y"><div class="avatar"><ion-icon name="person"></ion-icon><span>{{player.number}}</span></div><b>{{player.name}}</b></div></div><p class="pitch-note">La ubicación proviene de las coordenadas <code>x</code> e <code>y</code> del JSON y se adapta al número de jugadores del campeonato.</p></section></main><ng-template #missing><div class="missing"><ion-spinner></ion-spinner><p>Cargando detalle…</p></div></ng-template></ion-content>
+<ion-header class="ion-no-border">
+  <ion-toolbar><ion-buttons slot="start"><ion-back-button defaultHref="/page-main-menu/page-liga-pro"></ion-back-button></ion-buttons><ion-title>Partido</ion-title></ion-toolbar>
+</ion-header>
+<ion-content>
+  <main class="screen" *ngIf="match; else missing">
+    <section class="scoreboard">
+      <small>{{match.startsAt|date:'fullDate'}} · {{match.venue.name}}</small>
+      <div class="teams">
+        <div><img [src]="team(match.home.teamId)?.crestUrl" alt=""><b>{{team(match.home.teamId)?.name}}</b></div>
+        <strong>{{match.home.score===null?'–':match.home.score}} <span>–</span> {{match.away.score===null?'–':match.away.score}}</strong>
+        <div><img [src]="team(match.away.teamId)?.crestUrl" alt=""><b>{{team(match.away.teamId)?.name}}</b></div>
+      </div>
+      <em>{{match.status==='live'?match.minute+"'":match.status==='finished'?'Finalizado':'Programado'}}</em>
+    </section>
+
+    <ion-segment [(ngModel)]="segment" mode="ios" scrollable *ngIf="hasDetail">
+      <ion-segment-button value="stats" *ngIf="hasStats"><ion-label>Estadísticas</ion-label></ion-segment-button>
+      <ion-segment-button value="events" *ngIf="hasEvents"><ion-label>Eventos</ion-label></ion-segment-button>
+      <ion-segment-button value="lineups" *ngIf="hasLineups"><ion-label>Alineaciones</ion-label></ion-segment-button>
+    </ion-segment>
+
+    <section class="panel detail-notice" *ngIf="!hasDetail">
+      <ion-icon name="time-outline"></ion-icon><div><h2>{{unavailableTitle}}</h2><p>{{unavailableMessage}}</p></div>
+    </section>
+
+    <section class="panel" *ngIf="hasStats && segment==='stats'">
+      <div class="stat"><b>{{detail.possession?.home ?? '–'}}<small *ngIf="detail.possession?.home !== null && detail.possession?.home !== undefined">%</small></b><span>Posesión</span><b>{{detail.possession?.away ?? '–'}}<small *ngIf="detail.possession?.away !== null && detail.possession?.away !== undefined">%</small></b></div>
+      <div class="stat"><b>{{detail.shots?.home ?? '–'}}</b><span>Remates</span><b>{{detail.shots?.away ?? '–'}}</b></div>
+      <div class="stat"><b>{{detail.shotsOnTarget?.home ?? '–'}}</b><span>Al arco</span><b>{{detail.shotsOnTarget?.away ?? '–'}}</b></div>
+      <div class="stat"><b>{{detail.corners?.home ?? '–'}}</b><span>Córners</span><b>{{detail.corners?.away ?? '–'}}</b></div>
+      <div class="stat"><b>{{detail.fouls?.home ?? '–'}}</b><span>Faltas</span><b>{{detail.fouls?.away ?? '–'}}</b></div>
+    </section>
+
+    <section class="panel" *ngIf="hasEvents && segment==='events'">
+      <div class="event" *ngFor="let event of detail.events"><b>{{event.minute}}'</b><ion-icon name="football-outline"></ion-icon><div><strong>{{event.playerName}}</strong><small>{{team(event.teamId)?.name}}</small></div></div>
+    </section>
+
+    <section *ngIf="hasLineups && segment==='lineups'" class="lineup-section">
+      <div class="side-switch"><button *ngIf="hasLineup('home')" (click)="lineupSide='home'" [class.active]="lineupSide==='home'">{{team(match.home.teamId)?.shortName}}</button><button *ngIf="hasLineup('away')" (click)="lineupSide='away'" [class.active]="lineupSide==='away'">{{team(match.away.teamId)?.shortName}}</button></div>
+      <div class="formation-title"><div><b>{{team(lineupSide==='home'?match.home.teamId:match.away.teamId)?.name}}</b><small>{{detail.lineups[lineupSide].players.length}} titulares</small></div><strong>{{detail.lineups[lineupSide].formation}}</strong></div>
+      <div class="pitch"><div class="pitch-center"></div><div class="penalty top"></div><div class="penalty bottom"></div><div class="player" *ngFor="let player of detail.lineups[lineupSide].players" [style.left.%]="player.x" [style.top.%]="player.y"><div class="avatar"><ion-icon name="person"></ion-icon><span>{{player.number}}</span></div><b>{{player.name}}</b></div></div>
+    </section>
+  </main>
+
+  <ng-template #missing><div class="missing"><ion-spinner *ngIf="loading"></ion-spinner><ion-icon *ngIf="!loading" name="alert-circle-outline"></ion-icon><p>{{error?'No se pudo cargar este partido.':'Cargando detalle…'}}</p></div></ng-template>
+</ion-content>

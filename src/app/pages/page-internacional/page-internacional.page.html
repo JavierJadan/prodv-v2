@@ -17,8 +17,8 @@
       <ion-segment-button value="finished"><ion-label>Resultados</ion-label></ion-segment-button>
     </ion-segment>
   </section>
-  <div class="list-heading"><div><b>{{matches.length}}</b><span>{{matches.length===1?'partido':'partidos'}}</span></div><small *ngIf="data">Actualizado desde la API</small></div>
-  <article *ngFor="let match of matches" class="match" [routerLink]="['/details',match.leagueId,match.id]">
+  <div class="list-heading"><div><b>{{matches.length}}</b><span>{{matches.length===1?'partido':'partidos'}}</span></div></div>
+  <article *ngFor="let match of matches" class="match" role="button" tabindex="0" (click)="openMatch(match)" (keydown.enter)="openMatch(match)" [class.detail-unavailable]="!hasMatchDetail(match)">
     <div class="match-head"><div><b>{{league(match.leagueId)?.shortName}}</b><small>{{match.startsAt|date:'EEE d MMM, HH:mm'}} · {{match.venue.city}}</small></div><em [class.live]="match.status==='live'">{{match.status==='live'?match.minute+"'":match.status==='finished'?'Finalizado':'Programado'}}</em></div>
     <div class="team-line"><img [src]="team(match.home.teamId)?.crestUrl" alt=""><span>{{team(match.home.teamId)?.name}}</span><b>{{match.home.score===null?'–':match.home.score}}</b></div>
     <div class="team-line"><img [src]="team(match.away.teamId)?.crestUrl" alt=""><span>{{team(match.away.teamId)?.name}}</span><b>{{match.away.score===null?'–':match.away.score}}</b></div>

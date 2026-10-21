@@ -45,11 +45,11 @@
     </div>
 
     <section *ngIf="segment === 'matches'">
-      <article class="match-card" [class.knockout-card]="isKnockout" *ngFor="let match of matches" [routerLink]="['/details', match.leagueId, match.id]">
+      <article class="match-card" [class.knockout-card]="isKnockout" [class.detail-unavailable]="!hasMatchDetail(match)" *ngFor="let match of matches" role="button" tabindex="0" (click)="openMatch(match)" (keydown.enter)="openMatch(match)">
         <div class="match-info"><div><small>{{match.startsAt | date:'EEE d MMM · HH:mm'}}</small><b *ngIf="match.group">Grupo {{match.group}}</b></div><span [class.live]="match.status === 'live'">{{match.status === 'live' ? match.minute + "'" : match.status === 'finished' ? 'Finalizado' : 'Programado'}}</span></div>
         <div class="match-team" [class.winner]="match.winnerTeamId === match.home.teamId"><img [src]="team(match.home.teamId)?.crestUrl" alt=""><b>{{team(match.home.teamId)?.name}}</b><strong>{{match.home.score === null ? '–' : match.home.score}}</strong><small *ngIf="match.home.penalties !== null">({{match.home.penalties}})</small></div>
         <div class="match-team" [class.winner]="match.winnerTeamId === match.away.teamId"><img [src]="team(match.away.teamId)?.crestUrl" alt=""><b>{{team(match.away.teamId)?.name}}</b><strong>{{match.away.score === null ? '–' : match.away.score}}</strong><small *ngIf="match.away.penalties !== null">({{match.away.penalties}})</small></div>
-        <footer><span>{{match.venue.name}}, {{match.venue.city}}</span><span *ngIf="isKnockout && match.winnerTeamId">Clasificado <ion-icon name="checkmark-circle"></ion-icon></span><ion-icon *ngIf="!isKnockout" name="chevron-forward"></ion-icon></footer>
+        <footer><span>{{match.venue.name}}, {{match.venue.city}}</span><span *ngIf="isKnockout && match.winnerTeamId">Clasificado <ion-icon name="checkmark-circle"></ion-icon></span><span class="detail-hint" *ngIf="!hasMatchDetail(match)">Detalle próximamente</span><ion-icon *ngIf="hasMatchDetail(match) && !isKnockout" name="chevron-forward"></ion-icon></footer>
       </article>
       <div class="empty" *ngIf="!matches.length"><ion-icon name="calendar-outline"></ion-icon><p>No hay partidos para esta selección.</p></div>
     </section>

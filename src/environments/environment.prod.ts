@@ -8,9 +8,11 @@ export const environment = {
     messagingSenderId: '442737847371',
     appId: '1:442737847371:web:b21a056f2659f57280b1ce'
   },
-  // La API v2 documentada todavía espera un token Sanctum prodv:read.
+  // No guardar tokens reales en el cliente ni en Git. Para la aplicación final,
+  // usar rutas públicas de lectura protegidas con rate limiting o un proxy.
   apiAuthMode: 'sanctum' as 'public' | 'sanctum' | 'firebase',
   apiBaseUrl: 'https://laravel-dashboard-prodv-production.up.railway.app/api/v2',
+  apiReadToken: '',
   useMockDataOnApiError: false,
   apiCacheVersion: 2,
   catalogCacheTtlMs: 6 * 60 * 60 * 1000,

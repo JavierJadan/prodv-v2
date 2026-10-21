@@ -22,7 +22,9 @@ export class ApiAuthInterceptor implements HttpInterceptor {
         return next.handle(request.clone({ setHeaders: headers }));
       }));
     }
-    const token = this.tokens.get();
+    // El token integrado permite consultar datos públicos desde una instalación nueva.
+    // El valor local solo se usa cuando todavía no se ha configurado uno en el ambiente.
+    const token = environment.apiReadToken || this.tokens.get();
     if (token) { headers.Authorization = `Bearer ${token}`; }
     return next.handle(request.clone({ setHeaders: headers }));
   }

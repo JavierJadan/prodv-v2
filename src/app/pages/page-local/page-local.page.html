@@ -1,18 +1,13 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-title>PRODV</ion-title>
-    <ion-buttons slot="end"><ion-button routerLink="/page-main-menu/page-internacional" aria-label="Partidos"><ion-icon name="calendar-outline"></ion-icon></ion-button></ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
   <main class="screen" *ngIf="!loading && !error; else state">
-    <section class="hero">
-      <div><span class="eyebrow">Resumen deportivo</span><h1>Todo el fútbol, aquí</h1><p>Partidos, resultados y etapas de tus campeonatos.</p></div>
-      <div class="hero-stats"><span><b>{{allLiveMatches.length}}</b> en vivo</span><span><b>{{leagues.length}}</b> campeonatos</span><span><b>{{nextMatches.length}}</b> próximos</span></div>
-    </section>
     <section *ngIf="liveMatches.length">
       <div class="section-heading"><div><span class="live-dot"></span><h2>En vivo ahora</h2></div><a *ngIf="hasMoreLive" routerLink="/page-main-menu/page-internacional" [queryParams]="{status:'live',league:'all'}">Ver todos</a></div>
-      <article class="live-card" *ngFor="let match of liveMatches" [routerLink]="['/details',match.leagueId,match.id]">
+      <article class="live-card" *ngFor="let match of liveMatches" role="button" tabindex="0" (click)="openMatch(match)" (keydown.enter)="openMatch(match)" [class.detail-unavailable]="!hasMatchDetail(match)">
         <small>{{league(match.leagueId)?.shortName}} · {{match.venue.name}}</small>
         <div class="live-score"><span><img [src]="team(match.home.teamId)?.crestUrl" alt="">{{team(match.home.teamId)?.shortName}}</span><strong>{{match.home.score}} – {{match.away.score}}</strong><span><img [src]="team(match.away.teamId)?.crestUrl" alt="">{{team(match.away.teamId)?.shortName}}</span></div>
         <em>{{statusLabel(match)}}</em>
@@ -31,7 +26,7 @@
     <section class="home-grid">
       <div>
         <div class="section-heading"><h2>Próximos</h2><a routerLink="/page-main-menu/page-internacional" [queryParams]="{status:'scheduled',league:'all'}">Ver calendario</a></div>
-        <article class="compact-match" *ngFor="let match of nextMatches" [routerLink]="['/details',match.leagueId,match.id]">
+        <article class="compact-match" *ngFor="let match of nextMatches" role="button" tabindex="0" (click)="openMatch(match)" (keydown.enter)="openMatch(match)" [class.detail-unavailable]="!hasMatchDetail(match)">
           <div class="date"><b>{{match.startsAt|date:'dd'}}</b><small>{{match.startsAt|date:'MMM'}}</small></div>
           <div class="clubs"><small>{{league(match.leagueId)?.shortName}}</small><span>{{team(match.home.teamId)?.name}}</span><span>{{team(match.away.teamId)?.name}}</span></div>
           <div class="kickoff"><b>{{match.startsAt|date:'HH:mm'}}</b><small>Fecha {{match.round}}</small></div>
@@ -40,10 +35,10 @@
       </div>
       <div>
         <div class="section-heading"><h2>Últimos resultados</h2></div>
-        <article class="result-card" *ngFor="let match of recentMatches" [routerLink]="['/details',match.leagueId,match.id]"><small>{{league(match.leagueId)?.shortName}}</small><div><span>{{team(match.home.teamId)?.shortName}}</span><b>{{match.home.score}} – {{match.away.score}}</b><span>{{team(match.away.teamId)?.shortName}}</span></div></article>
+        <article class="result-card" *ngFor="let match of recentMatches" role="button" tabindex="0" (click)="openMatch(match)" (keydown.enter)="openMatch(match)" [class.detail-unavailable]="!hasMatchDetail(match)"><small>{{league(match.leagueId)?.shortName}}</small><div><span>{{team(match.home.teamId)?.shortName}}</span><b>{{match.home.score}} – {{match.away.score}}</b><span>{{team(match.away.teamId)?.shortName}}</span></div></article>
         <div class="empty-card" *ngIf="!recentMatches.length"><p>Aún no hay resultados.</p></div>
       </div>
     </section>
   </main>
-  <ng-template #state><div class="empty-state"><ion-spinner *ngIf="loading"></ion-spinner><ion-icon *ngIf="error" name="cloud-offline-outline"></ion-icon><h2 *ngIf="error">No pudimos cargar los datos</h2><p>{{error?'Comprueba la conexión con la API e inténtalo nuevamente.':'Cargando campeonatos…'}}</p><ion-button *ngIf="error" routerLink="/page-main-menu/page-profile">Revisar conexión</ion-button></div></ng-template>
+  <ng-template #state><div class="empty-state"><ion-spinner *ngIf="loading"></ion-spinner><ion-icon *ngIf="error" name="cloud-offline-outline"></ion-icon><h2 *ngIf="error">No pudimos cargar los datos</h2><p>{{error?'Comprueba tu conexión e inténtalo nuevamente.':'Cargando campeonatos…'}}</p></div></ng-template>
 </ion-content>

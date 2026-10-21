@@ -263,3 +263,7 @@ body[color-theme="dark"] .league-facts {
 body[color-theme="dark"] .league-facts span {
   background: #16241f;
 }
+
+.match-card[role="button"] { cursor: pointer; }
+.match-card .detail-hint { color: #7a8985; font-weight: 700; }
+.match-card.detail-unavailable .detail-hint { display: inline-flex; align-items: center; }

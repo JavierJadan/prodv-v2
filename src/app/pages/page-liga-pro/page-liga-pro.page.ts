@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { forkJoin, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { AppData, CompetitionStage, League, Match, Standing, Team, TopScorer } from '../../core/models/app-data.models';
 import { SportsDataService } from '../../core/services/sports-data.service';
+import { MatchNavigationService } from '../../core/services/match-navigation.service';
 
 interface NavigationOption {
   value: string;
@@ -26,14 +29,20 @@ export class PageLigaProPage implements OnInit {
   round = 1;
   loading = true;
   error = false;
+  private readonly overviews = new Map<string, AppData>();
 
-  constructor(private sports: SportsDataService) {}
+  constructor(private sports: SportsDataService, private matchNavigation: MatchNavigationService) {}
 
   ngOnInit(): void {
     this.sports.getLeagues({ status: 'active' }).subscribe({
       next: leagues => {
-        this.leagues = leagues;
-        leagues.length ? this.select(leagues[0]) : this.loading = false;
+        if (!leagues.length) { this.leagues = []; this.loading = false; return; }
+        forkJoin(leagues.map(league => this.sports.getLeagueOverview(league.id).pipe(catchError(() => of(undefined)))))
+          .subscribe(packs => {
+            packs.forEach((pack, index) => { if (pack) { this.overviews.set(leagues[index].id, pack); } });
+            this.leagues = [...leagues].sort((a, b) => Number(this.hasCompleteContent(b.id)) - Number(this.hasCompleteContent(a.id)));
+            this.select(this.leagues[0]);
+          });
       },
       error: () => { this.error = true; this.loading = false; }
     });
@@ -46,17 +55,13 @@ export class PageLigaProPage implements OnInit {
     this.loading = true;
     this.error = false;
     this.data = undefined;
+    const cached = this.overviews.get(league.id);
+    if (cached) {
+      this.applyLeagueData(cached);
+      return;
+    }
     this.sports.getLeagueOverview(league.id).subscribe({
-      next: data => {
-        this.data = data;
-        const firstAvailable = this.allNavigationOptions.find(option => !option.disabled);
-        if (this.selectedStage && !this.hasStageMatches(this.selectedStage) && firstAvailable) {
-          this.selectedStage = firstAvailable.stage;
-          this.round = firstAvailable.round;
-        }
-        this.refreshStage();
-        this.loading = false;
-      },
+      next: data => { this.overviews.set(league.id, data); this.applyLeagueData(data); },
       error: () => { this.error = true; this.loading = false; }
     });
   }
@@ -135,6 +140,24 @@ export class PageLigaProPage implements OnInit {
 
   team(id: string): Team | undefined { return this.data ? this.sports.getTeam(this.data, id) : undefined; }
   leagueStatusLabel(status?: string): string { return this.sports.getLeagueStatusLabel(status); }
+  hasMatchDetail(match: Match): boolean { return this.sports.hasMatchDetail(this.data, match.id); }
+  openMatch(match: Match): void { void this.matchNavigation.open(this.data, match); }
+
+  private hasCompleteContent(leagueId: string): boolean {
+    const overview = this.overviews.get(leagueId);
+    return Boolean(overview?.matches.length && overview.teams.length);
+  }
+
+  private applyLeagueData(data: AppData): void {
+    this.data = data;
+    const firstAvailable = this.allNavigationOptions.find(option => !option.disabled);
+    if (this.selectedStage && !this.hasStageMatches(this.selectedStage) && firstAvailable) {
+      this.selectedStage = firstAvailable.stage;
+      this.round = firstAvailable.round;
+    }
+    this.refreshStage();
+    this.loading = false;
+  }
 
   private applyNavigation(option: NavigationOption): void {
     this.selectedStage = option.stage;

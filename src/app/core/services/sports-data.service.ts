@@ -76,6 +76,18 @@ export class SportsDataService {
     return data.teams.find(team => team.id === teamId);
   }
 
+  hasMatchDetail(data: AppData | undefined, matchId: string): boolean {
+    const detail = data?.matchDetails?.[matchId];
+    if (!detail) { return false; }
+    const statKeys = ['possession', 'shots', 'shotsOnTarget', 'corners', 'fouls'];
+    const hasStats = statKeys.some(key =>
+      typeof detail[key]?.home === 'number' || typeof detail[key]?.away === 'number');
+    const hasEvents = Array.isArray(detail.events) && detail.events.length > 0;
+    const hasLineups = ['home', 'away'].some(side =>
+      Array.isArray(detail.lineups?.[side]?.players) && detail.lineups[side].players.length > 0);
+    return hasStats || hasEvents || hasLineups;
+  }
+
   private cachedGet(path: string, ttlMs: number, params = new HttpParams()): Observable<ApiPayload> {
     const query = params.toString();
     const key = `${path}${query ? `?${query}` : ''}`;

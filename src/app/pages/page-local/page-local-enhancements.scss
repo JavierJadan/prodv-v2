@@ -18,3 +18,20 @@
   letter-spacing: .04em;
   text-transform: uppercase;
 }
+
+.live-dot {
+  animation: live-pulse 1.25s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 4px rgba(237, 72, 88, .12); }
+  50% { opacity: .45; transform: scale(.72); box-shadow: 0 0 0 8px rgba(237, 72, 88, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-dot { animation: none; }
+}
+
+[role="button"].live-card,
+[role="button"].compact-match,
+[role="button"].result-card { cursor: pointer; }

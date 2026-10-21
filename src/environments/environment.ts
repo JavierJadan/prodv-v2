@@ -8,10 +8,11 @@ export const environment = {
     messagingSenderId: '442737847371',
     appId: '1:442737847371:web:b21a056f2659f57280b1ce'
   },
-  // Cambiar a "firebase" cuando Laravel valide ID tokens de Firebase.
-  // "sanctum" conserva temporalmente compatibilidad con la API actual.
+  // No guardar tokens reales en archivos versionados. En desarrollo se admite
+  // temporalmente un token local y, si la API falla, se usan los datos simulados.
   apiAuthMode: 'sanctum' as 'public' | 'sanctum' | 'firebase',
   apiBaseUrl: 'https://laravel-dashboard-prodv-production.up.railway.app/api/v2',
+  apiReadToken: '',
   useMockDataOnApiError: true,
   apiCacheVersion: 2,
   catalogCacheTtlMs: 6 * 60 * 60 * 1000,
