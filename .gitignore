@@ -31,3 +31,12 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+
+# Configuración local y secretos. Los archivos environment.ts versionados deben
+# contener únicamente valores públicos y placeholders vacíos.
+/.env
+/.env.*
+!/.env.example
+/src/environments/*.local.ts
+/src/environments/secrets.ts
+/src/assets/config.local.json
