@@ -1,3 +1,5 @@
+import { localSecrets } from './secrets';
+
 export const environment = {
   production: true,
   firebaseConfig: {
@@ -12,7 +14,7 @@ export const environment = {
   // usar rutas públicas de lectura protegidas con rate limiting o un proxy.
   apiAuthMode: 'sanctum' as 'public' | 'sanctum' | 'firebase',
   apiBaseUrl: 'https://laravel-dashboard-prodv-production.up.railway.app/api/v2',
-  apiReadToken: '',
+  apiReadToken: localSecrets.apiReadToken,
   useMockDataOnApiError: false,
   apiCacheVersion: 2,
   catalogCacheTtlMs: 6 * 60 * 60 * 1000,

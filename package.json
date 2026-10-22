@@ -5,7 +5,10 @@
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",
+    "configure:secrets": "node scripts/generate-secrets.mjs",
+    "prestart": "npm run configure:secrets",
     "start": "ng serve",
+    "prebuild": "npm run configure:secrets",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

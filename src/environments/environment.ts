@@ -1,3 +1,5 @@
+import { localSecrets } from './secrets';
+
 export const environment = {
   production: false,
   firebaseConfig: {
@@ -12,7 +14,7 @@ export const environment = {
   // temporalmente un token local y, si la API falla, se usan los datos simulados.
   apiAuthMode: 'sanctum' as 'public' | 'sanctum' | 'firebase',
   apiBaseUrl: 'https://laravel-dashboard-prodv-production.up.railway.app/api/v2',
-  apiReadToken: '',
+  apiReadToken: localSecrets.apiReadToken,
   useMockDataOnApiError: true,
   apiCacheVersion: 2,
   catalogCacheTtlMs: 6 * 60 * 60 * 1000,
