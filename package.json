@@ -10,6 +10,9 @@
     "start": "ng serve",
     "prebuild": "npm run configure:secrets",
     "build": "ng build",
+    "build:production": "npm run build -- --configuration production",
+    "android:sync": "npm run build:production && cap sync android",
+    "android:open": "cap open android",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

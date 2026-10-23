@@ -1,0 +1,34 @@
+// Capacitor 4 plugins declare their namespace in AndroidManifest.xml.
+// AGP 8 requires it in the DSL instead. Use generated manifest copies so
+// npm install and cap sync can regenerate plugins without losing this fix.
+subprojects { module ->
+    module.plugins.withId('kotlin-android') {
+        module.tasks.matching { it.name.startsWith('compile') && it.name.endsWith('Kotlin') }.configureEach {
+            kotlinOptions.jvmTarget = '11'
+        }
+    }
+    module.plugins.withId('com.android.library') {
+        module.android {
+            buildFeatures { buildConfig = true }
+        }
+        module.androidComponents.finalizeDsl { androidDsl ->
+            androidDsl.sourceSets.each { sourceSet ->
+                def original = sourceSet.manifest.srcFile
+                if (original.exists()) {
+                    def source = original.getText('UTF-8')
+                    def packageAttribute = source =~ /\s+package\s*=\s*["']([^"']+)["']/
+                    if (packageAttribute.find()) {
+                        if (!androidDsl.namespace) {
+                            androidDsl.namespace = packageAttribute.group(1)
+                        }
+                        def generated = new File(module.buildDir,
+                            "agp8-manifests/${sourceSet.name}/AndroidManifest.xml")
+                        generated.parentFile.mkdirs()
+                        generated.setText(source.replaceFirst(/\s+package\s*=\s*["'][^"']+["']/, ''), 'UTF-8')
+                        sourceSet.manifest.srcFile(generated)
+                    }
+                }
+            }
+        }
+    }
+}
