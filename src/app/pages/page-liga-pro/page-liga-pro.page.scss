@@ -332,3 +332,51 @@ body[color-theme="dark"] .league-facts span {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
 }
+
+:host-context(body[color-theme="dark"]) {
+  .match-team.winner {
+    background: #1c3b32;
+    color: #a2f2de;
+
+    > b, > strong {
+      color: inherit;
+    }
+  }
+
+  .match-info > div b {
+    background: #1c3b32;
+    color: #a2f2de;
+  }
+
+  .match-info > span {
+    background: #263632;
+    color: #c7d4d0;
+  }
+
+  .match-info > span.live {
+    background: #4a232a;
+    color: #ffbac4;
+  }
+
+  .match-info,
+  .match-card footer {
+    color: #aabcb6;
+  }
+
+  .match-card footer,
+  .table-row,
+  .scorer {
+    border-color: var(--ion-border-color);
+  }
+
+  .match-card footer span:last-of-type,
+  .league-facts ion-icon,
+  .scorer > span {
+    color: #5bd1bd;
+  }
+
+  .navigation-select small {
+    color: #d3ebe5 !important;
+    opacity: 1;
+  }
+}

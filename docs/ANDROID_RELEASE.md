@@ -21,7 +21,7 @@ existente y la variante release. Guarda las contraseñas fuera del repositorio.
 
 El código de versión está en android/app/build.gradle. Para cada nueva
 subida debe ser mayor que los códigos usados en Google Play, incluidos otros
-canales de prueba. La versión actual es 24 (24.0.0).
+canales de prueba.
 
 capacitor-legacy-compat.gradle adapta los manifests de los plugins Capacitor 4
 a los namespaces requeridos por AGP 8. Genera copias en sus carpetas build,

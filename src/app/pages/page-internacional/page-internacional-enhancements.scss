@@ -40,6 +40,43 @@
   width: 28px;
 }
 
-:host-context(body[color-theme="dark"]) .match-head > div b {
-  color: #30b6a3;
+:host-context(body[color-theme="dark"]) {
+  .filter-panel {
+    background: var(--ion-card-background);
+    border-color: var(--ion-border-color);
+  }
+
+  .filter-panel > label,
+  .list-heading span {
+    color: #aabcb6;
+  }
+
+  .league-select {
+    border: 1px solid var(--ion-border-color);
+  }
+
+  .league-select ion-icon,
+  .match-head > div b {
+    color: #5bd1bd;
+  }
+
+  .filter-panel ion-segment {
+    --background: #1b2925;
+  }
+
+  .filter-panel ion-segment-button {
+    --color: #c7d4d0;
+    --color-checked: #fff;
+    --indicator-color: #08786a;
+  }
+
+  .match em {
+    background: #263632;
+    color: #c7d4d0;
+  }
+
+  .match em.live {
+    background: #4a232a;
+    color: #ffbac4;
+  }
 }
