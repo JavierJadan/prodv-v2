@@ -12,3 +12,34 @@
 }
 
 .match[role="button"] { cursor: pointer; }
+
+.match {
+  overflow: hidden;
+}
+
+.team-line {
+  min-width: 0;
+}
+
+.team-line.image-unavailable {
+  grid-template-columns: minmax(0, 1fr) 28px;
+}
+
+.team-line > span {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.team-line > b {
+  justify-self: end;
+  width: 28px;
+}
+
+:host-context(body[color-theme="dark"]) .match-head > div b {
+  color: #30b6a3;
+}

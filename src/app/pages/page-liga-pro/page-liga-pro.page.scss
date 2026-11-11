@@ -267,3 +267,68 @@ body[color-theme="dark"] .league-facts span {
 .match-card[role="button"] { cursor: pointer; }
 .match-card .detail-hint { color: #7a8985; font-weight: 700; }
 .match-card.detail-unavailable .detail-hint { display: inline-flex; align-items: center; }
+
+.match-card {
+  overflow: hidden;
+}
+
+.match-team {
+  min-width: 0;
+}
+
+.match-team.image-unavailable {
+  grid-template-columns: minmax(0, 1fr) 24px auto;
+}
+
+.match-team > b {
+  display: -webkit-box;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.match-team > strong {
+  justify-self: end;
+}
+
+:host-context(body[color-theme="dark"]) .league-facts {
+  border-color: #30403b;
+  background: #30403b;
+}
+
+:host-context(body[color-theme="dark"]) .league-facts span {
+  background: #16241f;
+}
+
+:host-context(body[color-theme="dark"]) .league-facts small {
+  color: #9eafaa;
+}
+
+:host-context(body[color-theme="dark"]) .league-facts b {
+  color: #edf5f2;
+}
+
+:host-context(body[color-theme="dark"]) .content-tabs {
+  --background: #1b2925;
+}
+
+:host-context(body[color-theme="dark"]) .content-tabs ion-segment-button {
+  --color: #b8c7c2;
+  --color-checked: #ffffff;
+  --indicator-color: #08786a;
+}
+
+:host-context(body[color-theme="dark"]) .content-tabs ion-label {
+  color: inherit;
+}
+
+.league-facts b {
+  display: -webkit-box;
+  line-height: 1.2;
+  white-space: normal;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
